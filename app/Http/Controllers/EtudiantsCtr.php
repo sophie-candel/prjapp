@@ -15,57 +15,65 @@ class EtudiantsCtr extends Controller
     function index(){
         return Etudiant::all();
 
-        $query = Etudiant::getQuery(); 
+        $query = Etudiant::getQuery();
 
         if (request()->has('groupe_id')) {
-            $groupeId = request()->get('groupe_id'); 
+            $groupeId = request()->get('groupe_id');
             $query->whereHas('groupes', function ($query) use($groupeId){
                 $query->where('id', $groupeId);
-            }); 
+            });
         }
         return $query->all();
     }
 
-    public function trombi()
+    public function trombi($formation, $annee, $semestre)
     {
-        $etu = Etudiant::with('groupe')
-        
-            // ->join('etudiants_groupes', 'etudiants.id', '=', 'etudiants_groupes.etudiant_id')
-            // ->join('groupes', 'etudiants_groupes.groupe_id', '=', 'groupes.id')
-            // ->join('groupes_semestres', 'groupes.id', '=', 'groupes_semestres.groupe_id')
-            // ->join('semestres', 'groupes_semestres.semestre_id', '=', 'semestres.id')
-            // ->join('annees_semestres', 'semestres.id', '=', 'annees_semestres.semestre_id')
-            // ->join('annees', 'annees_semestres.annee_id', '=', 'annees.id')
-            // ->join('annees_formations', 'annees.id', '=', 'annees_formations.annee_id')
-            // ->join('formations', 'annees_formations.formation_id', '=', 'formations.id')
-            // ->where('annees.nom', '=', date('Y'))
-            // ->where('annees.nom', '=', '2017-2018')
-            // ->select(
-            //     'etudiants.id as id',
-            //     'etudiants.nom as nom',
-            //     'etudiants.prenom as prenom',
-            //     'groupe.id as groupe_id',
-            //     'groupe.nom as groupe')
-            //->distinct()
-            ->get();
+        $etu = \DB::table('etudiants')
+        ->select(
+            'etudiants.id as id',
+            'etudiants.nom as nom',
+            'etudiants.prenom as prenom',
+            'etudiants.alternant as alternant',
+            'etudiants.mail as mail',
+            'etudiants.photo as photo',
+            'etudiants.pre_diplome as pre_diplome',
+            'groupes.nom as groupe')
+        //GROUPE
+        ->join('etudiants_groupes', 'etudiants.id', '=', 'etudiants_groupes.etudiant_id')
+        //SEMESTRE
+        ->join('groupes', 'etudiants_groupes.groupe_id', '=', 'groupes.id')
+        ->join('groupes_semestres', 'groupes.id', '=', 'groupes_semestres.groupe_id')
+        ->join('semestres', 'groupes_semestres.semestre_id', '=', 'semestres.id')
+        ->where('semestres.nom', '=', $semestre)
+        //ANNEE
+        ->join('annees_semestres', 'semestres.id', '=', 'annees_semestres.semestre_id')
+        ->where('annees.nom', '=', $annee)
+        //FORMATION
+        ->join('annees', 'annees_semestres.annee_id', '=', 'annees.id')
+        ->join('annees_formations', 'annees.id', '=', 'annees_formations.annee_id')
+        //NOM FORMATION
+        ->join('formations', 'annees_formations.formation_id', '=', 'formations.id')
+        ->where('formations.nom', '=', $formation)
 
-        $for = Formation::query()
-            // ->select(
-            //     'formations.id as id_for',
-            //     'formations.nom as nom')
-            // ->distinct()
-            ->get();
+        ->distinct()
+        ->get();
 
-        $dep = Departement::query()->get();
+        //pour permettre les choix utilisateurs
+        $for = Formation::all();
+        $dep = Departement::all();
+        $annees = Annee::all();
+        $semestres = Semestre::all();
+        $groupes = Groupe::all();
 
         $result = [
             'departement' => $dep,
-            'formation' => $for,
-            'etudiants' => $etu
+            'formation'   => $for,
+            'etudiants'   => $etu,
+            'annees'      => $annees,
+            'semestres'   => $semestres,
+            'groupes'     => $groupes
         ];
-
-        //dd($etu);
-        //$annee = date('Y');
+        
         return $result;
 
     }
@@ -105,9 +113,9 @@ class EtudiantsCtr extends Controller
     //     if($etudiant->save()){
     //         return $etudiant;
     //     }
-        
+
     // }
     function delete(){
-        
+
     }
 }
