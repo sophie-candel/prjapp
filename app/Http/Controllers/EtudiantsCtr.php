@@ -65,15 +65,22 @@ class EtudiantsCtr extends Controller
         $semestres = Semestre::all();
         $groupes = Groupe::all();
 
+
+        $dep_actuel = \DB::table('departements')
+        ->join('formations', 'formations.departement_id', '=', 'departements.id')
+        ->where('formations.nom', '=', $formation)
+        ->get();
+      
         $result = [
             'departement' => $dep,
             'formation'   => $for,
             'etudiants'   => $etu,
             'annees'      => $annees,
             'semestres'   => $semestres,
-            'groupes'     => $groupes
+            'groupes'     => $groupes,
+            'dep_actuel'  => $dep_actuel
         ];
-        
+
         return $result;
 
     }
