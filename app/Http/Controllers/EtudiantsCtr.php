@@ -26,6 +26,37 @@ class EtudiantsCtr extends Controller
         // return $query->all();
     }
 
+private function concatGroupes() {
+    
+  
+  $map = []; // dans ce tableau il y a la correspondance entre la clé dans $res et l'identifiant de l'utilisateur
+  $res = []; // le tableau de résultat
+  $compteur = 0; // un compteur !
+  
+  // je parcours tous les éléments du tableau (tous les élèves)
+  foreach ($students as $student) {
+      // si c'est un élève qu'on a déjà vu...
+      if (isset($map[$student["id"]])) {
+          // ...je lui ajoute le groupe en question
+          $res[$map[$student["id"]]]["groups"][] = $student["group"];
+      } else {
+          // sinon on ajoute l'élève
+          $map[$student["id"]] = $compteur;
+          $res[$compteur] = $student;
+          $res[$compteur]["groups"] = []; // un tableau pour les groupes
+          if (isset($student["group"]) && !empty($student["group"])) {
+              $res[$compteur]["groups"][] = $student["group"];
+          }
+          unset($res[$compteur]["group"]); // juste pour éviter de trimbaler un attribut "group" pour la suite	
+          $compteur++;
+      }
+      echo $student["name"];
+  }
+  
+  
+  var_dump($res);
+}
+
     public function trombi($id_formation, $id_annee, $id_semestre)
     {
         // DEPARTEMENT
@@ -94,7 +125,7 @@ class EtudiantsCtr extends Controller
         $result = [
             // 'departement'  => $dep_actuel,
             'formation' => $for_actuelle,
-            'etudiants' => $etu,
+            'etudiants' => $this->concatGroupes($etu),
             // 'departements' => $dep,
             // 'formations'   => $for,
             'annees'      => $annees,
