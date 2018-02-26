@@ -23,23 +23,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // -------------------------------------------------------- //
 
 //Route::get('for', 'FormationsCtr@index');
-Route::resource('for', 'FormationsCtr');
+//Route::resource('for', 'FormationsCtr');
 
 Route::get('dep', 'DepartementsCtr@index');
 
-Route::get('grp', 'GroupesCtr@index');
+// Route::get('grp', 'GroupesCtr@index');
 
-Route::get('ann', 'AnneesCtr@index');
+// Route::get('ann', 'AnneesCtr@index');
 
-Route::get('sem', 'SemestresCtr@index');
+// Route::get('sem', 'SemestresCtr@index');
 
 Route::get('trombi/{formation}/{annee}/{semestre}', 'EtudiantsCtr@trombi');
+
 
 //Route::get('for/liste', 'FormationsCtr@liste');
 // Route::get('for', 'FormationsCtr@index');
 
+Route::get('search', 'DepartementsCtr@search');
 
 // -------------------------------------------------------- //
 //  ETUDIANTS //
 // -------------------------------------------------------- //
 Route::resource('etu', 'EtudiantsCtr');
+

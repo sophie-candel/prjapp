@@ -11,5 +11,9 @@ class DepartementsCtr extends Controller
         $departements = Departement::with('formations')->get();
         return $departements;
     }
+
+    function search() {
+        
+    }
 }
 
