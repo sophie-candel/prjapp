@@ -10,13 +10,10 @@ use App\Formation;
 use App\Groupe;
 use Illuminate\Http\Request;
 
-class EtudiantsCtr extends Controller
-{
+class EtudiantsCtr extends Controller {
     function index(){
         return Etudiant::all();
-
         // $query = Etudiant::getQuery();
-
         // if (request()->has('groupe_id')) {
         //     $groupeId = request()->get('groupe_id');
         //     $query->whereHas('groupes', function ($query) use($groupeId){
@@ -26,36 +23,31 @@ class EtudiantsCtr extends Controller
         // return $query->all();
     }
 
-private function concatGroupes() {
-    
-  
-  $map = []; // dans ce tableau il y a la correspondance entre la clé dans $res et l'identifiant de l'utilisateur
-  $res = []; // le tableau de résultat
-  $compteur = 0; // un compteur !
-  
-  // je parcours tous les éléments du tableau (tous les élèves)
-  foreach ($students as $student) {
-      // si c'est un élève qu'on a déjà vu...
-      if (isset($map[$student["id"]])) {
-          // ...je lui ajoute le groupe en question
-          $res[$map[$student["id"]]]["groups"][] = $student["group"];
-      } else {
-          // sinon on ajoute l'élève
-          $map[$student["id"]] = $compteur;
-          $res[$compteur] = $student;
-          $res[$compteur]["groups"] = []; // un tableau pour les groupes
-          if (isset($student["group"]) && !empty($student["group"])) {
-              $res[$compteur]["groups"][] = $student["group"];
-          }
-          unset($res[$compteur]["group"]); // juste pour éviter de trimbaler un attribut "group" pour la suite	
-          $compteur++;
-      }
-      echo $student["name"];
-  }
-  
-  
-  var_dump($res);
-}
+    private function concatGroupes($etu) {
+        $map = []; // correspondance entre la clé dans $res et l'identifiant de l'utilisateur
+        $res = []; 
+        $compteur = 0;
+
+        $etu = json_decode(json_encode($etu), true); //transforme l'objet en array
+
+        foreach ($etu as $e) {
+            // si c'est un élève qu'on a déjà vu...
+            if (isset($map[$e["id"]])) {
+                // ...on lui ajoute le groupe en question
+                $res[$map[$e["id"]]]["groupes"][] = $e["groupes"];
+            } else {
+                // sinon on ajoute l'élève
+                $map[$e["id"]] = $compteur;
+                $res[$compteur] = $e;
+                $res[$compteur]["groupes"] = []; // un tableau pour les groupes
+                if (isset($e["groupes"])) {
+                    $res[$compteur]["groupes"][] = $e["groupes"];
+                }
+                $compteur++;
+            }
+        }
+        return $res;
+    }
 
     public function trombi($id_formation, $id_annee, $id_semestre)
     {
@@ -94,7 +86,7 @@ private function concatGroupes() {
             'etudiants.mail as mail',
             'etudiants.photo as photo',
             'etudiants.pre_diplome as pre_diplome',
-            'groupes.nom as groupe')
+            'groupes.nom as groupes')
         //groupe
         ->join('etudiants_groupes', 'etudiants.id', '=', 'etudiants_groupes.etudiant_id')
         //semestres
@@ -114,67 +106,28 @@ private function concatGroupes() {
 
         ->distinct()
         ->get();
-
+        
+        
         // LISTE ANNEES, SEMESTRES, GROUPES
-        // $for = Formation::all();
-        // $dep = Departement::all();
-        $annees = Annee::all();
-        $semestres = Semestre::all();
-        $groupes = Groupe::all();
+        $annees     = Annee::all();
+        $semestres  = Semestre::all();
+        $groupes    = Groupe::all();
 
         $result = [
-            // 'departement'  => $dep_actuel,
-            'formation' => $for_actuelle,
-            'etudiants' => $this->concatGroupes($etu),
-            // 'departements' => $dep,
-            // 'formations'   => $for,
-            'annees'      => $annees,
-            'semestres'   => $semestres,
-            'groupes'     => $groupes
+            'formation'     => $for_actuelle,
+            //'etudiants'   => $etu,
+            'etudiants'     => $this->concatGroupes($etu),
+            'annees'        => $annees,
+            'semestres'     => $semestres,
+            'groupes'       => $groupes
         ];
-
         return $result;
-
+        //var_dump($result);
     }
-
-
 
     function show($id){
         return Etudiant::findOrFail($id);
     }
 
-    public function store()
-    {
-        // $etudiant = $request->isMethod('put') ? Etudiant::findOrFail($id) : new Etudiant;
 
-        // $etudiant->nom = $request->input('nom');
-        // $etudiant->prenom = $request->input('prenom');
-        // $etudiant->alternant = $request->input('alternant');
-        // $etudiant->mail = $request->input('mail');
-        // $etudiant->photo = $request->input('photo');
-        // $etudiant->pre_diplome = $request->input('pre_diplome');
-
-        // if($etudiant->save()){
-        //     return $etudiant;
-        // }
-    }
-
-    // function update(Request $request){
-    //     $etudiant = Etudiant::findOrFail($id);
-
-    //     $etudiant->nom = $request->input('nom');
-    //     $etudiant->prenom = $request->input('prenom');
-    //     $etudiant->alternant = $request->input('alternant');
-    //     $etudiant->mail = $request->input('mail');
-    //     $etudiant->photo = $request->input('photo');
-    //     $etudiant->pre_diplome = $request->input('pre_diplome');
-
-    //     if($etudiant->save()){
-    //         return $etudiant;
-    //     }
-
-    // }
-    function delete(){
-
-    }
 }
