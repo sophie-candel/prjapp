@@ -5,7 +5,7 @@ prjModule.controller("trombi", [
   "data",
   function($scope, $state, $stateParams, data) {
     let getTrombi = function() {
-      data.getTrombi().then(function(trombi) {
+      data.getTrombi($stateParams.trombi).then(function(trombi) {
         $scope.trombi = trombi;
       });
     };
