@@ -1,0 +1,19 @@
+<span class="icon-close text-xl" ng-click="closePanel()"></span>
+<p class="m-b-40 text-l">Exporter le trombinoscope</p>
+
+<form class="tiny-input">
+    <p class="label">Choix du format : </p>
+    <select class="m-b-20">
+        <option value="" disabled selected hidden>Format</option>
+        <option value="zip">
+            ZIP
+        </option>
+        <option value="pdf">
+            PDF
+        </option>
+    </select>
+    <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+        <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
+        <button class="flex-1 m-l-10" type="submit" value="">Exporter</button>
+    </div>
+</form>

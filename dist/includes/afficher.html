@@ -1,0 +1,13 @@
+<span class="icon-close text-xl" ng-click="closePanel()"></span>
+<p class="m-b-40 text-l">{{ etu.prenom }} {{ etu.nom }}</p>
+
+<img class="m-b-20 avatar" src="{{ etu.photo }}" alt="Photo de {{ etu.prenom }} {{ etu.nom }}">
+
+<a class="m-b-20 text-center" ui-sref="trombi.mailto({etu: e.id})">
+    <span>{{ e.mail }}</span>&nbsp;
+    <span class="icon-email text-white text-l"></span>
+</a>
+
+<p class="m-b-20 text-center" ng-repeat="e in etu">{{ e.groupes.nom}}</p>
+<p class="m-b-20 text-center" ng-if="e.alternant == 'true'">Alternant</p>
+<p class="m-y-20 text-center">{{ e.pre_diplome }}</p>

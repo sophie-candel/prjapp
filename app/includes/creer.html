@@ -1,0 +1,44 @@
+<span class="icon-close text-xl" ng-click="closePanel()"></span>
+<p class="m-b-40 text-l">Créer un nouvel étudiant</p>
+
+<form class="tiny-input">
+    <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
+        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom" required>
+        <input class="flex-1 m-l-10 text-center" type="text" name="nom" placeholder="Nom" required>
+    </div>
+    <div class="m-b-20">
+        <input type="file" name="photo" id="photo" class="inputfile" accept="image/*" required/>
+        <label for="photo">
+            <span class="icon-upload text-xxl"></span>
+            <p>Importer une photo</p>
+        </label>
+    </div>
+
+    <input class="m-b-20 text-center" type="email" placeholder="adresse e-mail" required>
+
+    <!-- <div class="fakeselect m-b-20">
+      <span>Groupes</span>
+      <div class="fakeselect-content">
+        <ul class="m-l-10">
+          <li class="text-left" ng-repeat="">
+            <div class="checkbox m-b-10">
+              <input type="checkbox" id="" name="" checked>
+              <label for="">{{}} {{}}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+
+    <div class="checkbox m-b-20">
+        <input type="checkbox" id="alt" name="alt" required>
+        <label for="alt">Alternant(e)</label>
+    </div>
+
+    <input class="m-b-20 text-center" type="text" placeholder="diplôme précédent" required>
+
+    <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+        <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
+        <button class="flex-1 m-l-10" type="submit" value="">Créer</button>
+    </div>
+</form>

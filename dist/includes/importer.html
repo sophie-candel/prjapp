@@ -1,0 +1,19 @@
+<span class="icon-close text-xl" ng-click="closePanel()"></span>
+<p class="m-b-40 text-l">Importer une liste d'étudiants</p>
+
+<form>
+  <div class="m-b-20">
+    <p class="label">Formats pris en charge : csv </p>
+    <input type="file" name="liste" id="liste" class="inputfile" accept=".csv" />
+    <label for="liste">
+      <span class="icon-upload text-xxl"></span>
+      <p>Importer une liste</p>
+    </label>
+  </div>
+
+
+  <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+    <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
+    <button class="flex-1 m-l-10" type="submit" value="">Importer</button>
+  </div>
+</form>

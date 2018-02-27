@@ -1,11 +1,11 @@
-vendor/
+laravel/vendor/
 node_modules/
 npm-debug.log
 
 # Laravel 5 & Lumen specific
-public/storage
-public/hot
-storage/*.key
+laravel/public/storage
+laravel/public/hot
+laravel/storage/*.key
 
 Homestead.yaml
 Homestead.json

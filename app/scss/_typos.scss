@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,600');
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('sources/fonts/icomoon.eot?bytht3');
+  src:  url('sources/fonts/icomoon.eot?bytht3#iefix') format('embedded-opentype'),
+    url('sources/fonts/icomoon.ttf?bytht3') format('truetype'),
+    url('sources/fonts/icomoon.woff?bytht3') format('woff'),
+    url('sources/fonts/icomoon.svg?bytht3#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+/*----------------------------------------------------------------------------------------------*/
+/* TYPOS */
+/*----------------------------------------------------------------------------------------------*/
+html { font-family: $font-family-main; color: $color-grey1; background-color: white; }
+
+p {
+    font-weight: $font-weight-2;
+    font-size: $font-size-m;
+}
+
+a {
+  color: $color-grey1;
+  text-decoration: none;
+}
+
+
+.uppercase { text-transform: uppercase !important; }
+
+.label {
+  text-align: left;
+  font-size: $font-size-s;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+// SIZE
+.text-xxs { font-size: $font-size-xxs !important; }
+.text-xs { font-size: $font-size-xs !important; }
+.text-s { font-size: $font-size-s !important; }
+.text-m { font-size: $font-size-m !important; }
+.text-l { font-size: $font-size-l !important; }
+.text-xl { font-size: $font-size-xl !important; }
+.text-xxl { font-size: $font-size-xxl !important; }
+
+// WEIGHT
+.weight-200 { font-weight: $font-weight-1 !important;}
+.weight-400 { font-weight: $font-weight-2 !important;}
+.weight-600, b, strong { font-weight: $font-weight-3 !important;}
+
+// TEXT-ALIGN
+$values:
+("left") (left),
+("center") (center),
+("right") (right);
+
+@each $i in $values {
+.text-#{nth($i, 1)} {
+text-align: #{nth($i, 2)} !important;
+}
+}
+
+
+/*----------------------------------------------------------------------------------------------*/
+/* ICONS */
+/*----------------------------------------------------------------------------------------------*/
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-account:before {
+  content: "\e900";
+}
+.icon-account-plus:before {
+  content: "\e901";
+}
+.icon-arrow-left:before {
+  content: "\e902";
+}
+.icon-close:before {
+  content: "\e903";
+}
+.icon-delete:before {
+  content: "\e904";
+}
+.icon-dots-vertical:before {
+  content: "\e905";
+}
+.icon-download:before {
+  content: "\e906";
+}
+.icon-email:before {
+  content: "\e907";
+}
+.icon-eye:before {
+  content: "\e908";
+}
+.icon-file:before {
+  content: "\e909";
+}
+.icon-lock:before {
+  content: "\e90a";
+}
+.icon-logout:before {
+  content: "\e90b";
+}
+.icon-magnify:before {
+  content: "\e90c";
+}
+.icon-pencil:before {
+  content: "\e90d";
+}
+.icon-printer:before {
+  content: "\e90e";
+}
+.icon-tune:before {
+  content: "\e90f";
+}
+.icon-upload:before {
+  content: "\e910";
+}

@@ -103,7 +103,7 @@ class EtudiantsCtr extends Controller {
         //nom formation
         ->join('formations', 'annees_formations.formation_id', '=', 'formations.id')
         ->where('formations.id', '=', $id_formation)
-
+        ->orderBy('id')
         ->distinct()
         ->get();
         

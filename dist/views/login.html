@@ -1,0 +1,35 @@
+<div class="m-center p-40 flex-container is-horizontal-center is-vertical-center ng-scope" style="height:100vh; overflow: hidden;">
+  <div style="width: 500px;">
+    <div class="m-b-40 text-center animated bounceInDown">
+      <p class="text-l">Trombinoscopes</p>
+      <p class="text-xl weight-600 m-y-5">IUT de Haguenau</p>
+    </div>
+    <!-- <form>
+            <span class="icon-account text-xl"></span>
+            <span class="icon-lock text-xl"></span>
+            <input type="email" placeholder="Nom d'utilisateur" class="m-b-20">
+            <input type="password" placeholder="Mot de passe" class="m-b-20">
+            <input type="submit" name="submit" placeholder="Se connecter" href="#/formations">
+        </form> -->
+
+    <form class="animated bounceInUp">
+      <div class="flex-container m-b-20">
+        <div class="w-65 bg-grey1 p-0 flex-container is-horizontal-center is-vertical-center">
+          <span class="icon-account text-xl text-white"></span>
+        </div>
+        <input id="user" class="flex-6" type="text" placeholder="Nom d'utilisateur" class="m-b-20" ng-model="login.user" ng-blur="login.change()">
+      </div>
+
+
+      <div class="flex-container m-b-20">
+        <div class="w-65 bg-grey1 p-0 flex-container is-horizontal-center is-vertical-center">
+          <span class="icon-lock text-xl text-white"></span>
+        </div>
+        <input id="pass" class="flex-6" type="password" placeholder="Mot de passe" class="m-b-20" ng-model="login.password">
+      </div>
+
+      <button type="submit" name="submit" href="#/" ng-click="login.submit()">Se connecter</button>
+    </form>
+
+  </div>
+</div>

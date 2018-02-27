@@ -1,0 +1,109 @@
+#wrapper {
+    transition: all  0.3s ease;
+    margin-right: 100px;
+    @media screen and (max-width: $width-sm) {
+        width: 100% !important;
+    }
+    
+    & * {
+        @media screen and (max-width: $width-sm) {
+            //margin-left: 0 !important;
+            //margin-right: 0 !important;
+        }
+    }
+}
+
+.maxw-1024 {
+    @media screen and (max-width: $width-sm) {
+        padding: 15px !important;
+        margin-bottom: 60px;
+        // .flex-container {
+        //     justify-content: center !important;
+        // }
+    }
+}
+
+#panel {
+    z-index: 3 ;
+    @media screen and (min-width: $width-sm) {
+        transition: right 0.3s ease;
+        height: 100%;
+        right: -400px;
+        top: 0;
+        width: 500px;
+    }
+
+
+   @media screen and (max-width: $width-sm) {
+        transition: all 0.3s ease;
+       height: 60px;
+       //bottom: 0;
+       right: 0;
+       width: 100vw;
+       top: calc(100vh - 60px);
+    }
+
+    #panelNav {
+        @media screen and (max-width: $width-sm) {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            width: 100%;
+        }
+        a {
+            @media screen and (max-width: $width-sm) {
+                margin: 0 !important;
+            }
+        }
+    }
+
+    #panelContent {
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        @media screen and (max-width: $width-sm) {
+            transition: all 0.3s ease;
+            //height: 0;
+            width: 100%;
+        }
+    }
+
+   a {
+       display: block;
+       color: white;
+   }
+}
+
+
+#panel.panel-is-open {
+    right: 0;
+    @media screen and (max-width: $width-sm) {
+        top: 0;
+        height: 100vh;
+    }
+    #panelContent {
+        @media screen and (max-width: $width-sm) {
+            height: 100%;
+        }
+    }
+}
+#wrapper.panel-is-open {
+    margin-right: 500px;
+    @media screen and (max-width: $width-sm) {
+        margin-top: 0;
+    }
+}
+
+#panelContent {
+    overflow-y: hidden;
+}
+
+
+.icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}

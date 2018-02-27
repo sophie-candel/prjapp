@@ -1,0 +1,46 @@
+<span class="icon-close text-xl" ng-click="closePanel()"></span>
+<p class="m-b-40 text-l">Migrer une promotion</p>
+
+<form class="tiny-input">
+  <!-- <p class="m-b-20">
+    De {{trombi.formation.nom}} à
+  </p>
+
+  <select class="m-b-20">
+    <option value="" disabled selected hidden>Promotion d'arrivée</option>
+    <option>
+
+    </option>
+  </select> -->
+
+  <div class="m-b-40">
+    <p class="label">Migrer la promotion vers : </p>
+    <div class="text-left">
+      <div class="checkbox m-b-20 m-l-40">
+        <input type="checkbox" id="annee" name="mail">
+        <label for="annee" class="m-b-10">Année suivante</label>
+        <input type="checkbox" id="semestre" name="mail">
+        <label for="semestre">Semestre suivant</label>
+      </div>
+    </div>
+  </div>
+
+  <p class="label">Sélection des étudiants à migrer : </p>
+  <div class="fakeselect m-b-40">
+    <a ng-click="dropdown()">Étudiants</a>
+    <div class="fakeselect-content">
+      <ul class="m-l-10">
+        <li class="text-left" ng-repeat="e in trombi.etudiants">
+          <div class="checkbox m-b-10">
+            <input type="checkbox" id="{{e.id_etu}}" name="{{e.id_etu}}" checked>
+            <label for="{{e.id_etu}}">{{e.prenom}} {{e.nom}}</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+    <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
+    <button class="flex-1 m-l-10" type="submit" value="">Migrer</button>
+  </div>
+</form>

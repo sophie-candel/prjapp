@@ -1,0 +1,63 @@
+@import "reset"; 
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,600'); 
+ 
+body { 
+    padding: 1cm;
+    font-family: Montserrat;
+    color: black !important;
+    font-size: 10pt;
+} 
+ 
+.screen {
+    display: none !important;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    height: 5cm;
+    margin-right: 1cm;
+}
+
+#title {
+    height: 3cm;
+    font-size: 14pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    & .flex-container p {
+        font-weight: bold;
+    }
+}
+
+.text-s {
+    font-size: 6pt;
+}
+
+.trombiGrid {
+    display: flex; 
+    flex-wrap: wrap; 
+    .trombiGrid__elt {
+        width: 19%;
+        position: relative;
+        .trombiGrid__img {
+            position: relative;
+            &:before {
+                display: block;
+                content: "";
+                width: 100%;
+                padding-top: calc((1/1)*100%);
+            }
+            img {
+                width: 3.5cm; 
+                height: 3.5cm; 
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+        }
+    }
+}

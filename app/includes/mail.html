@@ -1,0 +1,20 @@
+<span class="icon-close text-xl" ng-click="closePanel()"></span>
+<p class="m-b-40 text-l">Envoyer un message</p>
+
+<form class="tiny-input">
+    <select class="m-b-20" id="destinataires" ng-if="!mailto">
+        <option value="" disabled selected hidden>Destinataire</option>
+        <option>
+
+        </option>
+    </select>
+    <input class="m-b-20 text-center" type="text" name="" ng-value="mailto" placeholder="Email de l'étudiant" ng-if="mailto">
+    <input class="m-b-20 text-center" type="text" name="" placeholder="Objet du message">
+
+    <textarea class="m-b-20 h-250" placeholder="Votre message ..."></textarea>
+
+    <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+        <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
+        <button class="flex-1 m-l-10" type="submit" value="">Envoyer</button>
+    </div>
+</form>

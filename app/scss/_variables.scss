@@ -1,0 +1,68 @@
+/*----------------------------------------------------------------------------------------------*/
+/* LAYOUT */
+/*----------------------------------------------------------------------------------------------*/
+// $width-xxs: 0;
+// $width-xs: 320px;
+// $width-sm: 544px;
+// $width-md: 768px;
+// $width-lg: 992px;
+// $width-xl: 1200px;
+$width-xxs: 0;
+$width-xs: 365px;
+$width-sm: 544px;
+$width-md: 768px;
+$width-lg: 992px;
+$width-xl: 1200px;
+
+
+$border-radius: 4px;
+$shadow : 0 2px 5px rgba(0,0,0,.26);
+/*----------------------------------------------------------------------------------------------*/
+/* TYPOGRAPHY */
+/*----------------------------------------------------------------------------------------------*/
+
+$font-family-main: "Montserrat", Helvetica, Arial, sans-serif;
+
+$font-size-xxl:               5rem !default; // 20px 
+$font-size-xl:               2.5rem !default; // 20px 
+$font-size-l:               1.5rem !default; // 17px
+$font-size-m:               1rem !default;     // 14px
+$font-size-s:               .8rem !default; //12px 
+$font-size-xs:               .7rem !default;  //10px
+$font-size-xxs:              .6rem !default;  // 9px 
+
+
+// $font-size-xxl:             3rem !default; // 20px 
+// $font-size-xl:              1.5rem !default; // 20px 
+// $font-size-l:               1rem !default; // 17px
+// $font-size-m:               0.8rem !default;     // 14px
+// $font-size-s:               .7rem !default; //12px 
+// $font-size-xs:              .6rem !default;  //10px
+// $font-size-xxs:             .5rem !default;  // 9px 
+
+
+// $font-size-h1:               2.5rem !default;   // 35px
+// $font-size-h2:               2rem !default;     // 28px
+// $font-size-h3:               1.642rem !default; // 23px
+// $font-size-h4:               1.5rem !default;   // 21px
+// $font-size-h5:               1.214rem !default; // 17px
+// $font-size-h6:               1rem !default;
+
+$font-weight-1:               200 !default;
+$font-weight-2:               400 !default;
+$font-weight-3:               600 !default;
+
+/*----------------------------------------------------------------------------------------------*/
+/* COLORS */
+/*----------------------------------------------------------------------------------------------*/
+
+$color-mmi: rgb(62, 230, 62);
+$color-qlio: rgb(11, 125, 255);
+$color-geii: rgb(255, 72, 72);
+
+$color-grey1: #333333;
+$color-grey2: #828282;
+$color-grey3: #BDBDBD;
+$color-grey4: #E0E0E0;
+$color-grey5: #F2F2F2;
+
