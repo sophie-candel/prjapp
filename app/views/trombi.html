@@ -83,7 +83,7 @@
                 <!-- <p class="text-l m-x-15 m-y-40" ng-if="!trombi.etudiants[0]">Il n'y a pas d'étudiants correspondant à ces critères.</p> -->
                 <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.afficher({etu: e.id})">
                     <div class="trombiGrid__img">
-                        <img src="{{e.photo}}">
+                        <img ng-src="{{e.photo}}">
                     </div>
                     <p class="p-t-10">{{e.prenom}} {{e.nom}}</p>
                     <p ng-if="current.mail" class="text-s">{{e.mail}}</p>
