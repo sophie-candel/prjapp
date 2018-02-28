@@ -9,7 +9,4 @@ class Departement extends Model
     public function formations() {
         return $this->hasMany('App\Formation');
     }
-
-
-    
 }

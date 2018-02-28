@@ -11,8 +11,8 @@ class GroupesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('groupes')->insert([ 'nom' => 'DWEB',]);
-        DB::table('groupes')->insert([ 'nom' => 'CREAVI',]);
-        DB::table('groupes')->insert([ 'nom' => 'VIDNUM',]);
+        DB::table('groupes')->insert([ 'nom' => 'DWEB','formation_id' => 3,]);
+        DB::table('groupes')->insert([ 'nom' => 'CREAVI', 'formation_id' => 3,]);
+        DB::table('groupes')->insert([ 'nom' => 'VIDNUM', 'formation_id' => 3,]);
     }
 }

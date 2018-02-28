@@ -13,4 +13,8 @@ class Formation extends Model
     public function annee() {
         return $this->belongsToMany('App\Annee');
     }
+
+    public function groupes() {
+        return $this->hasMany('App\Groupe');
+    }
 }

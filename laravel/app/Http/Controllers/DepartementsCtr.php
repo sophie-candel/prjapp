@@ -12,8 +12,6 @@ class DepartementsCtr extends Controller
         return $departements;
     }
 
-    function search() {
-        
-    }
+   
 }
 

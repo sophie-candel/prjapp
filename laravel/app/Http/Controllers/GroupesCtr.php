@@ -10,13 +10,7 @@ use Illuminate\Http\Request;
 class GroupesCtr extends Controller
 {
     function index(){
-        // $groupes = Groupe::all();
-        // return $groupes;
-
-           
-
-        $grp = Groupe::with('etudiants')->get();
-        return $grp;
-
+        // $grp = Groupe::with('etudiants')->get();
+        // return $grp;
     }
 }

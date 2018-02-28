@@ -13,14 +13,6 @@ use Illuminate\Http\Request;
 class EtudiantsCtr extends Controller {
     function index(){
         return Etudiant::all();
-        // $query = Etudiant::getQuery();
-        // if (request()->has('groupe_id')) {
-        //     $groupeId = request()->get('groupe_id');
-        //     $query->whereHas('groupes', function ($query) use($groupeId){
-        //         $query->where('id', $groupeId);
-        //     });
-        // }
-        // return $query->all();
     }
 
     private function concatGroupes($etu) {
@@ -49,8 +41,7 @@ class EtudiantsCtr extends Controller {
         return $res;
     }
 
-    public function trombi($id_formation, $id_annee, $id_semestre)
-    {
+    public function trombi($id_formation, $id_annee, $id_semestre) {
         // DEPARTEMENT
         // $dep_actuel = \DB::table('departements')
         // ->select(

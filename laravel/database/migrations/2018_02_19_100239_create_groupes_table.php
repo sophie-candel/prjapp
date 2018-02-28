@@ -19,6 +19,8 @@ class CreateGroupesTable extends Migration
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
             $table->string('nom', 255);
+            $table->integer('formation_id')->unsigned();
+            $table->foreign('formation_id')->references('id')->on('formations');
             $table->timestamps();
         });
     }
