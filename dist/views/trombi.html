@@ -2,16 +2,16 @@
 
 <!-- Barre de navigation latérale -->
 <div id="panel" class="screen fixed text-center text-white flex-container">
-    <div id="panelNav" class="w-100 p-20" ng-style="{'background-color':trombi.departement.couleur}">
+    <div id="panelNav" class="w-100 p-20" ng-repeat="f in trombi.formation" ng-style="{'background-color':f.dep_couleur}">
         <a class="m-b-60" ng-click="openPanel()" ui-sref="trombi.filtres">
             <span class="icon-tune text-xl"></span>
             <p class="uppercase text-xs desktop">filtrer</p>
         </a>
-        <a class="m-b-20" ng-click="openPanel()" ui-sref="trombi.creer" ng-if="admin">
+        <a class="m-b-20" ng-click="openPanel()" ui-sref="trombi.creer">
             <span class="icon-account-plus text-xl"></span>
             <p class="uppercase text-xs desktop">ajouter un élève</p>
         </a>
-        <a class="m-b-60 desktop" ng-click="openPanel()" ui-sref="trombi.importer" ng-if="admin">
+        <a class="m-b-60 desktop" ng-click="openPanel()" ui-sref="trombi.importer">
             <span class="icon-file text-xl"></span>
             <p class="uppercase text-xs">importer une liste d'élèves</p>
         </a>
@@ -57,10 +57,10 @@
                     <span class="icon-arrow-left text-l"></span>Retour
                 </a>
 
-                <a class="flex-container is-vertical-center" ui-sref="login" ng-click="logout()">
+                <!-- <a class="flex-container is-vertical-center" ui-sref="login" ng-click="logout()">
                     Déconnexion
                     <span class="icon-logout text-l m-l-5"></span>
-                </a>
+                </a> -->
             </div>
         </div>
 
@@ -68,16 +68,18 @@
         <div class="animated bounceInUp">
             <div class="m-x-15 m-b-20" id="title">
                 <div class="flex-container">
-                    <p class="text-xl weight-600" ng-style="{'color':trombi.formation.dep_couleur}">{{trombi.formation.nom}}
+                    <p class="text-xl weight-600" ng-repeat="f in trombi.formation" ng-style="{'color':f.dep_couleur}">{{f.nom}}
                         <span class="text-m" ng-if="current.groupe"> {{current.groupe}}</span>
                     </p>
                     <!-- <button class="ghost-button screen uppercase desktop w-100 m-l-10" ng-click="openPanel()" ui-sref="trombi.migrer">Migrer</button> -->
                 </div>
 
-                <!-- <p class="text-l m-y-5">Année {{trombi.annee.nom}}</p>
-                <p class="text-l">Semestre {{trombi.semestre.nom}}</p> -->
-                <p class="text-m m-t-10" ng-if="current.alt">Étudiant(e)s en {{current.alt}}</p>
+                <!-- <p class="text-l m-y-5" ng-repeat="a in formation.annee">Année {{a.nom}}</p>
+                <p class="text-l" ng-repeat="s in trombi.semestre">Semestre {{trombi.semestre.nom}}</p>
+                <p class="text-m m-t-10" ng-if="current.alt">Étudiant(e)s en {{current.alt}}</p> -->
             </div>
+
+
 
             <div class="trombiGrid flex-container text-center">
                 <!-- <p class="text-l m-x-15 m-y-40" ng-if="!trombi.etudiants[0]">Il n'y a pas d'étudiants correspondant à ces critères.</p> -->
@@ -86,7 +88,7 @@
                         <img ng-src="{{e.photo}}">
                     </div>
                     <p class="p-t-10">{{e.prenom}} {{e.nom}}</p>
-                    <p ng-if="current.mail" class="text-s">{{e.mail}}</p>
+                    <p class="text-s">{{e.mail}}</p>
                 </a>
                 <!-- <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.modifier({etu: e.id_etu})"
                     >

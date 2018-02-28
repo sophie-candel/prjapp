@@ -72,8 +72,14 @@ class EtudiantsCtr extends Controller {
             'departements.nom as dep_nom',
             'departements.couleur as dep_couleur'
         )
+        // département
         ->join('departements', 'formations.departement_id', '=', 'departements.id')
+        // année
+        // ->join('annees', 'annees_semestres.annee_id', '=', 'annees.id')
+        // ->join('annees_formations', 'annees.id', '=', 'annees_formations.annee_id')
+
         ->where('formations.id', '=', $id_formation)
+        
         ->get();
 
         // ETUDIANTS
