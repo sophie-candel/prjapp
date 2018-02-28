@@ -6,10 +6,26 @@ prjModule.controller("trombi", [
   function($scope, $state, $stateParams, data) {
     let getTrombi = function() {
       data.getTrombi($stateParams.trombi).then(function(trombi) {
+        //var filterGroup = trombi.filter(function(elt) {
+        // return elt.groupes?.includes(1?);
+        // })
+
+        // trombi.forEach(function(elt){
+
+        // });
+
         $scope.trombi = trombi;
+        console.log(trombi.etudiants);
       });
     };
     getTrombi();
+
+    // var gensDuGroupe1 = getTrombi.filter(function (getTrombi) {
+    //   return getTrombi.groupes.includes(1);
+    // });
+    //console.log(gensDuGroupe1);
+
+    // $scope.filter = {};
 
     // filtrage
     // $scope.trombinoscopes = data.trombi($stateParams.trombi);
@@ -58,8 +74,8 @@ prjModule.controller("trombi", [
     if ($state.current.name != "trombi") {
       $scope.openPanel();
     }
-    $(window).blur(function() {
-      $scope.closePanel();
-    });
+    // $(window).blur(function() {
+    //   $scope.closePanel();
+    // });
   }
 ]);

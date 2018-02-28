@@ -70,15 +70,24 @@ class EtudiantsCtr extends Controller {
             'formations.nom as nom',
             'departement_id as dep_id',
             'departements.nom as dep_nom',
-            'departements.couleur as dep_couleur'
+            'departements.couleur as dep_couleur',
+            'annees.nom as annee',
+            'semestres.nom as semestre'
         )
         // département
         ->join('departements', 'formations.departement_id', '=', 'departements.id')
+
         // année
-        // ->join('annees', 'annees_semestres.annee_id', '=', 'annees.id')
-        // ->join('annees_formations', 'annees.id', '=', 'annees_formations.annee_id')
+        ->join('annees_formations', 'formations.id', '=', 'annees_formations.formation_id')
+        ->join('annees', 'annees_formations.annee_id', '=', 'annees.id')
+
+        // semestre
+        ->join('annees_semestres', 'annees.id', '=', 'annees_semestres.annee_id')
+        ->join('semestres', 'annees_semestres.semestre_id', '=', 'semestres.id')
 
         ->where('formations.id', '=', $id_formation)
+        ->where('annees.id', '=', $id_annee)
+        ->where('semestres.id', '=', $id_semestre)
         
         ->get();
 
@@ -109,7 +118,7 @@ class EtudiantsCtr extends Controller {
         //nom formation
         ->join('formations', 'annees_formations.formation_id', '=', 'formations.id')
         ->where('formations.id', '=', $id_formation)
-        ->orderBy('id')
+        ->orderBy('nom')
         ->distinct()
         ->get();
         

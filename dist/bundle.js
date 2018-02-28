@@ -18,8 +18,8 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
       controller: "formations"
     })
     .state("trombi", {
-      // url: "/trombi/{trombi}?a&s&g&al&m",
-      url: "/trombi/{trombi}",
+      url: "/trombi/{trombi}?a&s&g",
+      //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
       templateUrl: "views/trombi.html",
       controller: "trombi"
@@ -469,10 +469,26 @@ prjModule.controller("trombi", [
   function($scope, $state, $stateParams, data) {
     let getTrombi = function() {
       data.getTrombi($stateParams.trombi).then(function(trombi) {
+        //var filterGroup = trombi.filter(function(elt) {
+        // return elt.groupes?.includes(1?);
+        // })
+
+        // trombi.forEach(function(elt){
+
+        // });
+
         $scope.trombi = trombi;
+        console.log(trombi.etudiants);
       });
     };
     getTrombi();
+
+    // var gensDuGroupe1 = getTrombi.filter(function (getTrombi) {
+    //   return getTrombi.groupes.includes(1);
+    // });
+    //console.log(gensDuGroupe1);
+
+    // $scope.filter = {};
 
     // filtrage
     // $scope.trombinoscopes = data.trombi($stateParams.trombi);
@@ -521,9 +537,9 @@ prjModule.controller("trombi", [
     if ($state.current.name != "trombi") {
       $scope.openPanel();
     }
-    $(window).blur(function() {
-      $scope.closePanel();
-    });
+    // $(window).blur(function() {
+    //   $scope.closePanel();
+    // });
   }
 ]);
 
@@ -594,62 +610,67 @@ prjModule.controller('etudiants', ['$scope', '$state', '$stateParams', 'data', f
   });
 }]);
 
-prjModule.controller('filtres', ['$scope', '$state', '$stateParams', 'data', function($scope, $state, $stateParams, data) {
-  //filtres
-  $scope.filtres = {
-    alt: {
-      options: [{
-        title: 'Alternance',
-        value: '1',
-        id: 'alttrue'
-      }, {
-        title: 'Formation initiale',
-        value: '0',
-        id: 'altfalse'
-      }, {
-        title: 'Tous',
-        value: 'null',
-        id: 'altall'
-      }],
-      current: (($stateParams.al) ? $stateParams.al : 'null'),
-      change: function() {
-        var params = R.clone($stateParams);
-        params.al = (($scope.filtres.alt.current == 'null') ? null : $scope.filtres.alt.current);
-        $state.go($state.current.name, params, {
-          location: true
-        });
-      }
-    },
-    groupes: {
-      current: (($stateParams.g) ? $stateParams.g : null),
-      change: function() {
-        console.log($scope.filtres.groupes.current);
-        var params = R.clone($stateParams);
-        params.g = $scope.filtres.groupes.current;
-        $state.go($state.current.name, params, {
-          location: true
-        });
-      }
-    },
-    mail: {
-      current: (($stateParams.m == '1') ? 'true' : 'null'),
-      change: function() {
-        var params = R.clone($stateParams);
-        params.m = (($scope.filtres.mail.current == 'true') ? '1' : null);
-        $state.go($state.current.name, params, {
-          location: true
-        });
-      }
-    }
-  }
+prjModule.controller("filtres", [
+  "$scope",
+  "$state",
+  "$stateParams",
+  "data",
+  function($scope, $state, $stateParams, data) {
+    $scope.filtres = {
+      // ALTERNANCE
+      // alt: {
+      //   options: [
+      //     {
+      //       title: "Alternance",
+      //       value: "1",
+      //       id: "alttrue"
+      //     },
+      //     {
+      //       title: "Formation initiale",
+      //       value: "0",
+      //       id: "altfalse"
+      //     },
+      //     {
+      //       title: "Tous",
+      //       value: "null",
+      //       id: "altall"
+      //     }
+      //   ],
+      //   current: $stateParams.al ? $stateParams.al : "null",
+      //   change: function() {
+      //     var params = R.clone($stateParams);
+      //     params.al =
+      //       $scope.filtres.alt.current == "null"
+      //         ? null
+      //         : $scope.filtres.alt.current;
+      //     $state.go($state.current.name, params, {
+      //       location: true
+      //     });
+      //   }
+      // },
 
-  if ($state.current.name == 'trombi.imprimer') {
-    // print
-    $scope.print = function() {
-      window.print();
-    }
+      // GROUPES
+      groupes: {
+        current: $stateParams.g ? $stateParams.g : null,
+        change: function() {
+          console.log($scope.filtres.groupes.current);
+          var params = R.clone($stateParams);
+          params.g = $scope.filtres.groupes.current;
+          $state.go($state.current.name, params, {
+            location: true
+          });
+        }
+      }
+    };
+
+    // if ($state.current.name == 'trombi.imprimer') {
+    //   // print
+    //   $scope.print = function() {
+    //     window.print();
+    //   }
+    // }
   }
-}]);
+]);
 
 prjModule.controller('outils', ['$scope', '$state', '$stateParams', 'data', function($scope, $state, $stateParams, data) {
 

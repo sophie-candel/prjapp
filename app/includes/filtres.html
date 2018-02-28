@@ -4,28 +4,27 @@
 <form class="tiny-input">
 
   <p class="label">Choisir un trombinoscope : </p>
-  <select class="m-b-20">
-    <option value="" disabled selected hidden>Année</option>
-    <option>
-    </option>
-  </select>
-
+  <!-- 
   <select class="m-b-20">
     <option value="" selected disabled hidden>Année</option>
     <option ng-repeat="a in trombi.annees" ng-value="{{a.nom}}">{{a.nom}}</option>
   </select>
 
+  <select class="m-b-20">
+    <option value="" selected disabled hidden>Semestre</option>
+    <option ng-repeat="s in trombi.semestres" ng-value="{{s.nom}}">{{s.nom}}</option>
+  </select> -->
 
-
-
-  <select class="m-b-20 ">
-    <option value="" disabled selected hidden>Semestre</option>
-    <option>
-
-    </option>
+  <select class="m-b-20" ng-options="annee.nom for annee in trombi.annees" ng-model="filtres.annees.current" ng-change="filtres.annees.change()">
+    <option value="" selected>Année</option>
   </select>
-  <select ng-options="group.nom as group.nom for group in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
-    <option value="" selected>Tous les groupes</option>
+
+  <select class="m-b-20" ng-options="semestre.nom for semestre in trombi.semestres" ng-model="filtres.semestres.current" ng-change="filtres.semestres.change()">
+    <option value="" selected>Semestre</option>
+  </select>
+
+  <select ng-options="groupe.nom for groupe in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
+    <option value="" selected>Groupe</option>
   </select>
 
 
