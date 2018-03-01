@@ -67,16 +67,18 @@
         <!-- MAIN CONTENT -->
         <div class="animated bounceInUp">
 
-            <div class="m-x-15 m-b-20" id="title" ng-repeat="f in trombi.formation">
-                <div class="flex-container">
+            <div class="m-x-15 m-b-20" id="title">
+                <div class="flex-container" ng-repeat="f in trombi.formation">
                     <p class="text-xl weight-600" ng-style="{'color':f.dep_couleur}">{{f.nom}}
                         <span class="text-m" ng-if="current.groupe"> {{current.groupe}}</span>
                     </p>
                     <!-- <button class="ghost-button screen uppercase desktop w-100 m-l-10" ng-click="openPanel()" ui-sref="trombi.migrer">Migrer</button> -->
                 </div>
 
-                <p class="text-l m-y-5">Année {{f.annee}}</p>
-                <p class="text-l">{{f.semestre}}</p>
+                <div ng-repeat="p in trombi.periode">
+                    <p class="text-l m-y-5">Année {{p.annee_debut}}-{{p.annee_fin}}</p>
+                    <p class="text-l">Semestre {{p.semestre}}</p>
+                </div>
                 <!-- <p class="text-m m-t-10" ng-if="current.alt">Étudiant(e)s en {{current.alt}}</p> -->
             </div>
 

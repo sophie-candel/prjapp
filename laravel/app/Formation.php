@@ -10,11 +10,14 @@ class Formation extends Model
         return $this->belongsTo('App\Departement');
     }
 
-    public function annee() {
-        return $this->belongsToMany('App\Annee');
-    }
+    
 
     public function groupes() {
         return $this->hasMany('App\Groupe');
+    }
+
+
+    public function etudiants() {
+        return $this->belongsToMany('App\Etudiant', 'inscriptions');
     }
 }

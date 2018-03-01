@@ -14,8 +14,8 @@ class Groupe extends Model
     //     return $this->belongsToMany('App\Etudiant', 'etudiants_groupes');
     // }
 
-    public function inscriptions() {
-        return $this->belongsToMany('App\Inscription');
+    public function etudiants() {
+        return $this->belongsToMany('App\Etudiant', 'etudiants_groupes');
     }
 
     public function formations() {

@@ -654,11 +654,11 @@ prjModule.controller("filtres", [
         current: $stateParams.g ? $stateParams.g : null,
         change: function() {
           console.log($scope.filtres.groupes.current);
-          var params = R.clone($stateParams);
-          params.g = $scope.filtres.groupes.current;
-          $state.go($state.current.name, params, {
-            location: true
-          });
+          // var params = R.clone($stateParams);
+          // params.g = $scope.filtres.groupes.current;
+          // $state.go($state.current.name, params, {
+          //   location: true
+          // });
         }
       }
     };
@@ -717,7 +717,7 @@ prjModule.service("data", [
     };
 
     this.getTrombi = function(id) {
-      var req = "trombi/" + id + "/2" + "/5";
+      var req = "trombi/" + id + "/2017" + "/5";
       return $http({
         method: "GET",
         url: endpoint + req

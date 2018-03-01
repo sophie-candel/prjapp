@@ -14,7 +14,15 @@ class Etudiant extends Model
     //     return $this->hasMany('App\Formation');
     // }
 
-    public function inscriptions() {
-        return $this->belongsToMany('App\Inscription');
+    public function groupes() {
+        return $this->belongsToMany('App\Groupe', 'etudiants_groupes');
+    }
+
+    public function formations() {
+        return $this->belongsToMany('App\Formation', 'inscriptions');
+    }
+
+    public function periodes() {
+        return $this->belongsToMany('App\Periode', 'inscriptions');
     }
 }

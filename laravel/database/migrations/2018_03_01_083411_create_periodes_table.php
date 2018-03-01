@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInscriptionsTable extends Migration
+class CreatePeriodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateInscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('inscriptions', function (Blueprint $table) {
+        Schema::create('periodes', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
-            $table->integer('etudiant_id')->unsigned();
-            $table->foreign('etudiant_id')->references('id')->on('etudiants');
-            $table->integer('groupe_id')->unsigned();
-            $table->foreign('groupe_id')->references('id')->on('groupes');
-            $table->string('annee', 255);
+            $table->integer('annee_debut');
+            $table->integer('annee_fin');
             $table->integer('semestre');
             $table->timestamps();
         });
@@ -35,6 +32,6 @@ class CreateInscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inscriptions');
+        Schema::dropIfExists('periodes');
     }
 }
