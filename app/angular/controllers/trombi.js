@@ -9,13 +9,10 @@ prjModule.controller("trombi", [
         //var filterGroup = trombi.filter(function(elt) {
         // return elt.groupes?.includes(1?);
         // })
-
         // trombi.forEach(function(elt){
-
         // });
-
         $scope.trombi = trombi;
-        console.log(trombi.etudiants);
+        //console.log(trombi.periode);
       });
     };
     getTrombi();

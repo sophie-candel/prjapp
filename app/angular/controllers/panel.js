@@ -11,15 +11,24 @@ prjModule.controller("panel", [
     console.log($state);
     console.log($stateParams);
 
-    $scope.etu = {
-      id_etu: 1,
-      prenom: "Prénom",
-      nom: "Nom",
-      photo: "photo.png",
-      mail: "blabla@mail.cf",
-      pre_diplome: "bac",
-      alternant: true
+    let getEtu = function() {
+      data.getEtu($stateParams.etu).then(function(etu) {
+        $scope.etu = etu;
+        console.log(etu);
+        console.log("GET ETU");
+      });
     };
+    getEtu();
+
+    // $scope.etu = {
+    //   id_etu: 1,
+    //   prenom: "Toto",
+    //   nom: "Nom",
+    //   photo: "photo.png",
+    //   mail: "blabla@mail.cf",
+    //   pre_diplome: "bac",
+    //   alternant: true
+    // };
 
     //filtres
     $scope.filtres = {

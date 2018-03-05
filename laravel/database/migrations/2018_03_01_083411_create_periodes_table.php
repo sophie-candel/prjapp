@@ -18,8 +18,7 @@ class CreatePeriodesTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
-            $table->integer('annee_debut');
-            $table->integer('annee_fin');
+            $table->string('annee');
             $table->integer('semestre');
             $table->timestamps();
         });

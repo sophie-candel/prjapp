@@ -4,29 +4,20 @@
 <form class="tiny-input">
 
   <p class="label">Choisir un trombinoscope : </p>
-  <!-- 
-  <select class="m-b-20">
-    <option value="" selected disabled hidden>Année</option>
-    <option ng-repeat="a in trombi.annees" ng-value="{{a.nom}}">{{a.nom}}</option>
+
+  <select class="m-b-20" ng-model="filtre_annees">
+    <option value="" selected hidden>Année</option>
+    <option ng-repeat="a in trombi.annees" value="{{ a.annees }}">Année {{ a.annees }}</option>
   </select>
 
-  <select class="m-b-20">
-    <option value="" selected disabled hidden>Semestre</option>
-    <option ng-repeat="s in trombi.semestres" ng-value="{{s.nom}}">{{s.nom}}</option>
-  </select> -->
-
-  <select class="m-b-20" ng-options="annee.nom for annee in trombi.annees" ng-model="filtres.annees.current" ng-change="filtres.annees.change()">
-    <option value="" selected>Année</option>
+  <select class="m-b-20" ng-model="filtre_semestres">
+    <option value="" selected hidden>Semestre</option>
+    <option ng-repeat="s in trombi.semestres" value="{{ s.semestres }}">Semestre {{ s.semestres }}</option>
   </select>
 
-  <select class="m-b-20" ng-options="semestre.nom for semestre in trombi.semestres" ng-model="filtres.semestres.current" ng-change="filtres.semestres.change()">
-    <option value="" selected>Semestre</option>
-  </select>
-
-  <select ng-options="groupe.nom for groupe in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
+  <select ng-options="groupe.nom for groupe in trombi.groupes" ng-model="filtres.groupes.current">
     <option value="" selected>Groupe</option>
   </select>
-
 
   <div class="m-y-40">
     <p class="label">Informations à afficher : </p>
@@ -47,6 +38,11 @@
         <label for="{{option.id}}">{{ option.title }}</label>
       </div>
     </div>
+  </div>
+
+  <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+    <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
+    <button class="flex-1 m-l-10" type="submit" value="" ng-click="goFilter()">Filtrer</button>
   </div>
 
 </form>

@@ -18,7 +18,7 @@ prjModule.service("data", [
     };
 
     this.getTrombi = function(id) {
-      var req = "trombi/" + id + "/2017" + "/5";
+      var req = "trombi/" + id + "/2017-2018" + "/5";
       return $http({
         method: "GET",
         url: endpoint + req
@@ -26,6 +26,44 @@ prjModule.service("data", [
         return response.data;
       });
     };
+
+    // this.getTrombi = function(id, annee, semestre) {
+    //   var req = "trombi/" + id + "/" + annee + "/" + semestre;
+    //   return $http({
+    //     method: "GET",
+    //     url: endpoint + req
+    //   }).then(function(response) {
+    //     return response.data;
+    //   });
+    // };
+
+    this.getEtu = function(id) {
+      return $http({
+        method: "GET",
+        url: endpoint + "etu/" + id
+      }).then(function(response) {
+        return response.data;
+      });
+    };
+
+    // création d'un élève
+    // this.createEtu = function(
+    //   createEtunom,
+    //   createEtuPrenom,
+    //   createEtuPhoto,
+    //   createEtuMail
+    // ) {
+    //   return $http({
+    //     method: "POST",
+    //     url: endpoint + "etu/",
+    //     data: {
+    //       nom: createEtunom,
+    //       prenom: createEtuPrenom,
+    //       phot: createEtuPhoto,
+    //       mail: createEtuMail
+    //     }
+    //   });
+    // };
   }
 ]);
 

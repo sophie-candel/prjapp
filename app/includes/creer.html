@@ -1,9 +1,10 @@
 <span class="icon-close text-xl" ng-click="closePanel()"></span>
 <p class="m-b-40 text-l">Créer un nouvel étudiant</p>
 
-<form class="tiny-input">
+<form class="tiny-input" name="createEtuForm" ng-submit="createEtu($valid.createEtuForm)" novalidate>
     <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
-        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom" required>
+        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom" ng-model="" required>
+
         <input class="flex-1 m-l-10 text-center" type="text" name="nom" placeholder="Nom" required>
     </div>
     <div class="m-b-20">
@@ -36,6 +37,10 @@
     </div>
 
     <input class="m-b-20 text-center" type="text" placeholder="diplôme précédent" required>
+
+    <select ng-options="groupe.nom for groupe in trombi.groupes" ng-model="filtres.groupes.current">
+        <option value="" selected>Groupe</option>
+    </select>
 
     <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
         <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>

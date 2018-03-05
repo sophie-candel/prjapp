@@ -2,7 +2,7 @@
 
 <!-- Barre de navigation latérale -->
 <div id="panel" class="screen fixed text-center text-white flex-container">
-    <div id="panelNav" class="w-100 p-20" ng-repeat="f in trombi.formation" ng-style="{'background-color':f.dep_couleur}">
+    <div id="panelNav" class="w-100 p-20" ng-repeat="f in trombi.formation" ng-style="{'background-color':f.departement.couleur}">
         <a class="m-b-60" ng-click="openPanel()" ui-sref="trombi.filtres">
             <span class="icon-tune text-xl"></span>
             <p class="uppercase text-xs desktop">filtrer</p>
@@ -64,19 +64,20 @@
             </div>
         </div>
 
+
         <!-- MAIN CONTENT -->
         <div class="animated bounceInUp">
 
             <div class="m-x-15 m-b-20" id="title">
                 <div class="flex-container" ng-repeat="f in trombi.formation">
-                    <p class="text-xl weight-600" ng-style="{'color':f.dep_couleur}">{{f.nom}}
+                    <p class="text-xl weight-600" ng-style="{'color':f.departement.couleur}">{{f.nom}}
                         <span class="text-m" ng-if="current.groupe"> {{current.groupe}}</span>
                     </p>
                     <!-- <button class="ghost-button screen uppercase desktop w-100 m-l-10" ng-click="openPanel()" ui-sref="trombi.migrer">Migrer</button> -->
                 </div>
 
                 <div ng-repeat="p in trombi.periode">
-                    <p class="text-l m-y-5">Année {{p.annee_debut}}-{{p.annee_fin}}</p>
+                    <p class="text-l m-y-5">Année {{p.annee}}</p>
                     <p class="text-l">Semestre {{p.semestre}}</p>
                 </div>
                 <!-- <p class="text-m m-t-10" ng-if="current.alt">Étudiant(e)s en {{current.alt}}</p> -->
