@@ -354,20 +354,9 @@ prjModule.controller("panel", [
         current: $stateParams.g ? $stateParams.g : null,
 
         change: function() {
-          var params = $stateParams;
-          params.g = $scope.filtres.groupes.current;
-
-          console.log("params.g : " + params.g);
-          console.log("state.current.name : " + $state.current.name);
-
-          // var url = $location.path();
-          // $location.path(url + "?g=DWEB");
-
-          // $state.go($state.current.name, params, {
-          //   location: true
-          // });
-          // console.log("location : " + location);
-          console.log($location.path);
+          $state.go('trombi.filtres', {g: $scope.filtres.groupes.current}, {
+            location: true
+          });
         }
       }
     };
