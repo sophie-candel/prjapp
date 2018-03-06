@@ -18,11 +18,14 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
       controller: "formations"
     })
     .state("trombi", {
-      //url: "/trombi/{trombi}?p",
-      url: "/trombi/{trombi}",
+      url: "/trombi/{trombi}?g",
+      //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
       templateUrl: "views/trombi.html",
       controller: "trombi"
+      // params: {
+      //   g: 1
+      // }
     })
     .state("trombi.afficher", {
       url: "/etu/{etu}",

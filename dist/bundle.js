@@ -18,11 +18,14 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
       controller: "formations"
     })
     .state("trombi", {
-      //url: "/trombi/{trombi}?p",
-      url: "/trombi/{trombi}",
+      url: "/trombi/{trombi}?g",
+      //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
       templateUrl: "views/trombi.html",
       controller: "trombi"
+      // params: {
+      //   g: 1
+      // }
     })
     .state("trombi.afficher", {
       url: "/etu/{etu}",
@@ -311,64 +314,74 @@ prjModule.controller("panel", [
   "$scope",
   "$state",
   "$stateParams",
+  "$location",
   "data",
-  function($scope, $state, $stateParams, data) {
+  function($scope, $state, $stateParams, $location, data) {
     /*if ($state.current.name != 'trombi.afficher' || $state.current.name != 'trombi.modifier') {
     $state.go($state.current.name);
   }*/
 
-    console.log($state);
-    console.log($stateParams);
+    // console.log($state);
+    // console.log($stateParams);
 
     let getEtu = function() {
       data.getEtu($stateParams.etu).then(function(etu) {
         $scope.etu = etu;
-        console.log(etu);
-        console.log("GET ETU");
       });
     };
     getEtu();
 
-    // $scope.etu = {
-    //   id_etu: 1,
-    //   prenom: "Toto",
-    //   nom: "Nom",
-    //   photo: "photo.png",
-    //   mail: "blabla@mail.cf",
-    //   pre_diplome: "bac",
-    //   alternant: true
-    // };
+    // if ($stateParams.g != null && $stateParams.g) {
+    //   var currentGroupId;
+    //   $scope.trombinoscopes.groupes.forEach(function(i) {
+    //     if (i.groupe == $stateParams.g) {
+    //       currentGroupId = i.id_gro;
+    //     }
+    //   });
+    //   $scope.trombi.etudiants = R.clone($scope.trombi.etudiants).filter(function(el) {
+    //     if (R.contains({
+    //         id_gro: currentGroupId
+    //       }, el.groupes)) {
+    //       return el
+    //     }
+    //   });
+    //   $scope.current.groupe = $stateParams.g;
+    // }
 
     //filtres
     $scope.filtres = {
-      alt: {
-        options: [
-          {
-            title: "Alternance",
-            value: "1",
-            id: "alttrue"
-          },
-          {
-            title: "Formation initiale",
-            value: "0",
-            id: "altfalse"
-          },
-          {
-            title: "Tous",
-            value: "null",
-            id: "altall"
-          }
-        ],
-        current: $stateParams.al ? $stateParams.al : "null",
+      groupes: {
+        current: $stateParams.g ? $stateParams.g : null,
+
         change: function() {
-          var params = R.clone($stateParams);
-          params.al =
-            $scope.filtres.alt.current == "null"
-              ? null
-              : $scope.filtres.alt.current;
-          $state.go($state.current.name, params, { location: true });
+          var params = $stateParams;
+          params.g = $scope.filtres.groupes.current;
+
+          console.log("params.g : " + params.g);
+          console.log("state.current.name : " + $state.current.name);
+
+          // var url = $location.path();
+          // $location.path(url + "?g=DWEB");
+
+          // $state.go($state.current.name, params, {
+          //   location: true
+          // });
+          // console.log("location : " + location);
+          console.log($location.path);
         }
       }
+    };
+
+    $scope.filter = function() {
+      // var groupe = $stateParams.g;
+      // console.log($stateParams.g);
+      // var params = $stateParams;
+      // params.g = $scope.filtres.groupes.current;
+      // //console.log(params);
+      // console.log(params.g);
+      // $state.go($state.current.name, params, {
+      //   location: true
+      // });
     };
 
     // input file
@@ -478,13 +491,8 @@ prjModule.controller("trombi", [
   function($scope, $state, $stateParams, data) {
     let getTrombi = function() {
       data.getTrombi($stateParams.trombi).then(function(trombi) {
-        //var filterGroup = trombi.filter(function(elt) {
-        // return elt.groupes?.includes(1?);
-        // })
-        // trombi.forEach(function(elt){
-        // });
+        console.log($stateParams.trombi);
         $scope.trombi = trombi;
-        //console.log(trombi.periode);
       });
     };
     getTrombi();
@@ -623,58 +631,58 @@ prjModule.controller('etudiants', ['$scope', '$state', '$stateParams', 'data', f
 //   "data",
 //   function($scope, $state, $stateParams, data) {
 //     $scope.filtres = {
-//       // ALTERNANCE
-//       // alt: {
-//       //   options: [
-//       //     {
-//       //       title: "Alternance",
-//       //       value: "1",
-//       //       id: "alttrue"
-//       //     },
-//       //     {
-//       //       title: "Formation initiale",
-//       //       value: "0",
-//       //       id: "altfalse"
-//       //     },
-//       //     {
-//       //       title: "Tous",
-//       //       value: "null",
-//       //       id: "altall"
-//       //     }
-//       //   ],
-//       //   current: $stateParams.al ? $stateParams.al : "null",
-//       //   change: function() {
-//       //     var params = R.clone($stateParams);
-//       //     params.al =
-//       //       $scope.filtres.alt.current == "null"
-//       //         ? null
-//       //         : $scope.filtres.alt.current;
-//       //     $state.go($state.current.name, params, {
-//       //       location: true
-//       //     });
-//       //   }
-//       // },
+//       //ALTERNANCE
+//       alt: {
+//         options: [
+//           {
+//             title: "Alternance",
+//             value: "1",
+//             id: "alttrue"
+//           },
+//           {
+//             title: "Formation initiale",
+//             value: "0",
+//             id: "altfalse"
+//           },
+//           {
+//             title: "Tous",
+//             value: "null",
+//             id: "altall"
+//           }
+//         ],
+//         current: $stateParams.al ? $stateParams.al : "null",
+//         change: function() {
+//           var params = R.clone($stateParams);
+//           params.al =
+//             $scope.filtres.alt.current == "null"
+//               ? null
+//               : $scope.filtres.alt.current;
+//           $state.go($state.current.name, params, {
+//             location: true
+//           });
+//         }
+//       },
 
 //       // GROUPES
 //       groupes: {
 //         current: $stateParams.g ? $stateParams.g : null,
 //         change: function() {
 //           console.log($scope.filtres.groupes.current);
-//           // var params = R.clone($stateParams);
-//           // params.g = $scope.filtres.groupes.current;
-//           // $state.go($state.current.name, params, {
-//           //   location: true
-//           // });
+//           var params = R.clone($stateParams);
+//           params.g = $scope.filtres.groupes.current;
+//           $state.go($state.current.name, params, {
+//             location: true
+//           });
 //         }
 //       }
 //     };
 
-//     // if ($state.current.name == 'trombi.imprimer') {
-//     //   // print
-//     //   $scope.print = function() {
-//     //     window.print();
-//     //   }
-//     // }
+//     if ($state.current.name == 'trombi.imprimer') {
+//       // print
+//       $scope.print = function() {
+//         window.print();
+//       }
+//     }
 //   }
 // ]);
 
@@ -722,7 +730,8 @@ prjModule.service("data", [
       });
     };
 
-    this.getTrombi = function(id) {
+    this.getTrombi = function(id, annee, semestre) {
+      //var req = "trombi/" + id + "/" + annee + "/" + semestre;
       var req = "trombi/" + id + "/2017-2018" + "/5";
       return $http({
         method: "GET",

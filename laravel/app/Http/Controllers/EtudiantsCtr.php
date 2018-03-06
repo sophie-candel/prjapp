@@ -100,7 +100,7 @@ class EtudiantsCtr extends Controller {
         // SELECT DISTINCT annee-debut, CONCAT(annee, "-", annee_fin) AS annee FROM periodes ORDER BY annee DESC;
         $liste_annees = \DB::table('periodes')
         ->select(
-            'periodes.annee as annees'
+            'periodes.annee as annee'
         )
         ->orderBy('annee')
         ->distinct()
@@ -109,18 +109,24 @@ class EtudiantsCtr extends Controller {
 
         $liste_semestres = \DB::table('periodes')
         ->select(
-            'periodes.semestre as semestres'
+            'periodes.semestre as semestre'
         )
         ->distinct()
         ->get();
 
+        $liste_groupes = \DB::table('groupes')
+        ->select('groupes.nom as groupe')
+        ->where('groupes.formation_id', '=', $id_formation)
+        ->get();
+
+
         $result = [
             'formation'     => $for_actuelle,
             'periode' => $periode,
-            //'etudiants'   => $etu
             'etudiants'     => $this->concatGroupes($etu),
             'annees' => $liste_annees,
-            'semestres' => $liste_semestres
+            'semestres' => $liste_semestres,
+            'groupes' => $liste_groupes
         ];
         return $result;
     }

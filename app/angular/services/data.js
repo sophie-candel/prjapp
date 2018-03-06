@@ -17,7 +17,8 @@ prjModule.service("data", [
       });
     };
 
-    this.getTrombi = function(id) {
+    this.getTrombi = function(id, annee, semestre) {
+      //var req = "trombi/" + id + "/" + annee + "/" + semestre;
       var req = "trombi/" + id + "/2017-2018" + "/5";
       return $http({
         method: "GET",

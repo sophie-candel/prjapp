@@ -6,13 +6,8 @@ prjModule.controller("trombi", [
   function($scope, $state, $stateParams, data) {
     let getTrombi = function() {
       data.getTrombi($stateParams.trombi).then(function(trombi) {
-        //var filterGroup = trombi.filter(function(elt) {
-        // return elt.groupes?.includes(1?);
-        // })
-        // trombi.forEach(function(elt){
-        // });
+        console.log($stateParams.trombi);
         $scope.trombi = trombi;
-        //console.log(trombi.periode);
       });
     };
     getTrombi();
