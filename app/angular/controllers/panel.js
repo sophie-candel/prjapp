@@ -42,7 +42,7 @@ prjModule.controller("panel", [
         current: $stateParams.g ? $stateParams.g : null,
 
         change: function() {
-          $state.go('trombi.filtres', {g: $scope.filtres.groupes.current}, {
+          $state.go($state.current.name, {g: $scope.filtres.groupes.current}, {
             location: true
           });
         }

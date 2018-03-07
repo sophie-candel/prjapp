@@ -6,26 +6,36 @@ prjModule.service("data", [
   "$http",
   "$state",
   function($http, $state) {
+    // let reqDone = [];
     const endpoint = "http://127.0.0.1:8000/api/";
 
+
+    // effectue une requête sur l'url `req`
+    function makeRequest(req) {
+      // if (req in reqDone) {
+      //   return new Promise(function(resolve, reject) {
+      //     console.log(reqDone[req]);
+      //     resolve(reqDone[req]);
+      //   });
+      // } else {
+        return $http({
+          method: "GET",
+          url: endpoint + req
+        }).then(response => {
+          // reqDone[req] = response.data; // mettre cette ligne en commentaire si souhaite à chaque fois refaire la requête
+          return response.data;
+        });
+      // }
+    }
+
     this.getDpt = function() {
-      return $http({
-        method: "GET",
-        url: endpoint + "dep"
-      }).then(function(response) {
-        return response.data;
-      });
+      return makeRequest('dep');
     };
 
     this.getTrombi = function(id, annee, semestre) {
       //var req = "trombi/" + id + "/" + annee + "/" + semestre;
       var req = "trombi/" + id + "/2017-2018" + "/5";
-      return $http({
-        method: "GET",
-        url: endpoint + req
-      }).then(function(response) {
-        return response.data;
-      });
+      return makeRequest(req);
     };
 
     // this.getTrombi = function(id, annee, semestre) {
@@ -39,12 +49,7 @@ prjModule.service("data", [
     // };
 
     this.getEtu = function(id) {
-      return $http({
-        method: "GET",
-        url: endpoint + "etu/" + id
-      }).then(function(response) {
-        return response.data;
-      });
+      return makeRequest("etu/" + id);
     };
 
     // création d'un élève

@@ -354,7 +354,7 @@ prjModule.controller("panel", [
         current: $stateParams.g ? $stateParams.g : null,
 
         change: function() {
-          $state.go('trombi.filtres', {g: $scope.filtres.groupes.current}, {
+          $state.go($state.current.name, {g: $scope.filtres.groupes.current}, {
             location: true
           });
         }
@@ -478,13 +478,38 @@ prjModule.controller("trombi", [
   "$stateParams",
   "data",
   function($scope, $state, $stateParams, data) {
+    // $scope.trombiGet = []; // permet de stocker les trombi demandés; permet de refaire plusieurs fois la même requête
+
+    // permet de filtrer un trombi par groupe
+    function filterByGroup(trombi, groupe) {
+      if (groupe) {
+        const etudiants = trombi.etudiants.slice();
+        trombi.etudiants = etudiants.filter(etu => {
+          return etu.groupes.includes(groupe);
+        });
+      }
+      return trombi;
+    }
+
+    // permet de récupérer un trombi
     let getTrombi = function() {
-      data.getTrombi($stateParams.trombi).then(function(trombi) {
-        console.log($stateParams.trombi);
-        $scope.trombi = trombi;
-      });
+      const groupe = $state.params.g;
+      // console.log($scope.trombiGet);
+      // if ($stateParams.trombi in $scope.trombiGet) {
+      //   $scope.trombi = filterByGroup(Object.assign({}, $scope.trombiGet[$stateParams.trombi]), groupe);
+      //   $scope.trombiComplete = Object.assign({}, $scope.trombiGet[$stateParams.trombi]);
+      // } else {
+        data.getTrombi($stateParams.trombi).then(function(trombi) {
+          // console.log(trombi);
+          $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
+          $scope.trombiComplete = Object.assign({}, trombi);
+          // $scope.trombiGet[$stateParams.trombi] = trombi;
+        });
+      // }
     };
     getTrombi();
+
+
 
     // var gensDuGroupe1 = getTrombi.filter(function (getTrombi) {
     //   return getTrombi.groupes.includes(1);
@@ -708,26 +733,36 @@ prjModule.service("data", [
   "$http",
   "$state",
   function($http, $state) {
+    // let reqDone = [];
     const endpoint = "http://127.0.0.1:8000/api/";
 
+
+    // effectue une requête sur l'url `req`
+    function makeRequest(req) {
+      // if (req in reqDone) {
+      //   return new Promise(function(resolve, reject) {
+      //     console.log(reqDone[req]);
+      //     resolve(reqDone[req]);
+      //   });
+      // } else {
+        return $http({
+          method: "GET",
+          url: endpoint + req
+        }).then(response => {
+          // reqDone[req] = response.data; // mettre cette ligne en commentaire si souhaite à chaque fois refaire la requête
+          return response.data;
+        });
+      // }
+    }
+
     this.getDpt = function() {
-      return $http({
-        method: "GET",
-        url: endpoint + "dep"
-      }).then(function(response) {
-        return response.data;
-      });
+      return makeRequest('dep');
     };
 
     this.getTrombi = function(id, annee, semestre) {
       //var req = "trombi/" + id + "/" + annee + "/" + semestre;
       var req = "trombi/" + id + "/2017-2018" + "/5";
-      return $http({
-        method: "GET",
-        url: endpoint + req
-      }).then(function(response) {
-        return response.data;
-      });
+      return makeRequest(req);
     };
 
     // this.getTrombi = function(id, annee, semestre) {
@@ -741,12 +776,7 @@ prjModule.service("data", [
     // };
 
     this.getEtu = function(id) {
-      return $http({
-        method: "GET",
-        url: endpoint + "etu/" + id
-      }).then(function(response) {
-        return response.data;
-      });
+      return makeRequest("etu/" + id);
     };
 
     // création d'un élève

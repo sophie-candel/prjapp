@@ -17,10 +17,10 @@
   </select>
 
   <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
-    <option value="" selected disabled>Groupe</option>
+    <option value="all">Tous les groupes</option>
     <option ng-repeat="g in trombi.groupes" value="{{ g.groupe }}">Groupe {{ g.groupe }}</option>
   </select>
-  <!-- 
+  <!--
   <select ng-options="g for groupes.groupe in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
     <option value="" selected disabled>Groupes</option>
   </select> -->

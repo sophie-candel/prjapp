@@ -4,13 +4,38 @@ prjModule.controller("trombi", [
   "$stateParams",
   "data",
   function($scope, $state, $stateParams, data) {
+    // $scope.trombiGet = []; // permet de stocker les trombi demandés; permet de refaire plusieurs fois la même requête
+
+    // permet de filtrer un trombi par groupe
+    function filterByGroup(trombi, groupe) {
+      if (groupe) {
+        const etudiants = trombi.etudiants.slice();
+        trombi.etudiants = etudiants.filter(etu => {
+          return etu.groupes.includes(groupe);
+        });
+      }
+      return trombi;
+    }
+
+    // permet de récupérer un trombi
     let getTrombi = function() {
-      data.getTrombi($stateParams.trombi).then(function(trombi) {
-        console.log($stateParams.trombi);
-        $scope.trombi = trombi;
-      });
+      const groupe = $state.params.g;
+      // console.log($scope.trombiGet);
+      // if ($stateParams.trombi in $scope.trombiGet) {
+      //   $scope.trombi = filterByGroup(Object.assign({}, $scope.trombiGet[$stateParams.trombi]), groupe);
+      //   $scope.trombiComplete = Object.assign({}, $scope.trombiGet[$stateParams.trombi]);
+      // } else {
+        data.getTrombi($stateParams.trombi).then(function(trombi) {
+          // console.log(trombi);
+          $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
+          $scope.trombiComplete = Object.assign({}, trombi);
+          // $scope.trombiGet[$stateParams.trombi] = trombi;
+        });
+      // }
     };
     getTrombi();
+
+
 
     // var gensDuGroupe1 = getTrombi.filter(function (getTrombi) {
     //   return getTrombi.groupes.includes(1);
