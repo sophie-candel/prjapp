@@ -1,4 +1,4 @@
-prjModule.controller("panel", [
+prjModule.controller("etudiants", [
   "$scope",
   "$state",
   "$stateParams",
@@ -17,21 +17,20 @@ prjModule.controller("panel", [
     };
     getEtu();
 
-    // ********** FILTRES ********** //
-    $scope.filtres = {
-      // groupes
-      groupes: {
-        current: $stateParams.g ? $stateParams.g : null,
-        change: function() {
-          $state.go(
-            $state.current.name,
-            { g: $scope.filtres.groupes.current },
-            {
-              location: true
-            }
-          );
-        }
-      }
+    // ********** CREATION ETUDIANT ********** //
+    $scope.createEtu = function(isValid) {
+      $scope.submitted = true;
+      data
+        .createEtu(
+          $scope.createEtuNom,
+          $scope.createEtuPrenom,
+          // $scope.createEtuPhoto,
+          $scope.createEtuEmail
+        )
+        .then(function() {
+          getTrombi();
+          location.reload(true);
+        });
     };
 
     // input file
@@ -47,10 +46,5 @@ prjModule.controller("panel", [
         else label.innerHTML = labelVal;
       });
     });
-
-    // print
-    $scope.print = function() {
-      window.print();
-    };
   }
 ]);

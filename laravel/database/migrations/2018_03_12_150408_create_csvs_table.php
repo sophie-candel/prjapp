@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormationsPeriodesTable extends Migration
+class CreateCsvsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateFormationsPeriodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('formations_periodes', function (Blueprint $table) {
+        Schema::create('csvs', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
-            $table->integer('formation_id')->unsigned();
-            $table->foreign('formation_id')->references('id')->on('formations');
-
-            $table->integer('periode_id')->unsigned();
-            $table->foreign('periode_id')->references('id')->on('periodes');
-            
+            $table->string('nom', 255);
+            $table->string('prenom', 255);
+            $table->boolean('alternant');
+            $table->string('mail', 255);
+            $table->string('photo', 255);
+            $table->string('pre_diplome', 255);
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class CreateFormationsPeriodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formations_periodes');
+        Schema::dropIfExists('csvs');
     }
 }

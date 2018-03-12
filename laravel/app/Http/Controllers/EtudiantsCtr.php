@@ -158,7 +158,7 @@ class EtudiantsCtr extends Controller {
 
         $result = [
             'formation'     => $for_actuelle,
-            'periode' => $periode,
+            //'periode' => $periode,
             'etudiants'     => $this->concatGroupes($etu),
             // 'annees' => $liste_annees,
             // 'semestres' => $liste_semestres,
