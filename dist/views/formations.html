@@ -1,5 +1,5 @@
 <div class="resultbox-bg"></div>
-<div class="maxw-1024 m-center p-40" style="overflow: hidden;">
+<div class="maxw-1024 m-center p-40">
 
   <!-- SEARCH BAR -->
   <div class="m-x-15 screen relative" style="z-index:2;">
@@ -8,7 +8,7 @@
         <div class="w-65 bg-grey1 p-0 flex-container is-horizontal-center is-vertical-center">
           <span class="icon-magnify text-xl text-white"></span>
         </div>
-        <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation, un département...">
+        <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation...">
         <span id="reset-search" class="icon-close text-xl"></span>
       </div>
     </div>
@@ -26,10 +26,9 @@
     <p class="text-xl weight-600 m-y-5 ">IUT de Haguenau</p>
   </div>
 
-  <div class="flex-container is-horizontal-extremes ">
-    <div class="w-300 m-b-40 text-center animated bounceInUp " ng-repeat="d in departements ">
-      <div class="h-200 p-20 flex-container is-horizontal-center is-vertical-center " ng-style="{
-    'background-color':d.couleur} ">
+  <div class="flex-container is-horizontal-extremes">
+    <div class="w-300 m-b-40 text-center animated bounceInUp" ng-repeat="d in departements">
+      <div class="h-200 p-20 flex-container is-horizontal-center is-vertical-center " ng-style="{'background-color':d.couleur} ">
         <div class="text-white ">
           <p class="text-l ">Département</p>
           <p class="text-xl weight-600 ">{{d.nom}}</p>
@@ -37,7 +36,8 @@
       </div>
       <div class="m-t-10 flex-container is-column">
         <a ui-sref="trombi({trombi: f.id})" class="bg-grey5 m-b-10 p-10 " ng-repeat="f in d.formations">
-          {{f.nom}}
+          <!-- <a ui-sref="trombi({trombi: f.id, periode: f.periode_id})" class="bg-grey5 m-b-10 p-10 " ng-repeat="f in d.formations"> -->
+          {{f.nom}} {{f.periodes.id}}
         </a>
       </div>
     </div>

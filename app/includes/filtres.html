@@ -6,7 +6,7 @@
   <p class="label">Choisir un trombinoscope : </p>
 
 
-  <select class="m-b-20" ng-model="filtre_annees">
+  <!-- <select class="m-b-20" ng-model="filtre_annees">
     <option value="" selected disabled>Année</option>
     <option ng-repeat="a in trombi.annees" value="{{ a.annee }}">Année {{ a.annee }}</option>
   </select>
@@ -14,19 +14,17 @@
   <select class="m-b-20" ng-model="filtre_semestres">
     <option value="" selected disabled>Semestre</option>
     <option ng-repeat="s in trombi.semestres" value="{{ s.semestre }}">Semestre {{ s.semestre }}</option>
+  </select> -->
+
+  <select class="m-b-20" ng-options="a.annee as a.annee for a in trombi.periodes">
+    <option value="">Période</option>
   </select>
 
-  <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
-    <option value="" selected disabled>Groupe</option>
-    <option value="all">Tous les groupes</option>
-    <option ng-repeat="g in trombi.groupes" value="{{ g.groupe }}">Groupe {{ g.groupe }}</option>
+
   <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()" ng-options="group.groupe as group.groupe for group in trombi.groupes">
     <option value="">Tous les groupes</option>
   </select>
 
-  <select ng-options="groupe.nom as groupe.nom for groupe in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
-    <option value="" selected disabled>Groupes</option>
-  </select>
 
 
   <!-- <div class="m-y-40">
@@ -51,9 +49,10 @@
   </div> -->
 
   <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
-    <!-- <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
-    <button class="flex-1 m-l-10" type="submit" value="" ui-sref="trombi({g:1})">Filtrer</button> -->
-    <!-- <button class="flex-1 m-l-10" type="submit" value="" ng-click="filter()">Filtrer</button> -->
+    <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
+    <button class="flex-1 m-l-10" type="submit" value="" ng-click="filterTrombi()">Filtrer</button>
+  </div>
+  <!-- <button class="flex-1 m-l-10" type="submit" value="" ng-click="filter()">Filtrer</button>
   </div>
 
 </form>

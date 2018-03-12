@@ -13,6 +13,8 @@ class FormationsCtr extends Controller
         return Formation::with('departement')
         ->with('groupes')
         ->with('etudiants')
+        ->with('periodes')
+        ->distinct()
         ->get();   
     }
 
@@ -26,4 +28,7 @@ class FormationsCtr extends Controller
         ];
         return $result;
     }
+
+    // SELECT DISTINCT CONCAT(annee, ' S', semestre) AS periode, id FROM periodes ORDER BY periode;
+
 }

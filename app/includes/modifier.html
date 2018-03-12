@@ -1,7 +1,8 @@
 <span class="icon-close text-xl" ng-click="closePanel()"></span>
 <form class="tiny-input">
     <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
-        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" ng-model="etu.prenom" ng-value="etu.prenom" placeholder="Prénom" required>
+        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" ng-model="etu.prenom" ng-value="etu.prenom" placeholder="Prénom"
+            required>
         <input class="flex-1 m-l-10 text-center" type="text" name="nom" ng-model="etu.nom" ng-value="etu.nom" placeholder="Nom" required>
     </div>
 
@@ -37,6 +38,6 @@
 
     <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
         <button class="flex-1 m-r-10" type="reset" ng-click="closePanel()">Annuler</button>
-        <button class="flex-1 m-l-10" type="submit" ng-click="save()">Enregistrer</button>
+        <button class="flex-1 m-l-10" type="submit">Enregistrer</button>
     </div>
 </form>

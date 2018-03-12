@@ -18,7 +18,8 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
       controller: "formations"
     })
     .state("trombi", {
-      url: "/trombi/{trombi}?g",
+      url: "/trombi/{trombi}/{periode}?g",
+      // url: "/trombi/{trombi}/{periode}?g",
       //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
       templateUrl: "views/trombi.html",
@@ -36,7 +37,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
         },
         "panel@trombi": {
           templateUrl: "includes/afficher.html",
-          controller: "panel"
+          controller: "etudiants"
         }
       }
     })
@@ -49,7 +50,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
         },
         "panel@trombi": {
           templateUrl: "includes/modifier.html",
-          controller: "panel"
+          controller: "etudiants"
         }
       }
     })
@@ -62,7 +63,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
         },
         "panel@trombi": {
           templateUrl: "includes/creer.html",
-          controller: "panel"
+          controller: "etudiants"
         }
       }
     })
@@ -75,7 +76,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
         },
         "panel@trombi": {
           templateUrl: "includes/filtres.html",
-          controller: "panel"
+          controller: "filtres"
         }
       }
     })
@@ -143,18 +144,18 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
           controller: "panel"
         }
       }
-    })
-    .state("trombi.mailto", {
-      url: "/mail/{etu}",
-      views: {
-        "": {
-          templateUrl: "views/trombi.html",
-          controller: "trombi"
-        },
-        "panel@trombi": {
-          templateUrl: "includes/mail.html",
-          controller: "panel"
-        }
-      }
     });
+  // .state("trombi.mailto", {
+  //   url: "/mail/{etu}",
+  //   views: {
+  //     "": {
+  //       templateUrl: "views/trombi.html",
+  //       controller: "trombi"
+  //     },
+  //     "panel@trombi": {
+  //       templateUrl: "includes/mail.html",
+  //       controller: "panel"
+  //     }
+  //   }
+  // });
 });

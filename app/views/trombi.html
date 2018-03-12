@@ -44,7 +44,7 @@
                     <div class="w-65 bg-grey1 p-0 flex-container is-horizontal-center is-vertical-center">
                         <span class="icon-magnify text-xl text-white"></span>
                     </div>
-                    <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation, un département...">
+                    <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation...">
                     <span id="reset-search" class="icon-close text-xl"></span>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                     <p class="text-xl weight-600" ng-style="{'color':f.departement.couleur}">{{f.nom}}
                         <span class="text-m" ng-if="currentGroup"> {{currentGroup}}</span>
                     </p>
-                    <!-- <button class="ghost-button screen uppercase desktop w-100 m-l-10" ng-click="openPanel()" ui-sref="trombi.migrer">Migrer</button> -->
+                    <button class="ghost-button screen uppercase desktop w-100 m-l-10" ng-click="openPanel()" ui-sref="trombi.migrer">Migrer</button>
                 </div>
 
                 <div ng-repeat="p in trombi.periode">
@@ -98,7 +98,7 @@
                         <img ng-src="{{e.photo}}">
                     </div>
                     <p class="p-t-10">{{e.prenom}} {{e.nom}}</p>
-                    <p class="text-s">{{e.mail}}</p>
+                    <p ng-if="current.mail" class="text-s">{{e.mail}}</p>
                 </a>
                 <!-- <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.modifier({etu: e.id_etu})"
                     >

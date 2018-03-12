@@ -2,14 +2,14 @@
 var gulp = require("gulp");
 
 // Include plugins
-var plugins = require("gulp-load-plugins")(); // tous les plugins de package.json
+var plugins = require("gulp-load-plugins")();
 
 // Variables de chemins
-var source = "./app"; // dossier de travail
-var node_modules = "./node_modules"; // dossier node_modules
-var destination = "./dist"; // dossier à livrer
+var source = "./app";
+var node_modules = "./node_modules";
+var destination = "./dist";
 
-// Tâche "css" = SCSS + autoprefixer + CSScomb + beautify (source -> destination)
+// Tâche "css" = SCSS + autoprefixer + CSScomb + beautify
 gulp.task("css", function() {
   return gulp
     .src(source + "/scss/main.scss")
@@ -30,7 +30,7 @@ gulp.task("printcss", function() {
     .pipe(gulp.dest(destination));
 });
 
-// Tâche "js" = concat des js + copie (source -> destination)
+// Tâche "js" = concat des js + copie
 gulp.task("js", function() {
   return gulp
     .src([
@@ -45,33 +45,33 @@ gulp.task("js", function() {
     .pipe(gulp.dest(destination));
 });
 
-// Tâche "index" = copie de index (source -> destination)
+// Tâche "index" = copie de index
 gulp.task("index", function() {
   return gulp.src(source + "/index.html").pipe(gulp.dest(destination));
 });
 
-// Tâche "views" = copie des views (source -> destination)
+// Tâche "views" = copie des views
 gulp.task("views", function() {
   return gulp
     .src(source + "/views/*.html")
     .pipe(gulp.dest(destination + "/views"));
 });
 
-// Tâche "includes" = copie des includes (source -> destination)
+// Tâche "includes" = copie des includes
 gulp.task("includes", function() {
   return gulp
     .src(source + "/includes/*.html")
     .pipe(gulp.dest(destination + "/includes"));
 });
 
-// Tâche "sources" = copie des sources (source -> destination)
+// Tâche "sources" = copie des sources
 gulp.task("sources", function() {
   return gulp
     .src(source + "/sources/**/*")
     .pipe(gulp.dest(destination + "/sources"));
 });
 
-// Tâche "minifycss" = minification CSS (destination -> destination)
+// Tâche "minifycss" = minification CSS
 gulp.task("minifycss", function() {
   return gulp
     .src(destination + "/main.css")
@@ -84,7 +84,7 @@ gulp.task("minifycss", function() {
     .pipe(gulp.dest(destination));
 });
 
-// Tâche "minifyjs" = minification JS (destination -> destination)
+// Tâche "minifyjs" = minification JS
 gulp.task("minifyjs", function() {
   return gulp
     .src(destination + "/bundle.js")

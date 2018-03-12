@@ -6,7 +6,7 @@ prjModule.controller("trombi", [
   function($scope, $state, $stateParams, data) {
     // $scope.trombiGet = []; // permet de stocker les trombi demandés; permet de refaire plusieurs fois la même requête
 
-    // permet de filtrer un trombi par groupe
+    // ********** FILTRES ********** //
     function filterByGroup(trombi, groupe) {
       if (groupe) {
         const etudiants = trombi.etudiants.slice();
@@ -17,9 +17,11 @@ prjModule.controller("trombi", [
       return trombi;
     }
 
-    // permet de récupérer un trombi
+    // ********** AFFICHAGE TROMBI ********** //
     let getTrombi = function() {
       const groupe = $state.params.g;
+      // const mail = $state.params.m;
+      // console.log($state.params.m);
 
       // console.log($scope.trombiGet);
       // if ($stateParams.trombi in $scope.trombiGet) {
@@ -27,60 +29,18 @@ prjModule.controller("trombi", [
       //   $scope.trombiComplete = Object.assign({}, $scope.trombiGet[$stateParams.trombi]);
       // } else {
       data.getTrombi($stateParams.trombi).then(function(trombi) {
-        // console.log(trombi);
         $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
         $scope.trombiComplete = Object.assign({}, trombi);
 
         $scope.currentGroup = groupe;
-        // $scope.trombiGet[$stateParams.trombi] = trombi;
+        $scope.currentMail = mail;
       });
 
       // }
     };
     getTrombi();
 
-    // var gensDuGroupe1 = getTrombi.filter(function (getTrombi) {
-    //   return getTrombi.groupes.includes(1);
-    // });
-    //console.log(gensDuGroupe1);
-
-    // $scope.filter = {};
-
-    // filtrage
-    // $scope.trombinoscopes = data.trombi($stateParams.trombi);
-    // $scope.trombi = R.clone($scope.trombinoscopes);
-    // switch ($stateParams.al) {
-    //   case null:
-    //     $scope.trombi.etudiants = R.clone($scope.trombinoscopes.etudiants);
-    //     break;
-    //   case "null":
-    //     $scope.trombi.etudiants = R.clone($scope.trombinoscopes.etudiants);
-    //     break;
-    //   case "1":
-    //     $scope.trombi.etudiants = R.clone(
-    //       $scope.trombinoscopes.etudiants
-    //     ).filter(function(el) {
-    //       if (el.alternant) {
-    //         return el;
-    //       }
-    //     });
-    //     break;
-    //   case "0":
-    //     $scope.trombi.etudiants = R.clone(
-    //       $scope.trombinoscopes.etudiants
-    //     ).filter(function(el) {
-    //       if (!el.alternant) {
-    //         return el;
-    //       }
-    //     });
-    //     break;
-    //   default:
-    //     var params = R.clone($stateParams);
-    //     params.al = null;
-    //     $state.go($state.current.name, params, { location: true });
-    // }
-
-    // panel
+    // ********** PANEL ********** //
     $scope.openPanel = function() {
       $("#wrapper").addClass("panel-is-open");
       $("#panel").addClass("panel-is-open");

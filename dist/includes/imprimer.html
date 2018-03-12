@@ -4,28 +4,30 @@
 <form class="tiny-input">
 
   <p class="label">Groupes à imprimer : </p>
-  <select ng-options="group.nom as group.nom for group in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
-    <option value="" selected>Tous les groupes</option>
+  <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()" ng-options="group.groupe as group.groupe for group in trombi.groupes">
+    <option value="">Tous les groupes</option>
   </select>
 
   <div class="m-y-40">
     <p class="label">Informations à imprimer : </p>
     <div class="text-left">
       <div class="checkbox m-b-20 m-l-40">
-        <input type="checkbox" id="mail" name="mail" ng-true-value="true" ng-false-value="null" ng-model="filtres.mail.current" ng-change="filtres.mail.change()">
+        <input type="checkbox" id="mail" name="mail" ng-model="filtres.mail.current" ng-change="filtres.mail.change()">
         <label for="mail">Adresse e-mail</label>
+        <input type="checkbox" id="statut" name="statut" ng-true-value="alternance" ng-false-value="formation initiale">
+        <label for="statut">Statut</label>
       </div>
     </div>
   </div>
 
-  <p class="label">Imprimer les étudiants qui sont en : </p>
+  <!-- <p class="label">Imprimer les étudiants qui sont en : </p>
   <div class="text-left m-b-20 m-l-40">
     <div ng-repeat="option in filtres.alt.options track by $index" class="radio m-b-10 text-left">
       <input type="radio" name="alt" id="{{option.id}}" ng-value="option.value" ng-model="filtres.alt.current" ng-change="filtres.alt.change()"
       />
       <label for="{{option.id}}">{{ option.title }}</label>
     </div>
-  </div>
+  </div> -->
 
 
   <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">

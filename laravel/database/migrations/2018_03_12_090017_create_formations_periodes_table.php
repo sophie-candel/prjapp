@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormationsTable extends Migration
+class CreateFormationsPeriodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateFormationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('formations', function (Blueprint $table) {
+        Schema::create('formations_periodes', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
-            $table->string('nom', 255);
-            $table->integer('departement_id')->unsigned();
-            $table->foreign('departement_id')->references('id')->on('departements');
-            // $table->integer('periode_id')->unsigned();
-            // $table->foreign('periode_id')->references('id')->on('periodes');
-            $table->integer('first_semestre');
-            $table->integer('last_semestre');
+            $table->integer('formation_id')->unsigned();
+            $table->foreign('formation_id')->references('id')->on('formations');
+
+            $table->integer('periode_id')->unsigned();
+            $table->foreign('periode_id')->references('id')->on('periodes');
+            
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreateFormationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formations');
+        Schema::dropIfExists('formations_etudiants');
     }
 }

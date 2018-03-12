@@ -10,7 +10,6 @@ class Formation extends Model
         return $this->belongsTo('App\Departement');
     }
 
-    
 
     public function groupes() {
         return $this->hasMany('App\Groupe');
@@ -19,5 +18,9 @@ class Formation extends Model
 
     public function etudiants() {
         return $this->belongsToMany('App\Etudiant', 'inscriptions');
+    }
+
+    public function periodes() {
+        return $this->belongsToMany('App\Periode', 'formations_periodes');
     }
 }
