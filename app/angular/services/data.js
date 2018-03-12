@@ -9,7 +9,6 @@ prjModule.service("data", [
     // let reqDone = [];
     const endpoint = "http://127.0.0.1:8000/api/";
 
-
     // effectue une requête sur l'url `req`
     function makeRequest(req) {
       // if (req in reqDone) {
@@ -18,35 +17,24 @@ prjModule.service("data", [
       //     resolve(reqDone[req]);
       //   });
       // } else {
-        return $http({
-          method: "GET",
-          url: endpoint + req
-        }).then(response => {
-          // reqDone[req] = response.data; // mettre cette ligne en commentaire si souhaite à chaque fois refaire la requête
-          return response.data;
-        });
+      return $http({
+        method: "GET",
+        url: endpoint + req
+      }).then(response => {
+        // reqDone[req] = response.data; // mettre cette ligne en commentaire si souhaite à chaque fois refaire la requête
+        return response.data;
+      });
       // }
     }
 
     this.getDpt = function() {
-      return makeRequest('dep');
+      return makeRequest("dep");
     };
 
     this.getTrombi = function(id, annee, semestre) {
-      //var req = "trombi/" + id + "/" + annee + "/" + semestre;
       var req = "trombi/" + id + "/2017-2018" + "/5";
       return makeRequest(req);
     };
-
-    // this.getTrombi = function(id, annee, semestre) {
-    //   var req = "trombi/" + id + "/" + annee + "/" + semestre;
-    //   return $http({
-    //     method: "GET",
-    //     url: endpoint + req
-    //   }).then(function(response) {
-    //     return response.data;
-    //   });
-    // };
 
     this.getEtu = function(id) {
       return makeRequest("etu/" + id);

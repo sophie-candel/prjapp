@@ -20,22 +20,24 @@ prjModule.controller("trombi", [
     // permet de récupérer un trombi
     let getTrombi = function() {
       const groupe = $state.params.g;
+
       // console.log($scope.trombiGet);
       // if ($stateParams.trombi in $scope.trombiGet) {
       //   $scope.trombi = filterByGroup(Object.assign({}, $scope.trombiGet[$stateParams.trombi]), groupe);
       //   $scope.trombiComplete = Object.assign({}, $scope.trombiGet[$stateParams.trombi]);
       // } else {
-        data.getTrombi($stateParams.trombi).then(function(trombi) {
-          // console.log(trombi);
-          $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
-          $scope.trombiComplete = Object.assign({}, trombi);
-          // $scope.trombiGet[$stateParams.trombi] = trombi;
-        });
+      data.getTrombi($stateParams.trombi).then(function(trombi) {
+        // console.log(trombi);
+        $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
+        $scope.trombiComplete = Object.assign({}, trombi);
+
+        $scope.currentGroup = groupe;
+        // $scope.trombiGet[$stateParams.trombi] = trombi;
+      });
+
       // }
     };
     getTrombi();
-
-
 
     // var gensDuGroupe1 = getTrombi.filter(function (getTrombi) {
     //   return getTrombi.groupes.includes(1);

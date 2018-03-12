@@ -17,6 +17,20 @@ class EtudiantsCtr extends Controller {
         ->get();
     }
 
+    function store() {
+        $etudiant = $request->isMethod('put') ? Etudiant::findOrFail($id) : new Etudiant;
+        $etudiant->nom = $request->input('nom');
+        $etudiant->prenom = $request->input('prenom');
+        $etudiant->alternant = $request->input('alternant');
+        $etudiant->mail = $request->input('mail');
+        $etudiant->photo = $request->input('photo');
+        $etudiant->pre_diplome = $request->input('pre_diplome');
+
+        if($etudiant->save()){
+            return $etudiant;
+        }
+    }
+
     private function concatGroupes($etu) {
         $map = []; // correspondance entre la clé dans $res et l'identifiant de l'utilisateur
         $res = []; 

@@ -9,9 +9,7 @@ prjModule.controller("panel", [
     $state.go($state.current.name);
   }*/
 
-    // console.log($state);
-    // console.log($stateParams);
-
+    // ********** AFFICHAGE ETUDIANT ********** //
     let getEtu = function() {
       data.getEtu($stateParams.etu).then(function(etu) {
         $scope.etu = etu;
@@ -19,46 +17,21 @@ prjModule.controller("panel", [
     };
     getEtu();
 
-    // if ($stateParams.g != null && $stateParams.g) {
-    //   var currentGroupId;
-    //   $scope.trombinoscopes.groupes.forEach(function(i) {
-    //     if (i.groupe == $stateParams.g) {
-    //       currentGroupId = i.id_gro;
-    //     }
-    //   });
-    //   $scope.trombi.etudiants = R.clone($scope.trombi.etudiants).filter(function(el) {
-    //     if (R.contains({
-    //         id_gro: currentGroupId
-    //       }, el.groupes)) {
-    //       return el
-    //     }
-    //   });
-    //   $scope.current.groupe = $stateParams.g;
-    // }
-
-    //filtres
+    // ********** FILTRES ********** //
     $scope.filtres = {
+      // groupes
       groupes: {
         current: $stateParams.g ? $stateParams.g : null,
-
         change: function() {
-          $state.go($state.current.name, {g: $scope.filtres.groupes.current}, {
-            location: true
-          });
+          $state.go(
+            $state.current.name,
+            { g: $scope.filtres.groupes.current },
+            {
+              location: true
+            }
+          );
         }
       }
-    };
-
-    $scope.filter = function() {
-      // var groupe = $stateParams.g;
-      // console.log($stateParams.g);
-      // var params = $stateParams;
-      // params.g = $scope.filtres.groupes.current;
-      // //console.log(params);
-      // console.log(params.g);
-      // $state.go($state.current.name, params, {
-      //   location: true
-      // });
     };
 
     // input file

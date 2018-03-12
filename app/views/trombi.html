@@ -76,7 +76,7 @@
             <div class="m-x-15 m-b-20" id="title">
                 <div class="flex-container" ng-repeat="f in trombi.formation">
                     <p class="text-xl weight-600" ng-style="{'color':f.departement.couleur}">{{f.nom}}
-                        <span class="text-m" ng-if="current.groupe"> {{current.groupe}}</span>
+                        <span class="text-m" ng-if="currentGroup"> {{currentGroup}}</span>
                     </p>
                     <!-- <button class="ghost-button screen uppercase desktop w-100 m-l-10" ng-click="openPanel()" ui-sref="trombi.migrer">Migrer</button> -->
                 </div>

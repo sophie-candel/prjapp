@@ -321,9 +321,7 @@ prjModule.controller("panel", [
     $state.go($state.current.name);
   }*/
 
-    // console.log($state);
-    // console.log($stateParams);
-
+    // ********** AFFICHAGE ETUDIANT ********** //
     let getEtu = function() {
       data.getEtu($stateParams.etu).then(function(etu) {
         $scope.etu = etu;
@@ -331,46 +329,21 @@ prjModule.controller("panel", [
     };
     getEtu();
 
-    // if ($stateParams.g != null && $stateParams.g) {
-    //   var currentGroupId;
-    //   $scope.trombinoscopes.groupes.forEach(function(i) {
-    //     if (i.groupe == $stateParams.g) {
-    //       currentGroupId = i.id_gro;
-    //     }
-    //   });
-    //   $scope.trombi.etudiants = R.clone($scope.trombi.etudiants).filter(function(el) {
-    //     if (R.contains({
-    //         id_gro: currentGroupId
-    //       }, el.groupes)) {
-    //       return el
-    //     }
-    //   });
-    //   $scope.current.groupe = $stateParams.g;
-    // }
-
-    //filtres
+    // ********** FILTRES ********** //
     $scope.filtres = {
+      // groupes
       groupes: {
         current: $stateParams.g ? $stateParams.g : null,
-
         change: function() {
-          $state.go($state.current.name, {g: $scope.filtres.groupes.current}, {
-            location: true
-          });
+          $state.go(
+            $state.current.name,
+            { g: $scope.filtres.groupes.current },
+            {
+              location: true
+            }
+          );
         }
       }
-    };
-
-    $scope.filter = function() {
-      // var groupe = $stateParams.g;
-      // console.log($stateParams.g);
-      // var params = $stateParams;
-      // params.g = $scope.filtres.groupes.current;
-      // //console.log(params);
-      // console.log(params.g);
-      // $state.go($state.current.name, params, {
-      //   location: true
-      // });
     };
 
     // input file
@@ -494,22 +467,24 @@ prjModule.controller("trombi", [
     // permet de récupérer un trombi
     let getTrombi = function() {
       const groupe = $state.params.g;
+
       // console.log($scope.trombiGet);
       // if ($stateParams.trombi in $scope.trombiGet) {
       //   $scope.trombi = filterByGroup(Object.assign({}, $scope.trombiGet[$stateParams.trombi]), groupe);
       //   $scope.trombiComplete = Object.assign({}, $scope.trombiGet[$stateParams.trombi]);
       // } else {
-        data.getTrombi($stateParams.trombi).then(function(trombi) {
-          // console.log(trombi);
-          $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
-          $scope.trombiComplete = Object.assign({}, trombi);
-          // $scope.trombiGet[$stateParams.trombi] = trombi;
-        });
+      data.getTrombi($stateParams.trombi).then(function(trombi) {
+        // console.log(trombi);
+        $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
+        $scope.trombiComplete = Object.assign({}, trombi);
+
+        $scope.currentGroup = groupe;
+        // $scope.trombiGet[$stateParams.trombi] = trombi;
+      });
+
       // }
     };
     getTrombi();
-
-
 
     // var gensDuGroupe1 = getTrombi.filter(function (getTrombi) {
     //   return getTrombi.groupes.includes(1);
@@ -736,7 +711,6 @@ prjModule.service("data", [
     // let reqDone = [];
     const endpoint = "http://127.0.0.1:8000/api/";
 
-
     // effectue une requête sur l'url `req`
     function makeRequest(req) {
       // if (req in reqDone) {
@@ -745,35 +719,24 @@ prjModule.service("data", [
       //     resolve(reqDone[req]);
       //   });
       // } else {
-        return $http({
-          method: "GET",
-          url: endpoint + req
-        }).then(response => {
-          // reqDone[req] = response.data; // mettre cette ligne en commentaire si souhaite à chaque fois refaire la requête
-          return response.data;
-        });
+      return $http({
+        method: "GET",
+        url: endpoint + req
+      }).then(response => {
+        // reqDone[req] = response.data; // mettre cette ligne en commentaire si souhaite à chaque fois refaire la requête
+        return response.data;
+      });
       // }
     }
 
     this.getDpt = function() {
-      return makeRequest('dep');
+      return makeRequest("dep");
     };
 
     this.getTrombi = function(id, annee, semestre) {
-      //var req = "trombi/" + id + "/" + annee + "/" + semestre;
       var req = "trombi/" + id + "/2017-2018" + "/5";
       return makeRequest(req);
     };
-
-    // this.getTrombi = function(id, annee, semestre) {
-    //   var req = "trombi/" + id + "/" + annee + "/" + semestre;
-    //   return $http({
-    //     method: "GET",
-    //     url: endpoint + req
-    //   }).then(function(response) {
-    //     return response.data;
-    //   });
-    // };
 
     this.getEtu = function(id) {
       return makeRequest("etu/" + id);

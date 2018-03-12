@@ -19,10 +19,10 @@
   <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()" ng-options="group.groupe as group.groupe for group in trombi.groupes">
     <option value="">Tous les groupes</option>
   </select>
-  <!--
-  <select ng-options="g for groupes.groupe in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
+
+  <select ng-options="groupe.nom as groupe.nom for groupe in trombi.groupes" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()">
     <option value="" selected disabled>Groupes</option>
-  </select> -->
+  </select>
 
 
   <!-- <div class="m-y-40">
