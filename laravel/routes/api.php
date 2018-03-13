@@ -13,7 +13,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('importExport', 'CsvCtr@importExport');
+//Route::get('importExport', 'CsvCtr@importExport');
 // Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
 Route::post('importCsv', 'CsvCtr@importCsv');
 

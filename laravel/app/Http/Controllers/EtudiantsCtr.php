@@ -33,7 +33,7 @@ class EtudiantsCtr extends Controller {
             'prenom'=>'required|string',
             'alternant' => 'filled|boolean', 
             'mail' => 'required|string',
-            // 'photo' => 'required|string',
+            'photo' => 'required|string',
             'pre_diplome' => 'required|string'
         ]);
         $etudiant = new Etudiant;

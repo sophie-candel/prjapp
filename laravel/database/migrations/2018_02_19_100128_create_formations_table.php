@@ -23,8 +23,8 @@ class CreateFormationsTable extends Migration
             $table->foreign('departement_id')->references('id')->on('departements');
             // $table->integer('periode_id')->unsigned();
             // $table->foreign('periode_id')->references('id')->on('periodes');
-            $table->integer('first_semestre');
-            $table->integer('last_semestre');
+            // $table->integer('first_semestre');
+            // $table->integer('last_semestre');
             $table->timestamps();
         });
     }

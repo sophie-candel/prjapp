@@ -10,10 +10,7 @@ use Illuminate\Http\Request;
 class FormationsCtr extends Controller
 {
     function index(){
-        return Formation::with('departement')
-        ->with('groupes')
-        ->with('etudiants')
-        ->with('periodes')
+        return Formation::with('departement', 'groupes', 'etudiants', 'periodes')
         ->distinct()
         ->get();   
     }
