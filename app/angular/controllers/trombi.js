@@ -28,13 +28,16 @@ prjModule.controller("trombi", [
       //   $scope.trombi = filterByGroup(Object.assign({}, $scope.trombiGet[$stateParams.trombi]), groupe);
       //   $scope.trombiComplete = Object.assign({}, $scope.trombiGet[$stateParams.trombi]);
       // } else {
-      data.getTrombi($stateParams.trombi).then(function(trombi) {
-        $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
-        $scope.trombiComplete = Object.assign({}, trombi);
+      data
+        .getTrombi($stateParams.trombi, $stateParams.periode)
+        .then(function(trombi, periode) {
+          $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
+          $scope.periode = $stateParams.periode;
+          $scope.trombiComplete = Object.assign({}, trombi);
 
-        $scope.currentGroup = groupe;
-        $scope.currentMail = mail;
-      });
+          $scope.currentGroup = groupe;
+          $scope.currentMail = mail;
+        });
 
       // }
     };

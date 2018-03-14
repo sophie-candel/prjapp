@@ -35,9 +35,9 @@
         </div>
       </div>
       <div class="m-t-10 flex-container is-column">
-        <a ui-sref="trombi({trombi: f.id})" class="bg-grey5 m-b-10 p-10 " ng-repeat="f in d.formations">
+        <a ui-sref="trombi({trombi: f.id, periode: f.periode})" class="bg-grey5 m-b-10 p-10 " ng-repeat="f in d.formations">
           <!-- <a ui-sref="trombi({trombi: f.id, periode: f.periode_id})" class="bg-grey5 m-b-10 p-10 " ng-repeat="f in d.formations"> -->
-          {{f.nom}} {{f.periodes.id}}
+          {{f.nom}}
         </a>
       </div>
     </div>

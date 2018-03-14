@@ -2,155 +2,90 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+//use Carbon\Carbon;
 use App\Departement;
 use Illuminate\Http\Request;
 
 class DepartementsCtr extends Controller {
 
-    private function getPeriode($departements) {
-        
-        // retourne l'année scolaire en cours
-        function getCurrentYear() {
-            $first_semestre_start  = 9;
-            $month = date('n'); // 1..12
-            $year = date('Y'); // année actuelle
+    private $first_semestre_start = 9;
 
-            // si on est après spetembre dans l'année
-            if ($month >= $first_semestre_start) {
-                return $year . '-' . ($year + 1);
+    // retourne l'année scolaire en cours
+    private function getCurrentYear() {
+        $month = date('n'); // 1..12
+        $year = date('Y'); // année actuelle
+
+        // si on est après spetembre dans l'année
+        if ($month >= $this->first_semestre_start) {
+            return $year . '-' . ($year + 1);
+        } else {
+            return ($year - 1) . '-' . $year;
+        }
+    }
+
+    // enlève toutes les périodes inutiles
+    private function cleanPeriodes($array) {
+        $currentYear = $this->getCurrentYear();
+        $month = date('n'); // 1..12
+        $isSemestreOk = true;
+
+        // pour tous le semestres sauf le 5
+        if (isset($array['semestre']) && $array['semestre'] !=5 ) {
+            if ($month >= $this->first_semestre_start) {
+                $isSemestreOk = (($array['semestre']) % 2 == 1); // semestre impair
             } else {
-                return ($year - 1) . '-' . $year;
+                $isSemestreOk = (($array['semestre']) % 2 == 0); // semestre pair
             }
         }
-        getCurrentYear();
 
-        // enlève toutes les périodes inutiles
-        function cleanPeriodes($array) {
-            $currentYear = getCurrentYear();
-            $month = date('n'); // 1..12
+        
+        // s'il y a bien une année définie, et si elle correspond à l'année courante
+        // et si le semestre est bon, alors on garde la période; sinon on retire
+        return isset($array['annee']) && ($array['annee'] == $currentYear) && $isSemestreOk;  
+    }
+    
+    // assigne la période à la formation
+    private function getPeriode($departements) {
 
-            // pour tester sur les semestres
-            $isSemestreOk = true;
-            if (isset($array->semestre)) {
-                if ($month >= $first_semestre_start) {
-                $isSemestreOk = (($array->semestre) % 2 == 1); // semestre impair
-                } else {
-                $isSemestreOk = (($array->semestre) % 2 == 0); // semestre pair
-                }
-            }
-
-            // s'il y a bien une année définie, et si elle correspond à l'année courante
-            // et si le semestre est bon, alors on garde la période; sinon on retire
-            return isset($array->annee) && ($array->annee == $currentYear) && $isSemestreOk;  
-        }
-        cleanPeriodes($departements);
-
-        function currentPeriode($departements) {
-
-            // si le JSON est vide, on sort de la fonction
-            if (empty($departements)) {
-                return null;
-            }
-            
-            // on parcourt chaque département
-            foreach ($departements as $dep) {
-                if (isset($departement->formations)) {
+        // on parcourt chaque département
+        foreach ($departements as $depKey => $dep) {
+            if (isset($dep['formations'])) {
                 // on parcourt chaque formation
-                    foreach ($dep->formations as $key => $formation) {
-                        $delete = false; // permettra de savoir s'il faut la supprimer à la fin
-                        if (isset($formation->periodes) && is_array($formation->periodes)) {
+                foreach ($dep['formations'] as $formationKey => $formation) {
+                    $delete = false; // permettra de savoir s'il faut la supprimer à la fin
+                    if (isset($formation['periodes']) && is_array($formation['periodes'])) {
 
                         // on récupère un array avec la/les bonnes périodes; et on reset les index
-                        $periodes = array_values(array_filter($formation->periodes, "cleanPeriodes"));
+                        $periodes = array_values(
+                            array_filter($formation['periodes'], [$this, "cleanPeriodes"])
+                        );
 
-                        if (count($periodes) > 0 && isset($periodes[0]->id)) {
-                            $formation->periode = $periodes[0]->id;
+                        if (count($periodes) > 0 && isset($periodes[0]['pivot']['periode_id'])) {
+                            $departements[$depKey]['formations'][$formationKey]['periode'] = $periodes[0]['pivot']['periode_id'];
                         } else {
                             $delete = true; // pas de période courante, on retire de la listes
                         }
-                        unset($formation->periodes); // on enlève le tableau des périodes
-                        } else {
+                        
+                        unset($departements[$depKey]['formations'][$formationKey]['periodes']);
+                    } else {
                         $delete = true; // pas de période dispo; on supprime de la liste
-                        }
-                        // si on doit supprimer la formation...
-                        if ($delete) unset($dep->formations[$key]);
                     }
+                    // si on doit supprimer la formation...
+                    if ($delete) unset($departements[$depKey]['formations'][$formationKey]);
                 }
             }
-
-            return $departements;
         }
 
-        $json = json_decode($departements);
-        $result = currentPeriode($json);
+        return $departements;
     }
-
 
 
     public function index() {
         $departements = Departement::with('formations', 'formations.periodes')
-        ->get();
+        ->get()
+        ->toArray(); 
+
         return $this->getPeriode($departements);
-        //return $departements;
-
-        //$departements = \DB::table('departements')
-        // ->select(
-        //     'departements.id as id',
-        //     'departements.nom as nom',
-        //     'departements.couleur as couleur', 
-        //     'formations.id as id_formation',
-        //     'formations.nom as nom_formation',
-        //     'periodes.id as id_periode'
-        // )
-        // ->join ('formations', 'departements.id', '=', 'formations.departement_id')
-        // ->join ('formations_periodes', 'formations.id', '=', 'formations_periodes.formation_id')
-        // ->join ('periodes', 'formations_periodes.periode_id', '=', 'periodes.id')
-        // ->get();
-        
-        // $now = Carbon::now();
-        // $year = $now->year;
-        // $month = $now->month;
-        // $result = [
-        //     'departements'  => $departements,
-        //     'periode' => $now,
-        //     'année' => $year,
-        //     'mois' => $month
-        // ];
-
-        // $departements = Departement::with('formations', 'formations.periodes')
-        // ->get();
-        // return $departements;
-            //$departements = Departement::all();
-
-            // $formations = \DB::table('formations')
-            // ->select(
-            //     'formations.id as id_for',
-            //     'formations.nom as nom_for'
-            // )
-            // ->join ('departements', 'formations.departement_id', '=', 'departements.id')
-            // ->get();
-
-            // $periodes = \DB::table('periodes')
-            // // ->select(
-            // //     'periodes.id as id_periode',
-            // //     'periodes.annee as annee',
-            // //     'periodes.semestre as semestre'
-            // // )
-            // ->selectRaw('CONCAT(annee, \' S\', semestre) AS periode, periodes.id AS id_periode')
-            // ->join ('formations_periodes', 'periodes.id', '=', 'formations_periodes.periode_id')
-            // ->join ('formations', 'formations_periodes.formation_id', '=', 'formations.id')
-            // //->distinct()
-            // ->orderBy('id_periode', 'DESC')->first();
-            // // ->get();
-
-            // $result = [
-            //     'departements'  => $departements,
-            //     //'formations' => $formations,
-            //     'periodes' => $periodes
-            // ];
-
-            //return $result;
     }
 }
 

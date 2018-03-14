@@ -97,10 +97,10 @@ class EtudiantsCtr extends Controller {
         // ->get();
 
         $periode = \DB::table('periodes')
-        ->selectRaw('CONCAT(annee, \' S\', semestre) AS periode, id')
-        //->where('id', '=', $id_periode)
-        ->orderBy('periode')
-        ->distinct()
+        //->selectRaw('CONCAT(annee, \' S\', semestre) AS periode, id')
+        ->where('id', '=', $id_periode)
+        //->orderBy('periode')
+        //->distinct()
         ->get();
 
         // ETUDIANTS
@@ -158,7 +158,7 @@ class EtudiantsCtr extends Controller {
 
         $result = [
             'formation'     => $for_actuelle,
-            //'periode' => $periode,
+            'periode' => $periode,
             'etudiants'     => $this->concatGroupes($etu),
             // 'annees' => $liste_annees,
             // 'semestres' => $liste_semestres,

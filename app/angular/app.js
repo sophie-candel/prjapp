@@ -19,7 +19,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
     })
     .state("trombi", {
       url: "/trombi/{trombi}/{periode}?g",
-      // url: "/trombi/{trombi}/{periode}?g",
+      //url: "/trombi/{trombi}?periode&g",
       //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
       templateUrl: "views/trombi.html",

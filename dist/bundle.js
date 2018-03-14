@@ -19,7 +19,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
     })
     .state("trombi", {
       url: "/trombi/{trombi}/{periode}?g",
-      // url: "/trombi/{trombi}/{periode}?g",
+      //url: "/trombi/{trombi}?periode&g",
       //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
       templateUrl: "views/trombi.html",
@@ -174,11 +174,32 @@ prjModule.controller("formations", [
   }
 ]);
 
-// prjModule.controller("login", ["$scope", "data", function($scope, data) {}]);
+prjModule.controller("login", [
+  "$scope",
+  "$location",
+  "user",
+  "$state",
+  function($scope, $location, user, $state) {
+    $scope.login = function() {
+      user.login(
+        $scope.email,
+        $scope.password,
+        function(response) {
+          //$location.path("/");
+          $state.go("/");
+        },
+        function(response) {
+          alert("erreur lors de la connection");
+        }
+      );
+    };
 
-// prjModule.controller('login', ['$scope', 'data', function($scope, data) {
+    $scope.mail = "";
+    $scope.password = "";
 
-// }]);
+    if (user.checkIfLoggedIn()) $location.path("/");
+  }
+]);
 
 
 prjModule.controller("trombi", [
@@ -211,13 +232,16 @@ prjModule.controller("trombi", [
       //   $scope.trombi = filterByGroup(Object.assign({}, $scope.trombiGet[$stateParams.trombi]), groupe);
       //   $scope.trombiComplete = Object.assign({}, $scope.trombiGet[$stateParams.trombi]);
       // } else {
-      data.getTrombi($stateParams.trombi).then(function(trombi) {
-        $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
-        $scope.trombiComplete = Object.assign({}, trombi);
+      data
+        .getTrombi($stateParams.trombi, $stateParams.periode)
+        .then(function(trombi, periode) {
+          $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
+          $scope.periode = $stateParams.periode;
+          $scope.trombiComplete = Object.assign({}, trombi);
 
-        $scope.currentGroup = groupe;
-        $scope.currentMail = mail;
-      });
+          $scope.currentGroup = groupe;
+          $scope.currentMail = mail;
+        });
 
       // }
     };
@@ -412,7 +436,8 @@ prjModule.controller("panel", [
 prjModule.service("data", [
   "$http",
   "$state",
-  function($http, $state) {
+  "$stateParams",
+  function($http, $state, $stateParams) {
     const endpoint = "http://127.0.0.1:8000/api/";
 
     function makeRequest(req) {
@@ -430,15 +455,15 @@ prjModule.service("data", [
     };
 
     // ********** AFFICHAGE TROMBI ********** //
-    this.getTrombi = function(id) {
-      // if (id && periode) {
-      //   var req = "trombi/" + id + "/" + periode;
-      // } else if (id && !periode) {
-      //   var req = "trombi/" + id + "/5";
-      // }
+    this.getTrombi = function(id, periode) {
+      console.log("id : " + id);
+      console.log("periode : " + periode);
 
-      var req = "trombi/" + id + "/5";
+      var req = "trombi/" + id + "/" + periode;
+      //var req = "trombi/" + id + "/5";
 
+      console.log("requête : " + req);
+      console.log($stateParams);
       return makeRequest(req);
     };
 
@@ -450,7 +475,7 @@ prjModule.service("data", [
     this.createEtu = function(
       createEtuNom,
       createEtuPrenom,
-      // createEtuPhoto,
+      createEtuPhoto,
       createEtuEmail
     ) {
       return $http({
@@ -482,23 +507,25 @@ prjModule.service("data", [
 ]);
 
 prjModule.service("user", [
-  $http,
-  localStorage,
-  function($http, localStorage) {
+  "$http",
+  "$localStorage",
+  function($http, $localStorage) {
+    const endpoint = "http://127.0.0.1:8000/api/";
+
     function checkIfLoggedIn() {
-      if (localStorage.get("token")) return true;
+      if ($localStorage.get("token")) return true;
       else return false;
     }
 
     function login(email, password, onSuccess, onError) {
       $http
-        .post("/api/auth/login", {
+        .post(endpoint + "/user", {
           email: email,
           password: password
         })
         .then(
           function(response) {
-            localStorage.set("token", response.data.token);
+            $localStorage.set("token", response.data.token);
             onSuccess(response);
           },
           function(response) {
@@ -508,11 +535,11 @@ prjModule.service("user", [
     }
 
     function logout() {
-      localStorage.remove("token");
+      $localStorage.remove("token");
     }
 
     function getCurrentToken() {
-      return localStorage.get("token");
+      return $localStorage.get("token");
     }
 
     return {

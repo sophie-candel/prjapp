@@ -1,5 +1,26 @@
-// prjModule.controller("login", ["$scope", "data", function($scope, data) {}]);
+prjModule.controller("login", [
+  "$scope",
+  "$location",
+  "user",
+  "$state",
+  function($scope, $location, user, $state) {
+    $scope.login = function() {
+      user.login(
+        $scope.email,
+        $scope.password,
+        function(response) {
+          //$location.path("/");
+          $state.go("/");
+        },
+        function(response) {
+          alert("erreur lors de la connection");
+        }
+      );
+    };
 
-// prjModule.controller('login', ['$scope', 'data', function($scope, data) {
+    $scope.mail = "";
+    $scope.password = "";
 
-// }]);
+    if (user.checkIfLoggedIn()) $location.path("/");
+  }
+]);
