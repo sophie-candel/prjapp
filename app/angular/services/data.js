@@ -21,14 +21,14 @@ prjModule.service("data", [
 
     // ********** AFFICHAGE TROMBI ********** //
     this.getTrombi = function(id, periode) {
-      console.log("id : " + id);
-      console.log("periode : " + periode);
+      //console.log("id : " + id);
+      //console.log("periode : " + periode);
 
       var req = "trombi/" + id + "/" + periode;
       //var req = "trombi/" + id + "/5";
 
-      console.log("requête : " + req);
-      console.log($stateParams);
+      //console.log("requête : " + req);
+      //console.log($stateParams);
       return makeRequest(req);
     };
 

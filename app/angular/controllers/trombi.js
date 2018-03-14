@@ -33,6 +33,7 @@ prjModule.controller("trombi", [
         .then(function(trombi, periode) {
           $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
           $scope.periode = $stateParams.periode;
+
           $scope.trombiComplete = Object.assign({}, trombi);
 
           $scope.currentGroup = groupe;

@@ -18,7 +18,7 @@ prjModule.controller("login", [
       );
     };
 
-    $scope.mail = "";
+    //$scope.mail = "";
     $scope.password = "";
 
     if (user.checkIfLoggedIn()) $location.path("/");

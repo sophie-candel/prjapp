@@ -194,7 +194,7 @@ prjModule.controller("login", [
       );
     };
 
-    $scope.mail = "";
+    //$scope.mail = "";
     $scope.password = "";
 
     if (user.checkIfLoggedIn()) $location.path("/");
@@ -237,6 +237,7 @@ prjModule.controller("trombi", [
         .then(function(trombi, periode) {
           $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
           $scope.periode = $stateParams.periode;
+
           $scope.trombiComplete = Object.assign({}, trombi);
 
           $scope.currentGroup = groupe;
@@ -343,15 +344,31 @@ prjModule.controller("filtres", [
           );
         }
       },
-      // affichage email
-      mail: {
-        current: $stateParams.m ? $stateParams.m : null,
-        //current: $stateParams.m == "1" ? "true" : "null",
-        // current: $stateParams.m == "1" ? "true" : "null",
+
+      // periodes
+      periodes: {
+        current: $stateParams.periode ? $stateParams.periode : null,
         change: function() {
-          console.log($stateParams.m);
+          //console.log($stateParams.periode);
+          $state.go(
+            $state.current.name,
+            { periode: $scope.filtres.periodes.current },
+            {
+              location: true
+            }
+          );
         }
       }
+
+      // affichage email
+      // mail: {
+      //   current: $stateParams.m ? $stateParams.m : null,
+      //   //current: $stateParams.m == "1" ? "true" : "null",
+      //   // current: $stateParams.m == "1" ? "true" : "null",
+      //   change: function() {
+      //     console.log($stateParams.m);
+      //   }
+      // }
     };
 
     // ********** PRINT ********** //
@@ -456,14 +473,14 @@ prjModule.service("data", [
 
     // ********** AFFICHAGE TROMBI ********** //
     this.getTrombi = function(id, periode) {
-      console.log("id : " + id);
-      console.log("periode : " + periode);
+      //console.log("id : " + id);
+      //console.log("periode : " + periode);
 
       var req = "trombi/" + id + "/" + periode;
       //var req = "trombi/" + id + "/5";
 
-      console.log("requête : " + req);
-      console.log($stateParams);
+      //console.log("requête : " + req);
+      //console.log($stateParams);
       return makeRequest(req);
     };
 

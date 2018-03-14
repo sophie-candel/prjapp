@@ -16,12 +16,11 @@
     <option ng-repeat="s in trombi.semestres" value="{{ s.semestre }}">Semestre {{ s.semestre }}</option>
   </select> -->
 
-  <select class="m-b-20" ng-options="a.annee as a.annee for a in trombi.periodes">
-    <option value="">Période</option>
+  <select class="m-b-20" ng-model="filtres.periodes.current" ng-change="filtres.periodes.change()" ng-options="p.id as p.periode for p in trombi.periodes">
+    <option value="" selected disabled>Période</option>
   </select>
 
-
-  <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()" ng-options="group.groupe as group.groupe for group in trombi.groupes">
+  <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()" ng-options="g.groupe as g.groupe for g in trombi.groupes">
     <option value="">Tous les groupes</option>
   </select>
 

@@ -132,8 +132,24 @@ class EtudiantsCtr extends Controller {
         //SELECT DISTINCT CONCAT(annee, "-", annee_fin) AS annee FROM periodes ORDER BY annee DESC)
         // SELECT DISTINCT annee-debut, CONCAT(annee, "-", annee_fin) AS annee FROM periodes ORDER BY annee DESC;
         
+        // $liste_periodes = \DB::table('periodes')
+        // ->get();
+
+
         $liste_periodes = \DB::table('periodes')
+        ->selectRaw('CONCAT(annee, \' - Semestre \', semestre) AS periode, id')
+        ->orderBy('periode')
+        ->distinct()
         ->get();
+
+
+        // $liste_periodes = Formation::with('periodes')
+        // // ->select(
+        // //     'periodes.annee as periode'
+        // // )
+        // //->selectRaw('CONCAT(periodes.annee, \' - Semestre \', periodes.semestre) AS periode, periodes.id as id')
+        // ->where('formations.id', '=', $id_formation)
+        // ->get();
         
         
         // $liste_annees = \DB::table('periodes')

@@ -24,15 +24,31 @@ prjModule.controller("filtres", [
           );
         }
       },
-      // affichage email
-      mail: {
-        current: $stateParams.m ? $stateParams.m : null,
-        //current: $stateParams.m == "1" ? "true" : "null",
-        // current: $stateParams.m == "1" ? "true" : "null",
+
+      // periodes
+      periodes: {
+        current: $stateParams.periode ? $stateParams.periode : null,
         change: function() {
-          console.log($stateParams.m);
+          //console.log($stateParams.periode);
+          $state.go(
+            $state.current.name,
+            { periode: $scope.filtres.periodes.current },
+            {
+              location: true
+            }
+          );
         }
       }
+
+      // affichage email
+      // mail: {
+      //   current: $stateParams.m ? $stateParams.m : null,
+      //   //current: $stateParams.m == "1" ? "true" : "null",
+      //   // current: $stateParams.m == "1" ? "true" : "null",
+      //   change: function() {
+      //     console.log($stateParams.m);
+      //   }
+      // }
     };
 
     // ********** PRINT ********** //
