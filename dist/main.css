@@ -1977,15 +1977,6 @@ button[type=reset]:hover {
   background-color: white;
 }
 
-@font-face {
-  font-family: 'icomoon';
-    font-weight: normal;
-    font-style: normal; 
-
-    src: url('sources/fonts/icomoon.eot?bytht3');
-    src: url('sources/fonts/icomoon.eot?bytht3#iefix') format('embedded-opentype'), url('sources/fonts/icomoon.ttf?bytht3') format('truetype'), url('sources/fonts/icomoon.woff?bytht3') format('woff'), url('sources/fonts/icomoon.svg?bytht3#icomoon') format('svg');
-}
-
 /*----------------------------------------------------------------------------------------------*/
 /* TYPOS */
 /*----------------------------------------------------------------------------------------------*/
@@ -2073,6 +2064,15 @@ strong {
 /*----------------------------------------------------------------------------------------------*/
 /* ICONS */
 /*----------------------------------------------------------------------------------------------*/
+@font-face {
+  font-family: 'icomoon';
+    font-weight: normal;
+    font-style: normal; 
+
+    src: url('sources/fonts/icomoon.eot?5nxe78');
+    src: url('sources/fonts/icomoon.eot?5nxe78#iefix') format('embedded-opentype'), url('sources/fonts/icomoon.ttf?5nxe78') format('truetype'), url('sources/fonts/icomoon.woff?5nxe78') format('woff'), url('sources/fonts/icomoon.svg?5nxe78#icomoon') format('svg');
+}
+
 [class^='icon-'],
 [class*=' icon-'] {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -2088,72 +2088,80 @@ strong {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-account:before {
+.icon-account-plus:before {
   content: '\e900';
 }
 
-.icon-account-plus:before {
+.icon-account:before {
   content: '\e901';
 }
 
-.icon-arrow-left:before {
+.icon-alert-circle:before {
   content: '\e902';
 }
 
-.icon-close:before {
+.icon-arrow-left:before {
   content: '\e903';
 }
 
-.icon-delete:before {
+.icon-close:before {
   content: '\e904';
 }
 
-.icon-dots-vertical:before {
+.icon-delete:before {
   content: '\e905';
 }
 
-.icon-download:before {
+.icon-dots-vertical:before {
   content: '\e906';
 }
 
-.icon-email:before {
+.icon-download:before {
   content: '\e907';
 }
 
-.icon-eye:before {
+.icon-email:before {
   content: '\e908';
 }
 
-.icon-file:before {
+.icon-eye:before {
   content: '\e909';
 }
 
-.icon-lock:before {
+.icon-file:before {
   content: '\e90a';
 }
 
-.icon-logout:before {
+.icon-lock:before {
   content: '\e90b';
 }
 
-.icon-magnify:before {
+.icon-logout:before {
   content: '\e90c';
 }
 
-.icon-pencil:before {
+.icon-magnify:before {
   content: '\e90d';
 }
 
-.icon-printer:before {
+.icon-pencil:before {
   content: '\e90e';
 }
 
-.icon-tune:before {
+.icon-printer:before {
   content: '\e90f';
 }
 
-.icon-upload:before {
+.icon-transfer:before {
   content: '\e910';
+}
+
+.icon-tune:before {
+  content: '\e911';
+}
+
+.icon-upload:before {
+  content: '\e912';
 }
 
 #wrapper {
