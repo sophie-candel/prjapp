@@ -17,6 +17,26 @@ prjModule.controller("trombi", [
       return trombi;
     }
 
+    // ********** SEARCHBAR ********** //
+    // $scope.search = function() {
+    //   $scope.submitted = true;
+    //   data
+    //     .query(
+    //       $scope.query
+    //     )
+    //     .then(function() {
+
+    //     })
+    // }
+
+    let getSearch = function() {
+      data.getSearch().then(function(search) {
+        $scope.search = search;
+        //console.log($scope.search);
+      });
+    };
+    getSearch();
+
     // ********** AFFICHAGE TROMBI ********** //
     let getTrombi = function() {
       const groupe = $state.params.g;
@@ -39,6 +59,7 @@ prjModule.controller("trombi", [
           $scope.currentGroup = groupe;
 
           $scope.currentMail = $stateParams.m;
+          $scope.currentStatut = $stateParams.s;
         });
 
       // }

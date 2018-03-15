@@ -14,6 +14,11 @@ prjModule.service("data", [
       });
     }
 
+    // ********** SEARCHBAR ********** //
+    this.getSearch = function() {
+      return makeRequest("search");
+    };
+
     // ********** AFFICHAGE DEPARTEMENTS ********** //
     this.getDpt = function() {
       return makeRequest("dep");
@@ -51,6 +56,15 @@ prjModule.service("data", [
         headers: {
           "Content-Type": "application/json"
         }
+      });
+    };
+
+    // ********** SEARCHBAR ********** //
+    this.search = function(query) {
+      return $http({
+        method: "POST",
+        url: endpoint + "search",
+        data: { result: query }
       });
     };
 

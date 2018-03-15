@@ -5,12 +5,14 @@
 
     <img class="m-b-20 avatar" src="{{etu.photo}}" alt="Photo de {{ etu.prenom }} {{ etu.nom }}">
 
-    <a class="m-b-20 text-center" ui-sref="trombi.mailto({etu: e.id})">
+    <!-- <a class="m-b-20 text-center" ui-sref="trombi.mailto({etu: e.id})">
         <span>{{ etu.mail }}</span>&nbsp;
         <span class="icon-email text-white text-l"></span>
-    </a>
+    </a> -->
 
-    <p class="m-b-20 text-center" ng-repeat="g in etu.groupes">{{ g.nom}}</p>
-    <p class="m-b-20 text-center" ng-if="etu.alternant == 'true'">Alternant</p>
-    <p class="m-y-20 text-center">{{ etu.pre_diplome }}</p>
+    <p class="m-b-20 text-center">Adresse e-mail : {{etu.mail}}</p>
+    <p class="m-b-20 text-center" ng-repeat="g in etu.groupes">Groupe(s) : {{ g.nom}}</p>
+    <p class="m-b-20 text-center" ng-if="etu.alternant == 1">Statut : Alternant(e)</p>
+    <p class="m-b-20 text-center" ng-if="etu.alternant == 0">Statut : En formation initiale</p>
+    <p class="m-y-20 text-center">Diplôme précédent : {{ etu.pre_diplome }}</p>
 </div>

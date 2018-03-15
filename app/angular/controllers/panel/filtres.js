@@ -47,26 +47,25 @@ prjModule.controller("filtres", [
       },
 
       mail: {
-        // current: function() {
-        //   console.log($scope.filtres.mail.current);
-        // },
-        current: ($stateParams.m = $scope.filtres.mail.current),
-
+        current: $stateParams.m == "true",
         change: function() {
           $state.go(
             $state.current.name,
-            {
-              mail: $scope.filtres.mail.current
-            },
-            {
-              location: true
-            }
+            { m: $scope.filtres.mail.current },
+            { location: true }
           );
-          console.log($stateParams.m);
         }
-
-        //current: $stateParams.m ? $stateParams.m : null,
-        //current: $stateParams.m == "1" ? "true" : "null",
+      },
+      statut: {
+        current: $stateParams.s == "true",
+        change: function() {
+          $state.go(
+            $state.current.name,
+            { s: $scope.filtres.statut.current },
+            { location: true }
+          );
+          console.log($stateParams.s);
+        }
       }
     };
 

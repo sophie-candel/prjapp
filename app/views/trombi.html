@@ -38,16 +38,29 @@
     <div class="maxw-1024 m-center p-40">
 
         <!-- SEARCH BAR -->
+        <!-- <input type="text" placeholder="Recherche d'étudiants' ..." list="search" data-ng-model="search" />
+
+        <datalist id="search">
+            <option data-ng-repeat="s in search" value="{{s.nom}} {{s.prenom}}" />
+        </datalist> -->
+
+
         <div class="m-x-15 screen relative" style="z-index:2;">
             <div class="flex-container is-vertical-centerscreen">
                 <div class="flex-12 flex-container">
                     <div class="w-65 bg-grey1 p-0 flex-container is-horizontal-center is-vertical-center">
                         <span class="icon-magnify text-xl text-white"></span>
                     </div>
-                    <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation...">
+                    <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation..." list="search" data-ng-model="toto">
+
                     <span id="reset-search" class="icon-close text-xl"></span>
                 </div>
             </div>
+
+            <datalist id="search">
+                <option data-ng-repeat="e in search.etudiants" value="{{e.nom}} {{e.prenom}}" />
+                <option data-ng-repeat="f in search.formations" value="{{f.nom}}" />
+            </datalist>
 
             <!-- SEARCH RESULTS -->
 
@@ -99,6 +112,8 @@
                     </div>
                     <p class="p-t-10">{{e.prenom}} {{e.nom}}</p>
                     <p ng-if="currentMail" class="text-s">{{e.mail}}</p>
+                    <p ng-if="currentStatut AND e.alternant == 1" class="text-s">Alternant(e)</p>
+                    <!-- <p ng-if="currentStatut && e.alternant == 0" class="text-s">Formation initiale</p> -->
                 </a>
                 <!-- <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.modifier({etu: e.id_etu})"
                     >

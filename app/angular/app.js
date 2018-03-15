@@ -18,7 +18,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
       controller: "formations"
     })
     .state("trombi", {
-      url: "/trombi/{trombi}/{periode}?g&m",
+      url: "/trombi/{trombi}/{periode}?g&m&s",
       //url: "/trombi/{trombi}?periode&g",
       //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",

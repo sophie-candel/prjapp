@@ -13,28 +13,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-//Route::get('importExport', 'CsvCtr@importExport');
-// Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
 Route::post('importCsv', 'CsvCtr@importCsv');
 
 
-// -------------------------------------------------------- //
-//  FORMATIONS //
-// -------------------------------------------------------- //
-//Route::get('dep', 'DepartementsCtr@index')->middleware('auth:api');
 Route::get('dep', 'DepartementsCtr@index');
 
-
-//Route::get('trombi/{formation}/{annee}/{semestre}', 'EtudiantsCtr@trombi');
 Route::get('trombi/{formation}/{periode}', 'EtudiantsCtr@trombi');
-Route::post('search', 'EtudaintsCtr@search');
 
+
+
+Route::get('search', 'EtudiantsCtr@search');
 
 Route::get('for', 'FormationsCtr@index');
-
-
-// -------------------------------------------------------- //
-//  ETUDIANTS //
-// -------------------------------------------------------- //
 Route::resource('etu', 'EtudiantsCtr');
 

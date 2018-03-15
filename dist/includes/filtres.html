@@ -23,9 +23,14 @@
     <div class="text-left">
       <div class="checkbox m-b-20 m-l-40">
         <input type="checkbox" id="mail" name="mail" ng-model="filtres.mail.current" ng-change="filtres.mail.change()">
-        <!-- <input type="checkbox" id="mail" name="mail" ng-true-value="true" ng-false-value="null" ng-model="filtres.mail.current" ng-change="filtres.mail.change()"> -->
         <label for="mail">Adresse e-mail</label>
-        <p>{{filtres.mail.current}}</p>
+      </div>
+    </div>
+    <div class="text-left">
+      <div class="checkbox m-b-20 m-l-40">
+        <input type="checkbox" id="statut" name="statut" ng-model="filtres.statut.current" ng-change="filtres.statut.change()">
+        <!-- <input type="checkbox" id="mail" name="mail" ng-true-value="true" ng-false-value="null" ng-model="filtres.mail.current" ng-change="filtres.mail.change()"> -->
+        <label for="statut">Statut (alternant ou formation initiale)</label>
       </div>
     </div>
   </div>

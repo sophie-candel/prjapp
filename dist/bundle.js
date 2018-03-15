@@ -18,7 +18,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
       controller: "formations"
     })
     .state("trombi", {
-      url: "/trombi/{trombi}/{periode}?g&m",
+      url: "/trombi/{trombi}/{periode}?g&m&s",
       //url: "/trombi/{trombi}?periode&g",
       //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
@@ -221,6 +221,26 @@ prjModule.controller("trombi", [
       return trombi;
     }
 
+    // ********** SEARCHBAR ********** //
+    // $scope.search = function() {
+    //   $scope.submitted = true;
+    //   data
+    //     .query(
+    //       $scope.query
+    //     )
+    //     .then(function() {
+
+    //     })
+    // }
+
+    let getSearch = function() {
+      data.getSearch().then(function(search) {
+        $scope.search = search;
+        //console.log($scope.search);
+      });
+    };
+    getSearch();
+
     // ********** AFFICHAGE TROMBI ********** //
     let getTrombi = function() {
       const groupe = $state.params.g;
@@ -243,6 +263,7 @@ prjModule.controller("trombi", [
           $scope.currentGroup = groupe;
 
           $scope.currentMail = $stateParams.m;
+          $scope.currentStatut = $stateParams.s;
         });
 
       // }
@@ -370,26 +391,25 @@ prjModule.controller("filtres", [
       },
 
       mail: {
-        current: function() {
-          console.log($scope.filtres.mail.current);
-        },
-        //current: $stateParams.m = $scope.filtres.mail.current,
-
+        current: $stateParams.m == "true",
         change: function() {
           $state.go(
             $state.current.name,
-            {
-              mail: $scope.filtres.mail.current
-            },
-            {
-              location: true
-            }
+            { m: $scope.filtres.mail.current },
+            { location: true }
           );
-          console.log($stateParams.m);
         }
-
-        //current: $stateParams.m ? $stateParams.m : null,
-        //current: $stateParams.m == "1" ? "true" : "null",
+      },
+      statut: {
+        current: $stateParams.s == "true",
+        change: function() {
+          $state.go(
+            $state.current.name,
+            { s: $scope.filtres.statut.current },
+            { location: true }
+          );
+          console.log($stateParams.s);
+        }
       }
     };
 
@@ -488,6 +508,11 @@ prjModule.service("data", [
       });
     }
 
+    // ********** SEARCHBAR ********** //
+    this.getSearch = function() {
+      return makeRequest("search");
+    };
+
     // ********** AFFICHAGE DEPARTEMENTS ********** //
     this.getDpt = function() {
       return makeRequest("dep");
@@ -525,6 +550,15 @@ prjModule.service("data", [
         headers: {
           "Content-Type": "application/json"
         }
+      });
+    };
+
+    // ********** SEARCHBAR ********** //
+    this.search = function(query) {
+      return $http({
+        method: "POST",
+        url: endpoint + "search",
+        data: { result: query }
       });
     };
 

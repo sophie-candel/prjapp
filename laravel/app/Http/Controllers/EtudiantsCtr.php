@@ -144,7 +144,20 @@ class EtudiantsCtr extends Controller {
 
     // public function search(Request $request) {
     //     $query = $request->get('query');
-    //     $etudiants = Etudiant::where
+    //     $etudiants = Etudiant::where('nom', 'LIKE', '%query%')->get();
+    //     return $etudiants;
     // }
+
+    public function search() {
+        $etudiants = Etudiant::all();
+        $formations = Formation::all();
+
+        $result = [
+            'etudiants' => $etudiants,
+            'formations' => $formations
+        ];
+
+        return $result;
+    }
 
 }
