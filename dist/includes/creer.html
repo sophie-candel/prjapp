@@ -1,32 +1,37 @@
 <span class="icon-close text-xl" ng-click="closePanel()"></span>
 <p class="m-b-40 text-l">Créer un nouvel étudiant</p>
 
-<form class="tiny-input" name="createEtuForm" ng-submit="createEtu($valid.createEtuForm)" novalidate>
+<form class="tiny-input" name="createEtuForm" ng-submit="createEtu()">
     <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
-        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom" ng-model="createEtuPrenom" required>
+        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom" ng-model="createEtuPrenom">
 
-        <input class="flex-1 m-l-10 text-center" type="text" name="nom" placeholder="Nom" ng-model="createEtuNom" required>
+        <input class="flex-1 m-l-10 text-center" type="text" name="nom" placeholder="Nom" ng-model="createEtuNom">
     </div>
     <!-- <div class="m-b-20">
-        <input type="file" name="photo" id="photo" class="inputfile" accept="image/*" ng-model="createEtuPhoto" required/>
-        <label for="photo">
+        <input type="file" name="file" id="file" class="inputfile" ng-model="createEtuPhoto" />
+        <label for="file">
             <span class="icon-upload text-xxl"></span>
             <p>Importer une photo</p>
         </label>
     </div> -->
 
-    <input class="m-b-20 text-center" type="email" placeholder="adresse e-mail" ng-model="createEtuEmail" required>
 
-    <!-- <div class="checkbox m-b-20">
-        <input type="checkbox" id="alt" name="alt" required>
+    <input class="m-b-20 text-center" type="email" name="mail" placeholder="adresse e-mail" ng-model="createEtuMail">
+
+    <div class="checkbox m-b-20">
+        <input type="checkbox" id="alt" name="alt" ng-model="createEtuStatut">
         <label for="alt">Alternant(e)</label>
-    </div> -->
+    </div>
 
-    <!-- <input class="m-b-20 text-center" type="text" placeholder="diplôme précédent" required> -->
 
-    <!-- <select ng-options="groupe.nom for groupe in trombi.groupes" ng-model="filtres.groupes.current">
-        <option value="" selected>Groupe</option>
+    <!-- <select class="m-b-20" ng-options="g.groupe as g.groupe for g in trombi.groupes" ng-model="createEtuGroupe">
+        <option value="">Aucun groupe</option>
     </select> -->
+
+
+    <input class="m-b-20 text-center" type="text" name="diplome" placeholder="diplôme précédent" ng-model="createEtuDip">
+
+
 
     <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
         <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>

@@ -113,6 +113,7 @@ gulp.task("watch", function() {
       source + "/scss/*.scss",
       source + "/angular/app.js",
       source + "/angular/controllers/*.js",
+      source + "/angular/controllers/panel/*.js",
       source + "/angular/services/*.js",
       source + "/views/*.html",
       source + "/includes/*.html",

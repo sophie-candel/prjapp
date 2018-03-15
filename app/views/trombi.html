@@ -98,7 +98,7 @@
                         <img ng-src="{{e.photo}}">
                     </div>
                     <p class="p-t-10">{{e.prenom}} {{e.nom}}</p>
-                    <p ng-if="current.mail" class="text-s">{{e.mail}}</p>
+                    <p ng-if="currentMail" class="text-s">{{e.mail}}</p>
                 </a>
                 <!-- <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.modifier({etu: e.id_etu})"
                     >

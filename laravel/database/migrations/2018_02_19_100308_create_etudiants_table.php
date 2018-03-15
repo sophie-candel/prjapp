@@ -20,7 +20,7 @@ class CreateEtudiantsTable extends Migration
             $table->increments('id');
             $table->string('nom', 255);
             $table->string('prenom', 255);
-            $table->boolean('alternant');
+            $table->boolean('alternant')->default(0);
             $table->string('mail', 255);
             $table->string('photo', 255);
             $table->string('pre_diplome', 255);

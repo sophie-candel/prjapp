@@ -6,19 +6,11 @@
   <p class="label">Choisir un trombinoscope : </p>
 
 
-  <!-- <select class="m-b-20" ng-model="filtre_annees">
-    <option value="" selected disabled>Année</option>
-    <option ng-repeat="a in trombi.annees" value="{{ a.annee }}">Année {{ a.annee }}</option>
-  </select>
-
-  <select class="m-b-20" ng-model="filtre_semestres">
-    <option value="" selected disabled>Semestre</option>
-    <option ng-repeat="s in trombi.semestres" value="{{ s.semestre }}">Semestre {{ s.semestre }}</option>
-  </select> -->
 
   <select class="m-b-20" ng-model="filtres.periodes.current" ng-change="filtres.periodes.change()" ng-options="p.id as p.periode for p in trombi.periodes">
     <option value="" selected disabled>Période</option>
   </select>
+  <!-- select as label for value in array -->
 
   <select class="m-b-20" ng-model="filtres.groupes.current" ng-change="filtres.groupes.change()" ng-options="g.groupe as g.groupe for g in trombi.groupes">
     <option value="">Tous les groupes</option>
@@ -26,17 +18,19 @@
 
 
 
-  <!-- <div class="m-y-40">
+  <div class="m-y-40">
     <p class="label">Informations à afficher : </p>
     <div class="text-left">
       <div class="checkbox m-b-20 m-l-40">
-        <input type="checkbox" id="mail" name="mail" ng-true-value="true" ng-false-value="null" ng-model="filtres.mail.current" ng-change="filtres.mail.change()">
+        <input type="checkbox" id="mail" name="mail" ng-model="filtres.mail.current" ng-change="filtres.mail.change()">
+        <!-- <input type="checkbox" id="mail" name="mail" ng-true-value="true" ng-false-value="null" ng-model="filtres.mail.current" ng-change="filtres.mail.change()"> -->
         <label for="mail">Adresse e-mail</label>
+        <p>{{filtres.mail.current}}</p>
       </div>
     </div>
   </div>
 
-  <div>
+  <!-- <div>
     <p class="label">Afficher les étudiants qui sont en : </p>
     <div class="text-left m-b-20 m-l-40">
       <div ng-repeat="option in filtres.alt.options track by $index" class="radio m-b-10 text-left">
@@ -47,11 +41,9 @@
     </div>
   </div> -->
 
-  <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+  <!-- <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
     <button class="flex-1 m-r-10" type="reset" value="" ng-click="closePanel()">Annuler</button>
     <button class="flex-1 m-l-10" type="submit" value="" ng-click="filterTrombi()">Filtrer</button>
-  </div>
-  <!-- <button class="flex-1 m-l-10" type="submit" value="" ng-click="filter()">Filtrer</button>
-  </div>
+  </div> -->
 
 </form>

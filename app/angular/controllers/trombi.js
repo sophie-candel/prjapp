@@ -20,8 +20,8 @@ prjModule.controller("trombi", [
     // ********** AFFICHAGE TROMBI ********** //
     let getTrombi = function() {
       const groupe = $state.params.g;
-      // const mail = $state.params.m;
-      // console.log($state.params.m);
+      //const mail = $state.params.m;
+      //console.log($state.params);
 
       // console.log($scope.trombiGet);
       // if ($stateParams.trombi in $scope.trombiGet) {
@@ -32,12 +32,13 @@ prjModule.controller("trombi", [
         .getTrombi($stateParams.trombi, $stateParams.periode)
         .then(function(trombi, periode) {
           $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
-          $scope.periode = $stateParams.periode;
-
           $scope.trombiComplete = Object.assign({}, trombi);
 
+          $scope.periode = $stateParams.periode;
+
           $scope.currentGroup = groupe;
-          $scope.currentMail = mail;
+
+          $scope.currentMail = $stateParams.m;
         });
 
       // }

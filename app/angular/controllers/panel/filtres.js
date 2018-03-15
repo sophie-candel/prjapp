@@ -9,9 +9,8 @@ prjModule.controller("filtres", [
     $state.go($state.current.name);
   }*/
 
-    // ********** FILTRES ********** //
     $scope.filtres = {
-      // groupes
+      // ********** GROUPES ********** //
       groupes: {
         current: $stateParams.g ? $stateParams.g : null,
         change: function() {
@@ -25,30 +24,50 @@ prjModule.controller("filtres", [
         }
       },
 
-      // periodes
+      // ********** PERIODES ********** //
       periodes: {
         current: $stateParams.periode ? $stateParams.periode : null,
+        // if ($stateParams.periode) {
+        //   $stateParams.periode = $stateParams.periode;
+        // }
+        // else {
+        //   $stateParams.periode = null;
+        // }
         change: function() {
-          //console.log($stateParams.periode);
           $state.go(
             $state.current.name,
-            { periode: $scope.filtres.periodes.current },
+            {
+              periode: $scope.filtres.periodes.current
+            },
             {
               location: true
             }
           );
         }
-      }
+      },
 
-      // affichage email
-      // mail: {
-      //   current: $stateParams.m ? $stateParams.m : null,
-      //   //current: $stateParams.m == "1" ? "true" : "null",
-      //   // current: $stateParams.m == "1" ? "true" : "null",
-      //   change: function() {
-      //     console.log($stateParams.m);
-      //   }
-      // }
+      mail: {
+        // current: function() {
+        //   console.log($scope.filtres.mail.current);
+        // },
+        current: ($stateParams.m = $scope.filtres.mail.current),
+
+        change: function() {
+          $state.go(
+            $state.current.name,
+            {
+              mail: $scope.filtres.mail.current
+            },
+            {
+              location: true
+            }
+          );
+          console.log($stateParams.m);
+        }
+
+        //current: $stateParams.m ? $stateParams.m : null,
+        //current: $stateParams.m == "1" ? "true" : "null",
+      }
     };
 
     // ********** PRINT ********** //

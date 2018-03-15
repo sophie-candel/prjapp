@@ -19,16 +19,18 @@ prjModule.controller("etudiants", [
 
     // ********** CREATION ETUDIANT ********** //
     $scope.createEtu = function(isValid) {
+      //console.log(createEtu);
       $scope.submitted = true;
       data
         .createEtu(
           $scope.createEtuNom,
           $scope.createEtuPrenom,
-          // $scope.createEtuPhoto,
-          $scope.createEtuEmail
+          $scope.createEtuMail,
+          $scope.createEtuDip,
+          $scope.createEtuStatut
         )
         .then(function() {
-          getTrombi();
+          //getTrombi();
           location.reload(true);
         });
     };

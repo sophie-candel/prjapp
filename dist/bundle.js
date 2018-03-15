@@ -18,7 +18,7 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
       controller: "formations"
     })
     .state("trombi", {
-      url: "/trombi/{trombi}/{periode}?g",
+      url: "/trombi/{trombi}/{periode}?g&m",
       //url: "/trombi/{trombi}?periode&g",
       //url: "/trombi/{trombi}",
       //url: "/trombi/{trombi}a&s&g",
@@ -224,8 +224,8 @@ prjModule.controller("trombi", [
     // ********** AFFICHAGE TROMBI ********** //
     let getTrombi = function() {
       const groupe = $state.params.g;
-      // const mail = $state.params.m;
-      // console.log($state.params.m);
+      //const mail = $state.params.m;
+      //console.log($state.params);
 
       // console.log($scope.trombiGet);
       // if ($stateParams.trombi in $scope.trombiGet) {
@@ -236,12 +236,13 @@ prjModule.controller("trombi", [
         .getTrombi($stateParams.trombi, $stateParams.periode)
         .then(function(trombi, periode) {
           $scope.trombi = filterByGroup(Object.assign({}, trombi), groupe);
-          $scope.periode = $stateParams.periode;
-
           $scope.trombiComplete = Object.assign({}, trombi);
 
+          $scope.periode = $stateParams.periode;
+
           $scope.currentGroup = groupe;
-          $scope.currentMail = mail;
+
+          $scope.currentMail = $stateParams.m;
         });
 
       // }
@@ -288,16 +289,18 @@ prjModule.controller("etudiants", [
 
     // ********** CREATION ETUDIANT ********** //
     $scope.createEtu = function(isValid) {
+      //console.log(createEtu);
       $scope.submitted = true;
       data
         .createEtu(
           $scope.createEtuNom,
           $scope.createEtuPrenom,
-          // $scope.createEtuPhoto,
-          $scope.createEtuEmail
+          $scope.createEtuMail,
+          $scope.createEtuDip,
+          $scope.createEtuStatut
         )
         .then(function() {
-          getTrombi();
+          //getTrombi();
           location.reload(true);
         });
     };
@@ -329,9 +332,8 @@ prjModule.controller("filtres", [
     $state.go($state.current.name);
   }*/
 
-    // ********** FILTRES ********** //
     $scope.filtres = {
-      // groupes
+      // ********** GROUPES ********** //
       groupes: {
         current: $stateParams.g ? $stateParams.g : null,
         change: function() {
@@ -345,30 +347,50 @@ prjModule.controller("filtres", [
         }
       },
 
-      // periodes
+      // ********** PERIODES ********** //
       periodes: {
         current: $stateParams.periode ? $stateParams.periode : null,
+        // if ($stateParams.periode) {
+        //   $stateParams.periode = $stateParams.periode;
+        // }
+        // else {
+        //   $stateParams.periode = null;
+        // }
         change: function() {
-          //console.log($stateParams.periode);
           $state.go(
             $state.current.name,
-            { periode: $scope.filtres.periodes.current },
+            {
+              periode: $scope.filtres.periodes.current
+            },
             {
               location: true
             }
           );
         }
-      }
+      },
 
-      // affichage email
-      // mail: {
-      //   current: $stateParams.m ? $stateParams.m : null,
-      //   //current: $stateParams.m == "1" ? "true" : "null",
-      //   // current: $stateParams.m == "1" ? "true" : "null",
-      //   change: function() {
-      //     console.log($stateParams.m);
-      //   }
-      // }
+      mail: {
+        current: function() {
+          console.log($scope.filtres.mail.current);
+        },
+        //current: $stateParams.m = $scope.filtres.mail.current,
+
+        change: function() {
+          $state.go(
+            $state.current.name,
+            {
+              mail: $scope.filtres.mail.current
+            },
+            {
+              location: true
+            }
+          );
+          console.log($stateParams.m);
+        }
+
+        //current: $stateParams.m ? $stateParams.m : null,
+        //current: $stateParams.m == "1" ? "true" : "null",
+      }
     };
 
     // ********** PRINT ********** //
@@ -473,17 +495,11 @@ prjModule.service("data", [
 
     // ********** AFFICHAGE TROMBI ********** //
     this.getTrombi = function(id, periode) {
-      //console.log("id : " + id);
-      //console.log("periode : " + periode);
-
       var req = "trombi/" + id + "/" + periode;
-      //var req = "trombi/" + id + "/5";
-
-      //console.log("requête : " + req);
-      //console.log($stateParams);
       return makeRequest(req);
     };
 
+    // ********** AFFICHAGE ETUDIANT ********** //
     this.getEtu = function(id) {
       return makeRequest("etu/" + id);
     };
@@ -492,8 +508,9 @@ prjModule.service("data", [
     this.createEtu = function(
       createEtuNom,
       createEtuPrenom,
-      createEtuPhoto,
-      createEtuEmail
+      createEtuMail,
+      createEtuDip,
+      createEtuStatut
     ) {
       return $http({
         method: "POST",
@@ -501,8 +518,9 @@ prjModule.service("data", [
         data: {
           nom: createEtuNom,
           prenom: createEtuPrenom,
-          // photo: createEtuPhoto,
-          email: createEtuEmail
+          mail: createEtuMail,
+          diplome: createEtuDip,
+          alt: createEtuStatut
         },
         headers: {
           "Content-Type": "application/json"

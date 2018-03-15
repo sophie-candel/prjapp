@@ -12,12 +12,12 @@ use App\Periode;
 use Illuminate\Http\Request;
 
 class EtudiantsCtr extends Controller {
-    function index(){
+    public function index(){
         return Etudiant::with('groupes')
         ->get();
     }
 
-    function show($id){
+    public function show($id){
         $etu = Etudiant::with('groupes')
         ->where('etudiants.id', '=', $id)
         ->get();
@@ -27,25 +27,33 @@ class EtudiantsCtr extends Controller {
         return $result;
     }
 
-    function store(Request $request) {
+
+    public function store(Request $request) {
         $request->validate([
             'nom'=>'required|string',
             'prenom'=>'required|string',
-            'alternant' => 'filled|boolean', 
             'mail' => 'required|string',
-            'photo' => 'required|string',
-            'pre_diplome' => 'required|string'
+            'diplome' => 'required|string',
+            'alt' => 'boolean'
+            // 'file' => 'required|file|mimetypes:image/jpeg,image/png'
         ]);
         $etudiant = new Etudiant;
         $etudiant->nom = $request->input('nom');
         $etudiant->prenom = $request->input('prenom');
-        $etudiant->alternant = $request->input('alternant');
         $etudiant->mail = $request->input('mail');
-        // $etudiant->photo = $request->input('photo');
-        $etudiant->pre_diplome = $request->input('pre_diplome');
+        $etudiant->pre_diplome = $request->input('diplome');
+        $etudiant->alternant = $request->input('alt');
+        //$etudiant->photo = $request->file->getClientOriginalName();
         $etudiant->save();
+        //$request->file->storeAs('assets', $etudiant->photo, 'public');
 
-        return $etudiant;
+
+        $etu = $etudiant->id;
+
+        return $etu;
+
+        
+
     }
 
     private function concatGroupes($etu) {
@@ -75,36 +83,17 @@ class EtudiantsCtr extends Controller {
 
     public function trombi($id_formation, $id_periode) {
 
-        // if(isset($id_periode) && !empty($id_periode)) {
-        //     $id_periode = $id_periode;
-        // }
-        // else {
-        // // calculer la période en cours
-        //     $id_periode = "5";
-        // }
-
         // FORMATION
         $for_actuelle = Formation::with('departement')
         ->where('formations.id', '=', $id_formation)
         ->get();
 
-        // PERIODE 
-        // $periode = Periode::where('periodes.id', '=', $id_periode)
-        // ->select(
-        //     'periodes.annee as annee',
-        //     'periodes.semestre as semestre'
-        // )
-        // ->get();
-
-        $periode = \DB::table('periodes')
-        //->selectRaw('CONCAT(annee, \' S\', semestre) AS periode, id')
-        ->where('id', '=', $id_periode)
-        //->orderBy('periode')
-        //->distinct()
+        // PERIODE EN COURS
+        $periode_actuelle = Periode::where('id', '=', $id_periode)
         ->get();
 
         // ETUDIANTS
-        $etu = \DB::table('etudiants')
+        $etudiants = \DB::table('etudiants')
         ->select(
             'etudiants.id as id',
             'etudiants.nom as nom',
@@ -129,60 +118,33 @@ class EtudiantsCtr extends Controller {
         ->get();
 
 
-        //SELECT DISTINCT CONCAT(annee, "-", annee_fin) AS annee FROM periodes ORDER BY annee DESC)
-        // SELECT DISTINCT annee-debut, CONCAT(annee, "-", annee_fin) AS annee FROM periodes ORDER BY annee DESC;
-        
-        // $liste_periodes = \DB::table('periodes')
-        // ->get();
-
-
+        // SELECT PERIODES
         $liste_periodes = \DB::table('periodes')
-        ->selectRaw('CONCAT(annee, \' - Semestre \', semestre) AS periode, id')
-        ->orderBy('periode')
-        ->distinct()
+        ->selectRaw('CONCAT(annee, \' - Semestre \', semestre) AS periode, periodes.id as id')
+        ->join ('formations_periodes', 'periodes.id', 'formations_periodes.periode_id')
+        ->where('formations_periodes.formation_id', '=', $id_formation)
         ->get();
 
 
-        // $liste_periodes = Formation::with('periodes')
-        // // ->select(
-        // //     'periodes.annee as periode'
-        // // )
-        // //->selectRaw('CONCAT(periodes.annee, \' - Semestre \', periodes.semestre) AS periode, periodes.id as id')
-        // ->where('formations.id', '=', $id_formation)
-        // ->get();
-        
-        
-        // $liste_annees = \DB::table('periodes')
-        // ->select(
-        //     'periodes.annee as annee'
-        // )
-        // ->orderBy('annee')
-        // ->distinct()
-        // ->get();
-
-        // $liste_semestres = \DB::table('periodes')
-        // ->select(
-        //     'periodes.semestre as semestre'
-        // )
-        // ->distinct()
-        // ->get();
-
-        $liste_groupes = \DB::table('groupes')
-        ->select('groupes.nom as groupe')
+        // SELECT GROUPES
+        $liste_groupes = Groupe::select('groupes.nom as groupe')
         ->where('groupes.formation_id', '=', $id_formation)
         ->get();
 
         $result = [
             'formation'     => $for_actuelle,
-            'periode' => $periode,
-            'etudiants'     => $this->concatGroupes($etu),
-            // 'annees' => $liste_annees,
-            // 'semestres' => $liste_semestres,
+            'periode' => $periode_actuelle,
+            'etudiants'     => $this->concatGroupes($etudiants),
             'periodes' => $liste_periodes,
             'groupes' => $liste_groupes
         ];
         return $result;
     }
 
+
+    // public function search(Request $request) {
+    //     $query = $request->get('query');
+    //     $etudiants = Etudiant::where
+    // }
 
 }

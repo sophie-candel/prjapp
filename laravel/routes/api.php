@@ -27,6 +27,7 @@ Route::get('dep', 'DepartementsCtr@index');
 
 //Route::get('trombi/{formation}/{annee}/{semestre}', 'EtudiantsCtr@trombi');
 Route::get('trombi/{formation}/{periode}', 'EtudiantsCtr@trombi');
+Route::post('search', 'EtudaintsCtr@search');
 
 
 Route::get('for', 'FormationsCtr@index');

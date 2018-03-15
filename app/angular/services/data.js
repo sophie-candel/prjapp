@@ -21,17 +21,11 @@ prjModule.service("data", [
 
     // ********** AFFICHAGE TROMBI ********** //
     this.getTrombi = function(id, periode) {
-      //console.log("id : " + id);
-      //console.log("periode : " + periode);
-
       var req = "trombi/" + id + "/" + periode;
-      //var req = "trombi/" + id + "/5";
-
-      //console.log("requête : " + req);
-      //console.log($stateParams);
       return makeRequest(req);
     };
 
+    // ********** AFFICHAGE ETUDIANT ********** //
     this.getEtu = function(id) {
       return makeRequest("etu/" + id);
     };
@@ -40,8 +34,9 @@ prjModule.service("data", [
     this.createEtu = function(
       createEtuNom,
       createEtuPrenom,
-      createEtuPhoto,
-      createEtuEmail
+      createEtuMail,
+      createEtuDip,
+      createEtuStatut
     ) {
       return $http({
         method: "POST",
@@ -49,8 +44,9 @@ prjModule.service("data", [
         data: {
           nom: createEtuNom,
           prenom: createEtuPrenom,
-          // photo: createEtuPhoto,
-          email: createEtuEmail
+          mail: createEtuMail,
+          diplome: createEtuDip,
+          alt: createEtuStatut
         },
         headers: {
           "Content-Type": "application/json"
