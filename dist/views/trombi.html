@@ -23,9 +23,9 @@
             <span class="icon-download text-xl"></span>
             <p class="uppercase text-xs">exporter</p>
         </a>
-        <a ng-click="openPanel()" ui-sref="trombi.mail">
-            <span class="icon-email text-xl"></span>
-            <p class="uppercase text-xs desktop">envoyer un message</p>
+        <a ng-click="openPanel()" ui-sref="trombi.migrer">
+            <span class="icon-migrer text-xl"></span>
+            <p class="uppercase text-xs desktop">migrer</p>
         </a>
     </div>
     <div id="panelContent" class="w-400 p-40 bg-grey1 text-center relative" ui-view="panel">
@@ -91,14 +91,12 @@
                     <p class="text-xl weight-600" ng-style="{'color':f.departement.couleur}">{{f.nom}}
                         <span class="text-m" ng-if="currentGroup"> {{currentGroup}}</span>
                     </p>
-                    <!-- <button class="ghost-button screen uppercase desktop w-100 m-l-10" ng-click="openPanel()" ui-sref="trombi.migrer">Migrer</button> -->
                 </div>
 
                 <div ng-repeat="p in trombi.periode">
                     <p class="text-l m-y-5">Année {{p.annee}}</p>
                     <p class="text-l">Semestre {{p.semestre}}</p>
                 </div>
-                <!-- <p class="text-m m-t-10" ng-if="current.alt">Étudiant(e)s en {{current.alt}}</p> -->
             </div>
 
 
@@ -112,17 +110,11 @@
                     </div>
                     <p class="p-t-10">{{e.prenom}} {{e.nom}}</p>
                     <p ng-if="currentMail" class="text-s">{{e.mail}}</p>
-                    <p ng-if="currentStatut AND e.alternant == 1" class="text-s">Alternant(e)</p>
-                    <!-- <p ng-if="currentStatut && e.alternant == 0" class="text-s">Formation initiale</p> -->
-                </a>
-                <!-- <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.modifier({etu: e.id_etu})"
-                    >
-                    <div class="trombiGrid__img">
-                        <img src="{{e.photo}}">
+                    <div ng-if="currentStatut">
+                        <p ng-if="e.alternant == 1" class="text-s">Alternant(e)</p>
+                        <p ng-if="e.alternant == 0" class="text-s">Formation initiale</p>
                     </div>
-                    <p class="p-t-10">{{e.prenom}} {{e.nom}}</p>
-                    <p ng-if="current.mail" class="text-s">{{e.mail}}</p>
-                </a> -->
+                </a>
             </div>
 
         </div>

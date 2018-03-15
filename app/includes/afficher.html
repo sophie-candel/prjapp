@@ -10,7 +10,9 @@
         <span class="icon-email text-white text-l"></span>
     </a> -->
 
-    <p class="m-b-20 text-center">Adresse e-mail : {{etu.mail}}</p>
+    <p class="m-b-20 text-center">Adresse e-mail :
+        <a href="mailto:{{etu.mail}}" style="display:inline;">{{etu.mail}}</a>
+    </p>
     <p class="m-b-20 text-center" ng-repeat="g in etu.groupes">Groupe(s) : {{ g.nom}}</p>
     <p class="m-b-20 text-center" ng-if="etu.alternant == 1">Statut : Alternant(e)</p>
     <p class="m-b-20 text-center" ng-if="etu.alternant == 0">Statut : En formation initiale</p>

@@ -427,6 +427,12 @@ prjModule.controller("panel", [
   "$location",
   "data",
   function($scope, $state, $stateParams, $location, data) {
+    if ($state.current.name == "trombi.migrer") {
+      $scope.dropdown = function() {
+        $(".fakeselect-content").toggleClass("active");
+        $(".fakeselect").toggleClass("active");
+      };
+    }
     /*if ($state.current.name != 'trombi.afficher' || $state.current.name != 'trombi.modifier') {
     $state.go($state.current.name);
   }*/
