@@ -1,35 +1,53 @@
 <span class="icon-close text-xl" ng-click="closePanel()"></span>
 <p class="m-b-40 text-l">Créer un nouvel étudiant</p>
 
-<form class="tiny-input" name="createEtuForm" ng-submit="createEtu()">
-    <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
-        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom" ng-model="createEtuPrenom">
+<!-- <a ng-click="getParams()">GET PARAMS</a> -->
 
-        <input class="flex-1 m-l-10 text-center" type="text" name="nom" placeholder="Nom" ng-model="createEtuNom">
+<!-- <p>periode = {{periode}}</p>
+<p>formation = {{for}}</p> -->
+
+
+
+<form class="tiny-input" name="createEtuForm" ng-submit="createEtu(createEtuPhoto)">
+
+    <input type="hidden" name="periode" ng-model="createEtuPeriode">
+    <input type="hidden" name="formation" ng-model="createEtuFormation">
+
+
+
+    <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
+        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom..." ng-model="createEtuPrenom">
+
+        <input class="flex-1 m-l-10 text-center" type="text" name="nom" placeholder="Nom..." ng-model="createEtuNom">
     </div>
-    <!-- <div class="m-b-20">
-        <input type="file" name="file" id="file" class="inputfile" ng-model="createEtuPhoto" />
-        <label for="file">
+    <div class="m-b-20">
+        <input class="inputfile" type="file" name="photo" id="photo" ng-model="createEtuPhoto" ngf-select="" ngf-pattern="'image/*'"
+            ngf-accept="'image/*'" ngf-max-size="20MB" />
+        <label for="photo">
             <span class="icon-upload text-xxl"></span>
             <p>Importer une photo</p>
         </label>
-    </div> -->
+    </div>
+    <img ngf-src="createEtuPhoto" style="height: 100px;">
 
 
-    <input class="m-b-20 text-center" type="email" name="mail" placeholder="adresse e-mail" ng-model="createEtuMail">
+    <input class="m-b-20 text-center" type="email" name="mail" placeholder="Adresse e-mail..." ng-model="createEtuMail">
 
     <div class="checkbox m-b-20">
         <input type="checkbox" id="alt" name="alt" ng-model="createEtuStatut">
         <label for="alt">Alternant(e)</label>
     </div>
 
+    <!-- <p>{{filtres.groupes.current}}</p> -->
+    <select class="m-b-20" name="groupe" ng-model="createEtuGroupe" ng-options="g.id as g.groupe for g in trombi.groupes">
+        <option value="" disabled>Groupe</option>
+    </select>
 
-    <!-- <select class="m-b-20" ng-options="g.groupe as g.groupe for g in trombi.groupes" ng-model="createEtuGroupe">
-        <option value="">Aucun groupe</option>
-    </select> -->
 
 
-    <input class="m-b-20 text-center" type="text" name="diplome" placeholder="diplôme précédent" ng-model="createEtuDip">
+
+
+    <input class="m-b-20 text-center" type="text" name="diplome" placeholder="Diplôme précédent..." ng-model="createEtuDip">
 
 
 

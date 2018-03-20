@@ -37,8 +37,11 @@ a {
 .label {
   text-align: left;
   font-size: $font-size-s;
-  font-style: italic;
+  //font-style: italic;
   margin-bottom: 10px;
+  padding-bottom: 3px;
+  //border-bottom: solid 1px #c3c0c0;
+  color: #c3c0c0;
 }
 
 // SIZE

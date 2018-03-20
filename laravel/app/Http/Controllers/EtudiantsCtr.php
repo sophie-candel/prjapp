@@ -32,28 +32,58 @@ class EtudiantsCtr extends Controller {
         $request->validate([
             'nom'=>'required|string',
             'prenom'=>'required|string',
+            //'photo' => 'filled|string',
             'mail' => 'required|string',
             'diplome' => 'required|string',
-            'alt' => 'boolean'
-            // 'file' => 'required|file|mimetypes:image/jpeg,image/png'
+            //'alt' => 'boolean',
+            'groupe' => 'required|integer',
+            'periode' => 'required|integer',
+            'formation' => 'required|integer',
+            'file' => 'filled|file|mimetypes:image/jpeg,image/png'
         ]);
+        $groupe = $request->groupe;
+        $periode = $request->periode;
+        $formation = $request->formation;
+
         $etudiant = new Etudiant;
         $etudiant->nom = $request->input('nom');
         $etudiant->prenom = $request->input('prenom');
         $etudiant->mail = $request->input('mail');
         $etudiant->pre_diplome = $request->input('diplome');
-        $etudiant->alternant = $request->input('alt');
-        //$etudiant->photo = $request->file->getClientOriginalName();
+        //$etudiant->alternant = $request->input('alt', 0);
+        
+        // RENOMMER PHOTO
+        $photoName = $etudiant->nom.$etudiant->prenom;
+        $photoExtension = $request->file->getClientOriginalExtension();
+        $photoPath = "./sources/img/";
+        $etudiant->photo = $photoPath.$photoName.'.'.$photoExtension;
+
+
         $etudiant->save();
-        //$request->file->storeAs('assets', $etudiant->photo, 'public');
+        $request->file->storeAs('', $photoName.'.'.$photoExtension, 'photos');
 
 
-        $etu = $etudiant->id;
+        // PIVOT TABLES
+        $etudiant->groupes()->attach($groupe);
+        
+        $etudiant->formations()->attach(
+            $etudiant->id, 
+            array(
+                "formation_id"=>$formation, 
+                "periode_id"=>$periode)
+        );
 
-        return $etu;
+        return $etudiant;
 
         
 
+    }
+
+    public function destroy($id) {
+        $etudiant = \App\Etudiant::findOrFail($id);
+        $etudiant->delete();
+        //Storage::delete('public/assets/'.$etudiant->filename);
+        //return ;
     }
 
     private function concatGroupes($etu) {
@@ -127,7 +157,7 @@ class EtudiantsCtr extends Controller {
 
 
         // SELECT GROUPES
-        $liste_groupes = Groupe::select('groupes.nom as groupe')
+        $liste_groupes = Groupe::select('groupes.nom as groupe', 'groupes.id as id')
         ->where('groupes.formation_id', '=', $id_formation)
         ->get();
 

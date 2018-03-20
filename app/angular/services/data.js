@@ -2,7 +2,8 @@ prjModule.service("data", [
   "$http",
   "$state",
   "$stateParams",
-  function($http, $state, $stateParams) {
+  "$q",
+  function($http, $state, $stateParams, $q) {
     const endpoint = "http://127.0.0.1:8000/api/";
 
     function makeRequest(req) {
@@ -35,29 +36,49 @@ prjModule.service("data", [
       return makeRequest("etu/" + id);
     };
 
-    // ********** CREATION ETUDIANT ********** //
-    this.createEtu = function(
-      createEtuNom,
-      createEtuPrenom,
-      createEtuMail,
-      createEtuDip,
-      createEtuStatut
-    ) {
+    // ********** SUPPRESSION ETUDIANT ********** //
+    this.destroyEtu = function(id) {
       return $http({
-        method: "POST",
-        url: endpoint + "etu/",
-        data: {
-          nom: createEtuNom,
-          prenom: createEtuPrenom,
-          mail: createEtuMail,
-          diplome: createEtuDip,
-          alt: createEtuStatut
-        },
+        method: "DELETE",
+        url: endpoint + "etu/" + id,
         headers: {
           "Content-Type": "application/json"
         }
       });
     };
+
+    // ********** CREATION ETUDIANT ********** //
+
+    // this.createEtu = function(
+    //   createEtuNom,
+    //   createEtuPrenom,
+    //   createEtuMail,
+    //   createEtuDip,
+    //   createEtuStatut,
+    //   createEtuPhoto,
+    //   createEtuGroupe,
+    //   createEtuPeriode,
+    //   createEtuFormation
+    // ) {
+    //   return $http({
+    //     method: "POST",
+    //     url: endpoint + "etu/",
+    //     data: {
+    //       nom: createEtuNom,
+    //       prenom: createEtuPrenom,
+    //       photo: createEtuPhoto,
+    //       mail: createEtuMail,
+    //       diplome: createEtuDip,
+    //       alt: createEtuStatut,
+    //       groupe: createEtuGroupe,
+    //       periode: createEtuPeriode,
+    //       formation: createEtuFormation
+    //     },
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     }
+    //   });
+    // };
 
     // ********** SEARCHBAR ********** //
     this.search = function(query) {

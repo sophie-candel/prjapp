@@ -1,43 +1,50 @@
-<span class="icon-close text-xl" ng-click="closePanel()"></span>
-<form class="tiny-input">
-    <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
-        <input class="flex-1 m-r-10 text-center" type="text" name="prenom" ng-model="etu.prenom" ng-value="etu.prenom" placeholder="Prénom"
-            required>
-        <input class="flex-1 m-l-10 text-center" type="text" name="nom" ng-model="etu.nom" ng-value="etu.nom" placeholder="Nom" required>
-    </div>
+<div ng-repeat="etu in etu.etudiant">
+    <span class="icon-close text-xl" ng-click="closePanel()"></span>
+    <form class="tiny-input">
+        <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
+            <input class="flex-1 m-r-10 text-center" type="text" name="prenom" ng-model="etu.prenom" value="etu.prenom" placeholder="Prénom">
+            <input class="flex-1 m-l-10 text-center" type="text" name="nom" ng-model="etu.nom" value="etu.nom" placeholder="Nom">
+        </div>
 
-    <div class="m-b-20">
-        <input type="file" name="photo" id="photo" class="inputfile" data-multiple-caption="{count} files selected" multiple />
-        <label for="photo" ng-style="{'background': 'url('+etu.photo+')', 'background-size': 'cover'}">
-            <span class="icon-upload text-xxl"></span>
-            <p>Importer une photo</p>
-        </label>
-    </div>
+        <!-- <div class="m-b-20">
+                <input type="file" name="photo" id="photo" class="inputfile" data-multiple-caption="{count} files selected" multiple />
+                <label for="photo" ng-style="{'background': 'url('+etu.photo+')', 'background-size': 'cover'}">
+                    <span class="icon-upload text-xxl"></span>
+                    <p>Importer une photo</p>
+                </label>
+            </div> -->
 
-    <input class="m-b-20 text-center" type="email" placeholder="Adresse e-mail" ng-model="etu.mail" ng-value="etu.mail">
-    <!-- <div class="fakeselect m-b-20">
-      <span>Groupes</span>
-      <div class="fakeselect-content">
-        <ul class="m-l-10">
-          <li class="text-left" ng-repeat="">
-            <div class="checkbox m-b-10">
-              <input type="checkbox" id="" name="" checked>
-              <label for="">{{}} {{}}</label>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div> -->
+        <img class="m-b-20 avatar" src="{{etu.photo}}" alt="Photo de {{etu.prenom}} {{etu.nom}}">
 
-    <div class="checkbox m-b-20">
-        <input type="checkbox" id="alt" name="alt" ng-true-value="true" ng-false-value="false" ng-model="etu.alternant">
-        <label for="alt">Alternant(e)</label>
-    </div>
+        <input class="m-b-20 text-center" type="email" placeholder="Adresse e-mail" ng-model="etu.mail" value="{{etu.mail}}">
+        <!-- <div class="fakeselect m-b-20">
+                  <span>Groupes</span>
+                  <div class="fakeselect-content">
+                    <ul class="m-l-10">
+                      <li class="text-left" ng-repeat="">
+                        <div class="checkbox m-b-10">
+                          <input type="checkbox" id="" name="" checked>
+                          <label for="">{{}} {{}}</label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div> -->
 
-    <input class="m-b-20 text-center" type="text" ng-model="etu.pre_diplome" ng-value="etu.pre_diplome" placeholder="Précédent diplome">
+        <div class="checkbox m-b-20">
+            <input type="checkbox" id="alt" name="alt" ng-true-value="true" ng-false-value="false" ng-model="etu.alternant">
+            <label for="alt">Alternant(e)</label>
+        </div>
 
-    <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
-        <button class="flex-1 m-r-10" type="reset" ng-click="closePanel()">Annuler</button>
-        <button class="flex-1 m-l-10" type="submit">Enregistrer</button>
-    </div>
-</form>
+        <input class="m-b-20 text-center" type="text" ng-model="etu.pre_diplome" value="{{etu.pre_diplome}}" placeholder="Précédent diplome">
+
+        <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
+            <button class="flex-1 m-r-10" type="reset" ng-click="closePanel()">Annuler</button>
+            <button class="flex-1 m-l-10" type="submit">Enregistrer</button>
+        </div>
+        <button class="bg-grey1" ng-click="destroyEtu(etu.id)">
+            <span class="icon-delete"></span>
+            Supprimer l'étudiant
+        </button>
+    </form>
+</div>

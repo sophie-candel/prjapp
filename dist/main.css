@@ -1796,9 +1796,18 @@ textarea,
   width: 100%;
   padding: 20px;
   resize: vertical;
-  color: #828282;
+  color: #333;
   border: 0;
+  border-radius: 5px;
   background-color: #f2f2f2;
+}
+
+#panelContent input,
+#panelContent select,
+#panelContent textarea,
+#panelContent .fakeselect {
+  border: solid 1px #c3c0c0;
+  background-color: white !important;
 }
 
 label {
@@ -1810,10 +1819,11 @@ label {
 .tiny-input > select,
 .tiny-input > textarea,
 .tiny-input > button {
-  padding: 10px !important;
+  padding: 8px !important;
 }
 
 select {
+  height: 37px;
   text-align-last: center;
 }
 
@@ -1829,37 +1839,25 @@ button {
   cursor: pointer;
   color: white;
   border: 0 !important;
+  border-radius: 5px;
 }
 
-button[type=submit] {
+button[type='submit'] {
+  border-radius: 5px !important;
   background-color: #4caf50;
 }
 
-button[type=reset] {
+button[type='reset'] {
+  border-radius: 5px !important;
   background-color: #ce1b1b;
 }
 
-button[type=submit]:hover {
+button[type='submit']:hover {
   background-color: #45a049;
 }
 
-button[type=reset]:hover {
+button[type='reset']:hover {
   background-color: #aa1616;
-}
-
-.ghost-button {
-  padding: 10px;
-  color: #bdbdbd;
-  border: 1px solid #bdbdbd !important;
-  background-color: white;
-}
-
-.ghost-button:hover {
-  -webkit-transition: .5s;
-  transition: .5s;
-  color: #333;
-  border: 1px solid #333 !important;
-  border-radius: 4px;
 }
 
 .checkbox input,
@@ -1873,7 +1871,7 @@ button[type=reset]:hover {
 .checkbox label,
 .radio label {
   position: relative;
-  margin-left: 50px;
+  margin-left: 10px;
 }
 
 .checkbox label::before,
@@ -1885,8 +1883,9 @@ button[type=reset]:hover {
   height: 30px;
   margin-top: -6px;
   content: '';
-  border: 5px solid #f2f2f2;
-  background: #f2f2f2;
+  border: 1px solid #c3c0c0;
+  border-radius: 5px;
+  background: white;
 }
 
 .checkbox input:checked + label::before,
@@ -1912,7 +1911,7 @@ button[type=reset]:hover {
 .fakeselect a {
   width: 100%;
   height: 100%;
-  padding: 10px !important;
+  padding: 5px !important;
   cursor: default;
   color: #828282 !important;
 }
@@ -1965,15 +1964,8 @@ button[type=reset]:hover {
   padding: 70px 20px 20px 20px;
   cursor: pointer;
   text-align: center;
-  color: #828282;
-  background-color: #f2f2f2;
-}
-
-.inputfile:focus + label,
-.inputfile + label:hover,
-#panelContent input:hover,
-#panelContent select:hover,
-#panelContent textarea:hover {
+  color: #333;
+  border: solid 1px #c3c0c0;
   background-color: white;
 }
 
@@ -2002,9 +1994,10 @@ a {
 
 .label {
   font-size: .8rem;
-  font-style: italic;
   margin-bottom: 10px;
+  padding-bottom: 3px;
   text-align: left;
+  color: #c3c0c0;
 }
 
 .text-xxs {
@@ -2166,8 +2159,8 @@ strong {
 
 #wrapper {
   margin-right: 100px;
-  -webkit-transition: all  .3s ease;
-  transition: all  .3s ease;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
 }
 
 @media screen and (max-width: 544px) {
@@ -2239,6 +2232,7 @@ strong {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
+  background-color: #f5f5f5;
 }
 
 @media screen and (max-width: 544px) {
@@ -2300,7 +2294,7 @@ strong {
 }
 
 .avatar {
-  max-width: 90%;
+  max-width: 100%;
   height: auto;
 }
 
@@ -2385,7 +2379,7 @@ strong {
 .trombiGrid .trombiGrid__elt .trombiGrid__img:before {
   display: block;
   width: 100%;
-  padding-top: calc((1/1)*100%);
+  padding-top: calc((1 / 1) * 100%);
   content: '';
 }
 

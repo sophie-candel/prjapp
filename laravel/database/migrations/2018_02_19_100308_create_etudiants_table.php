@@ -20,11 +20,12 @@ class CreateEtudiantsTable extends Migration
             $table->increments('id');
             $table->string('nom', 255);
             $table->string('prenom', 255);
-            $table->boolean('alternant')->default(0);
+            $table->boolean('alternant')->nullable();
             $table->string('mail', 255);
             $table->string('photo', 255);
             $table->string('pre_diplome', 255);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

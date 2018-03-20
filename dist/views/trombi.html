@@ -1,7 +1,7 @@
 <div class="resultbox-bg"></div>
 
 <!-- Barre de navigation latérale -->
-<div id="panel" class="screen fixed text-center text-white flex-container">
+<div id="panel" class="screen fixed text-center flex-container">
     <div id="panelNav" class="w-100 p-20" ng-repeat="f in trombi.formation" ng-style="{'background-color':f.departement.couleur}">
         <a class="m-b-60" ng-click="openPanel()" ui-sref="trombi.filtres">
             <span class="icon-tune text-xl"></span>
@@ -28,13 +28,14 @@
             <p class="uppercase text-xs desktop">migrer</p>
         </a>
     </div>
-    <div id="panelContent" class="w-400 p-40 bg-grey1 text-center relative" ui-view="panel">
+    <div id="panelContent" class="w-400 p-40 text-center relative " ui-view="panel">
 
     </div>
 </div>
 
 
 <div id="wrapper">
+    <!-- <div class="p-10 text-center" style="background: #ce1b1b; color: white;">ALERT</div> -->
     <div class="maxw-1024 m-center p-40">
 
         <!-- SEARCH BAR -->
@@ -103,7 +104,7 @@
 
             <div class="trombiGrid flex-container text-center">
                 <!-- <p class="text-l m-x-15 m-y-40" ng-if="!trombi.etudiants[0]">Il n'y a pas d'étudiants correspondant à ces critères.</p> -->
-                <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.afficher({etu: e.id})"
+                <a class="trombiGrid__elt m-x-15 m-b-40" ng-repeat="e in trombi.etudiants" ng-click="openPanel()" ui-sref="trombi.modifier({etu: e.id})"
                     | filter: filter>
                     <div class="trombiGrid__img">
                         <img ng-src="{{e.photo}}">

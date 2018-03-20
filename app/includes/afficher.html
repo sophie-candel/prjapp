@@ -10,11 +10,16 @@
         <span class="icon-email text-white text-l"></span>
     </a> -->
 
-    <p class="m-b-20 text-center">Adresse e-mail :
+    <p class="m-b-20 text-center">
+        <b>Adresse e-mail :</b>
         <a href="mailto:{{etu.mail}}" style="display:inline;">{{etu.mail}}</a>
     </p>
-    <p class="m-b-20 text-center" ng-repeat="g in etu.groupes">Groupe(s) : {{ g.nom}}</p>
-    <p class="m-b-20 text-center" ng-if="etu.alternant == 1">Statut : Alternant(e)</p>
-    <p class="m-b-20 text-center" ng-if="etu.alternant == 0">Statut : En formation initiale</p>
-    <p class="m-y-20 text-center">Diplôme précédent : {{ etu.pre_diplome }}</p>
+    <p class="m-b-20 text-center" ng-repeat="g in etu.groupes">
+        <b>Groupe(s) :</b> {{ g.nom}}</p>
+    <p class="m-b-20 text-center" ng-if="etu.alternant == 1">
+        <b>Statut :</b> Alternant(e)</p>
+    <p class="m-b-20 text-center" ng-if="etu.alternant == 0">
+        <b>Statut :</b> Formation initiale</p>
+    <p class="m-y-20 text-center">
+        <b>Diplôme précédent :</b> {{ etu.pre_diplome }}</p>
 </div>

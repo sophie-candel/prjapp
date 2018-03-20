@@ -19,7 +19,7 @@ class CreateInscriptionsTable extends Migration
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
             $table->integer('etudiant_id')->unsigned();
-            $table->foreign('etudiant_id')->references('id')->on('etudiants');
+            $table->foreign('etudiant_id')->references('id')->on('etudiants')->onDelete('cascade');;
 
             $table->integer('formation_id')->unsigned();
             $table->foreign('formation_id')->references('id')->on('formations');
@@ -27,7 +27,8 @@ class CreateInscriptionsTable extends Migration
             $table->integer('periode_id')->unsigned();
             $table->foreign('periode_id')->references('id')->on('periodes');
             
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

@@ -1,5 +1,9 @@
-var app = angular.module("prjApp", ["prjModule"]);
-var prjModule = angular.module("prjModule", ["ui.router", "ngStorage"]);
+//var app = angular.module("prjApp", ["prjModule"]);
+var prjModule = angular.module("prjModule", [
+  "ui.router",
+  "ngStorage",
+  "ngFileUpload"
+]);
 
 ////////////////////////////////////////////////////////////
 // ROUTING

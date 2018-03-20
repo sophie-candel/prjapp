@@ -20,7 +20,8 @@ class CreateDepartementsTable extends Migration
             $table->increments('id');
             $table->string('nom', 255);
             $table->string('couleur', 7);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
