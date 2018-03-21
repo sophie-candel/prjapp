@@ -8,7 +8,6 @@ prjModule.controller("etudiants", [
   "$timeout",
   function($scope, $state, $stateParams, $location, data, Upload, $timeout) {
     let getParams = function() {
-      console.log($stateParams.trombi);
       $scope.createEtuFormation = $stateParams.trombi;
       $scope.createEtuPeriode = $stateParams.periode;
     };
@@ -23,20 +22,36 @@ prjModule.controller("etudiants", [
     getEtu();
 
     // ********** MODIFICATION ETUDIANT ********** //
+    $scope.updateEtu = function(etu) {
+      $scope.submitted = true;
+      $scope.etu = $stateParams.etu;
+      data.updateEtu(
+        $scope.etu,
+        $scope.updateEtuNom,
+        $scope.updateEtuPrenom,
+        $scope.updateEtuMail,
+        $scope.updateEtuDip
+      );
+      // .then(function() {
+      //   location.reload(true);
+      // });
+    };
 
     // ********** SUPPRESSION ETUDIANT ********** //
     $scope.destroyEtu = function(etu) {
       data.destroyEtu($stateParams.etu).then(function() {
-        location.reload(true);
-        //$state.go("trombi");
+        //location.reload(true);
+        //closePanel();
+        $state.go("trombi", $stateParams);
+        //$state.go("trombi/" + $stateParams.trombi + "/" + $stateParams.periode);
+        // console.log(
+        //   "trombi/" + $stateParams.trombi + "/" + $stateParams.periode
+        // );
       });
     };
 
     // ********** CREATION ETUDIANT ********** //
-
     $scope.createEtu = function(createEtuPhoto) {
-      //console.log(createEtuPhoto);
-
       createEtuPhoto.upload = Upload.upload({
         url: "http://127.0.0.1:8000/api/etu/",
         data: {
@@ -70,6 +85,7 @@ prjModule.controller("etudiants", [
           );
         }
       );
+      // .then(location.reload(true));
     };
 
     // $scope.createEtu = function(photo) {

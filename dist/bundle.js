@@ -303,7 +303,6 @@ prjModule.controller("etudiants", [
   "$timeout",
   function($scope, $state, $stateParams, $location, data, Upload, $timeout) {
     let getParams = function() {
-      console.log($stateParams.trombi);
       $scope.createEtuFormation = $stateParams.trombi;
       $scope.createEtuPeriode = $stateParams.periode;
     };
@@ -318,20 +317,36 @@ prjModule.controller("etudiants", [
     getEtu();
 
     // ********** MODIFICATION ETUDIANT ********** //
+    $scope.updateEtu = function(etu) {
+      $scope.submitted = true;
+      $scope.etu = $stateParams.etu;
+      data.updateEtu(
+        $scope.etu,
+        $scope.updateEtuNom,
+        $scope.updateEtuPrenom,
+        $scope.updateEtuMail,
+        $scope.updateEtuDip
+      );
+      // .then(function() {
+      //   location.reload(true);
+      // });
+    };
 
     // ********** SUPPRESSION ETUDIANT ********** //
     $scope.destroyEtu = function(etu) {
       data.destroyEtu($stateParams.etu).then(function() {
-        location.reload(true);
-        //$state.go("trombi");
+        //location.reload(true);
+        //closePanel();
+        $state.go("trombi", $stateParams);
+        //$state.go("trombi/" + $stateParams.trombi + "/" + $stateParams.periode);
+        // console.log(
+        //   "trombi/" + $stateParams.trombi + "/" + $stateParams.periode
+        // );
       });
     };
 
     // ********** CREATION ETUDIANT ********** //
-
     $scope.createEtu = function(createEtuPhoto) {
-      //console.log(createEtuPhoto);
-
       createEtuPhoto.upload = Upload.upload({
         url: "http://127.0.0.1:8000/api/etu/",
         data: {
@@ -365,6 +380,7 @@ prjModule.controller("etudiants", [
           );
         }
       );
+      // .then(location.reload(true));
     };
 
     // $scope.createEtu = function(photo) {
@@ -468,7 +484,7 @@ prjModule.controller("filtres", [
             { s: $scope.filtres.statut.current },
             { location: true }
           );
-          console.log($stateParams.s);
+          //console.log($stateParams.s);
         }
       }
     };
@@ -486,75 +502,57 @@ prjModule.controller("panel", [
   "$stateParams",
   "$location",
   "data",
-  function($scope, $state, $stateParams, $location, data) {
+  "Upload",
+  "$timeout",
+  function($scope, $state, $stateParams, $location, data, Upload, $timeout) {
     if ($state.current.name == "trombi.migrer") {
       $scope.dropdown = function() {
         $(".fakeselect-content").toggleClass("active");
         $(".fakeselect").toggleClass("active");
       };
     }
-    /*if ($state.current.name != 'trombi.afficher' || $state.current.name != 'trombi.modifier') {
-    $state.go($state.current.name);
-  }*/
-    // ********** AFFICHAGE ETUDIANT ********** //
-    // let getEtu = function() {
-    //   data.getEtu($stateParams.etu).then(function(etu) {
-    //     $scope.etu = etu;
-    //   });
-    // };
-    // getEtu();
-    // ********** FILTRES ********** //
-    // $scope.filtres = {
-    //   // groupes
-    //   groupes: {
-    //     current: $stateParams.g ? $stateParams.g : null,
-    //     change: function() {
-    //       $state.go(
-    //         $state.current.name,
-    //         { g: $scope.filtres.groupes.current },
-    //         {
-    //           location: true
-    //         }
-    //       );
-    //     }
-    //   },
-    //   // affichage email
-    //   mail: {
-    //     current: $stateParams.m == "1" ? "true" : "null",
-    //     // current: $stateParams.m == "1" ? "true" : "null",
-    //     change: function() {
-    //       console.log($stateParams.m);
-    //     }
-    //   }
-    // };
-    // ********** CREATION ETUDIANT ********** //
-    // $scope.createEtu = function(isValid) {
-    //   $scope.submitted = true;
-    //   data
-    //     .createEtu(
-    //       $scope.createEtuNom,
-    //       $scope.createEtuPrenom,
-    //       $scope.createEtuPhoto,
-    //       $scope.createEtuEmail
-    //     )
-    //     .then(function() {
-    //       getTrombi();
-    //       location.reload(true);
-    //     });
-    // };
-    // input file
-    // var inputs = document.querySelectorAll(".inputfile");
-    // Array.prototype.forEach.call(inputs, function(input) {
-    //   var label = input.nextElementSibling,
-    //     labelVal = label.innerHTML;
-    //   console.log(labelVal);
-    //   input.addEventListener("change", function(e) {
-    //     var fileName = "";
-    //     fileName = e.target.value.split("\\").pop();
-    //     if (fileName) label.querySelector("p").innerHTML = fileName;
-    //     else label.innerHTML = labelVal;
-    //   });
-    // });
+
+    let getParams = function() {
+      console.log($stateParams.trombi);
+      $scope.createEtuFormation = $stateParams.trombi;
+      $scope.createEtuPeriode = $stateParams.periode;
+    };
+    getParams();
+
+    // ********** IMPORT CSV ********** //
+    $scope.importList = function(importListFile) {
+      // console.log(importList);
+      // console.log(importListFile);
+
+      importListFile.upload = Upload.upload({
+        url: "http://127.0.0.1:8000/api/import",
+        data: {
+          periode: $scope.importListPeriode,
+          formation: $scope.importListFormation,
+          file: $scope.importListFile
+        }
+      });
+
+      importListFile.upload.then(
+        function(response) {
+          $timeout(function() {
+            importListFile.result = response.data;
+          });
+        },
+        function(response) {
+          if (response.status > 0)
+            $scope.errorMsg = response.status + ": " + response.data;
+        },
+        function(evt) {
+          importListFile.progress = Math.min(
+            100,
+            parseInt(100.0 * evt.loaded / evt.total)
+          );
+        }
+      );
+      // .then(location.reload(true));
+      //console.log(importList);
+    };
   }
 ]);
 
@@ -609,36 +607,60 @@ prjModule.service("data", [
 
     // ********** CREATION ETUDIANT ********** //
 
-    // this.createEtu = function(
-    //   createEtuNom,
-    //   createEtuPrenom,
-    //   createEtuMail,
-    //   createEtuDip,
-    //   createEtuStatut,
-    //   createEtuPhoto,
-    //   createEtuGroupe,
-    //   createEtuPeriode,
-    //   createEtuFormation
+    // this.updateEtu = function(
+    //   updateEtuNom,
+    //   updateEtuPrenom,
+    //   updateEtuMail,
+    //   updateEtuDip,
+    //   updateEtuStatut,
+    //   updateEtuPhoto,
+    //   updateEtuGroupe,
+    //   updateEtuPeriode,
+    //   updateEtuFormation
     // ) {
     //   return $http({
     //     method: "POST",
     //     url: endpoint + "etu/",
     //     data: {
-    //       nom: createEtuNom,
-    //       prenom: createEtuPrenom,
-    //       photo: createEtuPhoto,
-    //       mail: createEtuMail,
-    //       diplome: createEtuDip,
-    //       alt: createEtuStatut,
-    //       groupe: createEtuGroupe,
-    //       periode: createEtuPeriode,
-    //       formation: createEtuFormation
+    //       nom: updateEtuNom,
+    //       prenom: updateEtuPrenom,
+    //       photo: updateEtuPhoto,
+    //       mail: updateEtuMail,
+    //       diplome: updateEtuDip,
+    //       alt: updateEtuStatut,
+    //       groupe: updateEtuGroupe,
+    //       periode: updateEtuPeriode,
+    //       formation: updateEtuFormation
     //     },
     //     headers: {
     //       "Content-Type": "application/json"
     //     }
     //   });
     // };
+
+    // ********** MODIFICATION ETUDIANT ********** //
+    this.updateEtu = function(
+      etu,
+      updateEtuNom,
+      updateEtuPrenom,
+      updateEtuMail,
+      updateEtuDip
+    ) {
+      return $http({
+        method: "PUT",
+        url: endpoint + "etu/" + etu,
+        data: {
+          nom: updateEtuNom,
+          prenom: updateEtuPrenom,
+          mail: updateEtuMail,
+          diplome: updateEtuDip
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      });
+    };
 
     // ********** SEARCHBAR ********** //
     this.search = function(query) {
@@ -650,15 +672,15 @@ prjModule.service("data", [
     };
 
     // ********** IMPORT CSV ********** //
-    this.importCsv = function(createCsvFile) {
-      return $http({
-        method: "POST",
-        url: endpoint + "importer"
-        // data : {
+    // this.importCsv = function(updateCsvFile) {
+    //   return $http({
+    //     method: "POST",
+    //     url: endpoint + "importer"
+    //     // data : {
 
-        // }
-      });
-    };
+    //     // }
+    //   });
+    // };
   }
 ]);
 

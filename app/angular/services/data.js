@@ -49,36 +49,60 @@ prjModule.service("data", [
 
     // ********** CREATION ETUDIANT ********** //
 
-    // this.createEtu = function(
-    //   createEtuNom,
-    //   createEtuPrenom,
-    //   createEtuMail,
-    //   createEtuDip,
-    //   createEtuStatut,
-    //   createEtuPhoto,
-    //   createEtuGroupe,
-    //   createEtuPeriode,
-    //   createEtuFormation
+    // this.updateEtu = function(
+    //   updateEtuNom,
+    //   updateEtuPrenom,
+    //   updateEtuMail,
+    //   updateEtuDip,
+    //   updateEtuStatut,
+    //   updateEtuPhoto,
+    //   updateEtuGroupe,
+    //   updateEtuPeriode,
+    //   updateEtuFormation
     // ) {
     //   return $http({
     //     method: "POST",
     //     url: endpoint + "etu/",
     //     data: {
-    //       nom: createEtuNom,
-    //       prenom: createEtuPrenom,
-    //       photo: createEtuPhoto,
-    //       mail: createEtuMail,
-    //       diplome: createEtuDip,
-    //       alt: createEtuStatut,
-    //       groupe: createEtuGroupe,
-    //       periode: createEtuPeriode,
-    //       formation: createEtuFormation
+    //       nom: updateEtuNom,
+    //       prenom: updateEtuPrenom,
+    //       photo: updateEtuPhoto,
+    //       mail: updateEtuMail,
+    //       diplome: updateEtuDip,
+    //       alt: updateEtuStatut,
+    //       groupe: updateEtuGroupe,
+    //       periode: updateEtuPeriode,
+    //       formation: updateEtuFormation
     //     },
     //     headers: {
     //       "Content-Type": "application/json"
     //     }
     //   });
     // };
+
+    // ********** MODIFICATION ETUDIANT ********** //
+    this.updateEtu = function(
+      etu,
+      updateEtuNom,
+      updateEtuPrenom,
+      updateEtuMail,
+      updateEtuDip
+    ) {
+      return $http({
+        method: "PUT",
+        url: endpoint + "etu/" + etu,
+        data: {
+          nom: updateEtuNom,
+          prenom: updateEtuPrenom,
+          mail: updateEtuMail,
+          diplome: updateEtuDip
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      });
+    };
 
     // ********** SEARCHBAR ********** //
     this.search = function(query) {
@@ -90,14 +114,14 @@ prjModule.service("data", [
     };
 
     // ********** IMPORT CSV ********** //
-    this.importCsv = function(createCsvFile) {
-      return $http({
-        method: "POST",
-        url: endpoint + "importer"
-        // data : {
+    // this.importCsv = function(updateCsvFile) {
+    //   return $http({
+    //     method: "POST",
+    //     url: endpoint + "importer"
+    //     // data : {
 
-        // }
-      });
-    };
+    //     // }
+    //   });
+    // };
   }
 ]);

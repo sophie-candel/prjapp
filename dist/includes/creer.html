@@ -13,8 +13,6 @@
     <input type="hidden" name="periode" ng-model="createEtuPeriode">
     <input type="hidden" name="formation" ng-model="createEtuFormation">
 
-
-
     <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
         <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="Prénom..." ng-model="createEtuPrenom">
 
@@ -27,24 +25,24 @@
             <span class="icon-upload text-xxl"></span>
             <p>Importer une photo</p>
         </label>
+        <img ngf-src="createEtuPhoto" style="height: 100px;">
     </div>
-    <img ngf-src="createEtuPhoto" style="height: 100px;">
+
 
 
     <input class="m-b-20 text-center" type="email" name="mail" placeholder="Adresse e-mail..." ng-model="createEtuMail">
 
     <div class="checkbox m-b-20">
-        <input type="checkbox" id="alt" name="alt" ng-model="createEtuStatut">
+        <input type="checkbox" id="alt" name="alt" ng-true-value="1" ng-false-value="0" ng-model="createEtuStatut">
         <label for="alt">Alternant(e)</label>
+        <span>{{createEtuStatut}}</span>
     </div>
+
 
     <!-- <p>{{filtres.groupes.current}}</p> -->
     <select class="m-b-20" name="groupe" ng-model="createEtuGroupe" ng-options="g.id as g.groupe for g in trombi.groupes">
         <option value="" disabled>Groupe</option>
     </select>
-
-
-
 
 
     <input class="m-b-20 text-center" type="text" name="diplome" placeholder="Diplôme précédent..." ng-model="createEtuDip">

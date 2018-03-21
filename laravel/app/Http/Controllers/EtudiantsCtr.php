@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Excel;
 use App\Etudiant;
 use App\Annee;
 use App\Semestre;
@@ -10,6 +11,7 @@ use App\Formation;
 use App\Groupe;
 use App\Periode;
 use Illuminate\Http\Request;
+use Illumnate\Support\Collection;
 
 class EtudiantsCtr extends Controller {
     public function index(){
@@ -27,20 +29,74 @@ class EtudiantsCtr extends Controller {
         return $result;
     }
 
+    // ********** MODIFICATION ETUDIANT ********** //
+    public function update(Request $request, $id) {
+        $request->validate([
+            'nom'=>'filled|string',
+            'prenom'=>'filled|string',
+            'mail' => 'filled|string',
+            'diplome' => 'filled|string',
+            'alt' => 'filled|boolean',
+            'groupe' => 'filled|integer',
+            // 'periode' => 'require|integer',
+            // 'formation' => 'require|integer',
+            'file' => 'filled|file|mimetypes:image/jpeg,image/png'
+        ]);
 
+        $groupe = $request->groupe;
+        $periode = $request->periode;
+        $formation = $request->formation;
+
+        $etudiant = Etudiant::findOrFail($id);
+        $etudiant->nom = $request->input('nom');
+        $etudiant->prenom = $request->input('prenom');
+        $etudiant->mail = $request->input('mail');
+        $etudiant->pre_diplome = $request->input('diplome');
+        $etudiant->alternant = $request->input('alt', 0);
+        
+        // RENOMMER PHOTO
+        if (isset($request->file) && !empty($request->file)) {
+            $photoName = $etudiant->nom.$etudiant->prenom;
+            $photoExtension = $request->file->getClientOriginalExtension();
+            $photoPath = "./sources/img/";
+
+            $etudiant->photo = $photoPath.$photoName.'.'.$photoExtension;
+            $request->file->storeAs('', $photoName.'.'.$photoExtension, 'photos');
+        }
+        
+        $etudiant->save();
+        
+
+        // // PIVOT TABLES
+        // $etudiant->groupes()->attach($groupe);
+        
+        // $etudiant->formations()->attach(
+        //     $etudiant->id, 
+        //     array(
+        //         "formation_id"=>$formation, 
+        //         "periode_id"=>$periode)
+        // );
+
+        return $etudiant;
+
+        //return $request->alt;
+    }   
+
+
+    // ********** CREATION ETUDIANT ********** //
     public function store(Request $request) {
         $request->validate([
             'nom'=>'required|string',
             'prenom'=>'required|string',
-            //'photo' => 'filled|string',
-            'mail' => 'required|string',
-            'diplome' => 'required|string',
-            //'alt' => 'boolean',
+            'mail' => 'filled|string',
+            'diplome' => 'filled|string',
+            'alt' => 'boolean',
             'groupe' => 'required|integer',
             'periode' => 'required|integer',
             'formation' => 'required|integer',
             'file' => 'filled|file|mimetypes:image/jpeg,image/png'
         ]);
+
         $groupe = $request->groupe;
         $periode = $request->periode;
         $formation = $request->formation;
@@ -50,18 +106,20 @@ class EtudiantsCtr extends Controller {
         $etudiant->prenom = $request->input('prenom');
         $etudiant->mail = $request->input('mail');
         $etudiant->pre_diplome = $request->input('diplome');
-        //$etudiant->alternant = $request->input('alt', 0);
+        $etudiant->alternant = $request->input('alt', 0);
         
         // RENOMMER PHOTO
-        $photoName = $etudiant->nom.$etudiant->prenom;
-        $photoExtension = $request->file->getClientOriginalExtension();
-        $photoPath = "./sources/img/";
-        $etudiant->photo = $photoPath.$photoName.'.'.$photoExtension;
+        if (isset($request->file) && !empty($request->file)) {
+            $photoName = $etudiant->nom.$etudiant->prenom;
+            $photoExtension = $request->file->getClientOriginalExtension();
+            $photoPath = "./sources/img/";
 
-
+            $etudiant->photo = $photoPath.$photoName.'.'.$photoExtension;
+            $request->file->storeAs('', $photoName.'.'.$photoExtension, 'photos');
+        }
+        
         $etudiant->save();
-        $request->file->storeAs('', $photoName.'.'.$photoExtension, 'photos');
-
+        
 
         // PIVOT TABLES
         $etudiant->groupes()->attach($groupe);
@@ -75,15 +133,15 @@ class EtudiantsCtr extends Controller {
 
         return $etudiant;
 
-        
-
+        //return $request->alt;
     }
 
+    // ********** SUPPRESSION ETUDIANT ********** //
     public function destroy($id) {
         $etudiant = \App\Etudiant::findOrFail($id);
         $etudiant->delete();
-        //Storage::delete('public/assets/'.$etudiant->filename);
-        //return ;
+        //Storage::disk('photos')->delete($etudiant->photo);
+        //return $etudiant->photo;
     }
 
     private function concatGroupes($etu) {
@@ -110,7 +168,7 @@ class EtudiantsCtr extends Controller {
         return $res;
     }
 
-
+    // ********** AFFICHAGE TROMBI ********** //
     public function trombi($id_formation, $id_periode) {
 
         // FORMATION
@@ -172,6 +230,8 @@ class EtudiantsCtr extends Controller {
     }
 
 
+    // ********** BARRE DE RECHERCHE ********** //
+
     // public function search(Request $request) {
     //     $query = $request->get('query');
     //     $etudiants = Etudiant::where('nom', 'LIKE', '%query%')->get();
@@ -190,4 +250,20 @@ class EtudiantsCtr extends Controller {
         return $result;
     }
 
+
+    // ********** IMPORT LISTE CSV ********** //
+    public function import(Request $request) {
+        $request->validate([
+            //'file' => 'required'
+            'file' => 'required|file|mimetypes:text/csv'
+        ]);
+
+        Excel::load($request->file)->each(function (Collection $csvLine) {
+            Etudiant::create([
+                'nom' => $csvLine->get('nom'),
+                'prenom' => $csvLine->get('prenom'),
+                'photo' => $csvLine->get('photo'),
+            ]);
+       });
+    }
 }

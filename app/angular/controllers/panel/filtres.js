@@ -64,7 +64,7 @@ prjModule.controller("filtres", [
             { s: $scope.filtres.statut.current },
             { location: true }
           );
-          console.log($stateParams.s);
+          //console.log($stateParams.s);
         }
       }
     };
