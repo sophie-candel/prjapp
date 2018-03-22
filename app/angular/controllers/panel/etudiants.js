@@ -8,8 +8,8 @@ prjModule.controller("etudiants", [
   "$timeout",
   function($scope, $state, $stateParams, $location, data, Upload, $timeout) {
     let getParams = function() {
-      $scope.createEtuFormation = $stateParams.trombi;
-      $scope.createEtuPeriode = $stateParams.periode;
+      $scope.currentEtuFormation = $stateParams.trombi;
+      $scope.currentEtuPeriode = $stateParams.periode;
     };
     getParams();
 
@@ -23,18 +23,17 @@ prjModule.controller("etudiants", [
 
     // ********** MODIFICATION ETUDIANT ********** //
     $scope.updateEtu = function(etu) {
-      $scope.submitted = true;
       $scope.etu = $stateParams.etu;
-      data.updateEtu(
-        $scope.etu,
-        $scope.updateEtuNom,
-        $scope.updateEtuPrenom,
-        $scope.updateEtuMail,
-        $scope.updateEtuDip
-      );
-      // .then(function() {
-      //   location.reload(true);
-      // });
+      console.log("update : " + etu);
+      // $scope.submitted = true;
+      // $scope.etu = $stateParams.etu;
+      // data.updateEtu(
+      //   $scope.etu,
+      //   $scope.updateEtuNom,
+      //   $scope.updateEtuPrenom,
+      //   $scope.updateEtuMail,
+      //   $scope.updateEtuDip
+      // );
     };
 
     // ********** SUPPRESSION ETUDIANT ********** //
@@ -62,8 +61,8 @@ prjModule.controller("etudiants", [
           diplome: $scope.createEtuDip,
           alt: $scope.createEtuStatut,
           groupe: $scope.createEtuGroupe,
-          periode: $scope.createEtuPeriode,
-          formation: $scope.createEtuFormation,
+          periode: $scope.currentEtuPeriode,
+          formation: $scope.currentEtuFormation,
           file: $scope.createEtuPhoto
         }
       });

@@ -4,13 +4,13 @@
 
     <form class="tiny-input" name="updateEtuForm" ng-submit="updateEtu()">
 
-        <input type="hidden" name="periode" ng-model="createEtuPeriode">
-        <input type="hidden" name="formation" ng-model="createEtuFormation">
+        <input type="hidden" name="periode" ng-model="currentEtuPeriode">
+        <input type="hidden" name="formation" ng-model="currentEtuFormation">
 
 
         <div class="m-b-20 flex-container is-horizontal-extremes tiny-input">
-            <input class="flex-1 m-r-10 text-center" type="text" name="prenom" placeholder="{{etu.prenom}}" ng-model="updateEtuPrenom">
-            <input class="flex-1 m-l-10 text-center" type="text" name="nom" placeholder="{{etu.nom}}" ng-model="updateEtuNom">
+            <input class="flex-1 m-r-10 text-center" type="text" name="prenom" ng-model="etu.prenom">
+            <input class="flex-1 m-l-10 text-center" type="text" name="nom" ng-model="etu.nom">
         </div>
 
         <!-- <div class="m-b-20">
