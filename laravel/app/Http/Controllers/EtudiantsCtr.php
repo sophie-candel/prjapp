@@ -168,6 +168,35 @@ class EtudiantsCtr extends Controller {
         return $res;
     }
 
+
+    public function migrate($id_formation, $id_periode) {
+
+    
+
+        //ETUDIANTS
+        $etudiants = \DB::table('etudiants')
+        ->select(
+            'inscriptions.etudiant_id as id',
+            'inscriptions.periode_id as periode',
+            'inscriptions.formation_id as formation'
+        )
+        ->join('inscriptions', 'etudiants.id', '=', 'inscriptions.etudiant_id')
+        ->where('inscriptions.formation_id', '=', $id_formation)
+        ->where('inscriptions.periode_id', '=', $id_periode)
+        ->get();
+
+        foreach ($etudiant as $e) {
+            
+        }
+        
+        $result = [
+            'formation actuelle' => $id_formation,
+            'periode actuelle' => $id_periode,
+            'etudiants' => $etudiants
+        ];
+
+        return $result;
+    }
     // ********** AFFICHAGE TROMBI ********** //
     public function trombi($id_formation, $id_periode) {
 

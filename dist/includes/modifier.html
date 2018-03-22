@@ -33,10 +33,11 @@
         <input class="m-b-20 text-center" type="email" ng-model="etu.mail">
 
         <div class="checkbox m-b-20">
-            <input type="checkbox" id="alt" name="alt" ng-true-value="1" ng-false-value="0" ng-model="etu.alternant">
+            <input type="checkbox" id="alt" name="alt" ng-true-value="1" ng-false-value="0" ng-checked="etu.alternant == 1" ng-model="etu.alternant">
             <label for="alt">Alternant(e)</label>
         </div>
 
+        <!-- select as label for value in array -->
         <select class="m-b-20" name="groupe" ng-model="etu.groupes" ng-options="g.id as g.groupe for g in trombi.groupes">
             <option value="" disabled>Groupe</option>
         </select>
