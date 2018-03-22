@@ -23,8 +23,8 @@ prjModule.controller("etudiants", [
 
     // ********** MODIFICATION ETUDIANT ********** //
     $scope.updateEtu = function(etu) {
-      $scope.etu = $stateParams.etu;
-      console.log("update : " + etu);
+      // $scope.etu = $stateParams.etu;
+      // console.log("update : " + etu);
       // $scope.submitted = true;
       // $scope.etu = $stateParams.etu;
       // data.updateEtu(
@@ -34,6 +34,18 @@ prjModule.controller("etudiants", [
       //   $scope.updateEtuMail,
       //   $scope.updateEtuDip
       // );
+      var etudiant = $scope.etu.etudiant[0];
+      data
+        .updateEtu(
+          etudiant.id,
+          etudiant.nom,
+          etudiant.prenom,
+          etudiant.mail,
+          etudiant.pre_diplome
+        )
+        .then(function() {
+          location.reload(true);
+        });
     };
 
     // ********** SUPPRESSION ETUDIANT ********** //

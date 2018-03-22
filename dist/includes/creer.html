@@ -1,13 +1,6 @@
 <span class="icon-close text-xl" ng-click="closePanel()"></span>
 <p class="m-b-40 text-l">Créer un nouvel étudiant</p>
 
-<!-- <a ng-click="getParams()">GET PARAMS</a> -->
-
-<!-- <p>periode = {{periode}}</p>
-<p>formation = {{for}}</p> -->
-
-
-
 <form class="tiny-input" name="createEtuForm" ng-submit="createEtu(createEtuPhoto)">
 
     <input type="hidden" name="periode" ng-model="currentEtuPeriode">
@@ -27,8 +20,6 @@
         </label>
         <img ngf-src="createEtuPhoto" style="height: 100px;">
     </div>
-
-
 
     <input class="m-b-20 text-center" type="email" name="mail" placeholder="Adresse e-mail..." ng-model="createEtuMail">
 

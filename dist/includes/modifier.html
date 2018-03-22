@@ -13,24 +13,28 @@
             <input class="flex-1 m-l-10 text-center" type="text" name="nom" ng-model="etu.nom">
         </div>
 
-        <!-- <div class="m-b-20">
-                <input type="file" name="photo" id="photo" class="inputfile" data-multiple-caption="{count} files selected" multiple />
-                <label for="photo" ng-style="{'background': 'url('+etu.photo+')', 'background-size': 'cover'}">
-                    <span class="icon-upload text-xxl"></span>
-                    <p>Importer une photo</p>
-                </label>
-            </div> -->
+        <div class="m-b-20">
+            <input type="file" name="photo" id="photo" class="inputfile" data-multiple-caption="{count} files selected" multiple />
+            <label for="photo" ng-style="{'background': 'url('+etu.photo+')', 'background-size': 'cover'}">
+                <span class="icon-upload text-xxl"></span>
+                <p>Importer une photo</p>
+            </label>
+        </div>
 
-        <img class="m-b-20 avatar" src="{{etu.photo}}" alt="Photo de {{etu.prenom}} {{etu.nom}}">
+        <!-- <img class="m-b-20 avatar" src="{{etu.photo}}" alt="Photo de {{etu.prenom}} {{etu.nom}}"> -->
 
-        <input class="m-b-20 text-center" type="email" placeholder="{{etu.mail}}" ng-model="updateEtuMail">
+        <input class="m-b-20 text-center" type="email" ng-model="etu.mail">
 
-        <!-- <div class="checkbox m-b-20">
-            <input type="checkbox" id="alt" name="alt" ng-model="updateEtuStatut">
+        <div class="checkbox m-b-20">
+            <input type="checkbox" id="alt" name="alt" ng-true-value="1" ng-false-value="0" ng-model="etu.alternant">
             <label for="alt">Alternant(e)</label>
-        </div> -->
+        </div>
 
-        <input class="m-b-20 text-center" type="text" placeholder="{{etu.pre_diplome}}" ng-model="updateEtuDip">
+        <select class="m-b-20" name="groupe" ng-model="etu.groupes" ng-options="g.id as g.groupe for g in trombi.groupes">
+            <option value="" disabled>Groupe</option>
+        </select>
+
+        <input class="m-b-20 text-center" type="text" ng-model="etu.pre_diplome">
 
         <div class="m-y-20 flex-container is-horizontal-extremes tiny-input">
             <button class="flex-1 m-r-10" type="reset" ng-click="closePanel()">Annuler</button>
@@ -49,8 +53,8 @@
             <span class="icon-alert-circle text-xl"></span>
             <p style="line-height: 35px;">Supprimer {{etu.nom}} {{etu.prenom}} ?</p>
             <div class="m-b-&0 flex-container is-horizontal-extremes tiny-input">
-                <button class="flex-1 m-x-10" type="reset" ng-click="show = !show">Non</button>
-                <button class="flex-1" type="submit" ng-click="destroyEtu(etu.id)">Oui</button>
+                <button class="flex-1 m-x-10 bg-white text-grey1" ng-click="show = !show">Non</button>
+                <button class="flex-1 bg-white text-grey1" ng-click="destroyEtu(etu.id)">Oui</button>
             </div>
         </div>
     </div>
