@@ -14,12 +14,19 @@
         </div>
 
         <div class="m-b-20">
-            <input type="file" name="photo" id="photo" class="inputfile" data-multiple-caption="{count} files selected" multiple />
-            <label for="photo" ng-style="{'background': 'url('+etu.photo+')', 'background-size': 'cover'}">
+            <input class="inputfile" type="file" name="photo" id="photo" ng-model="updateEtuPhoto" ngf-select="" ngf-pattern="'image/*'"
+                ngf-accept="'image/*'" ngf-max-size="20MB" />
+            <label for="photo">
                 <span class="icon-upload text-xxl"></span>
                 <p>Importer une photo</p>
             </label>
+            <img ngf-src="updateEtuPhoto" style="height: 100px;">
         </div>
+
+        <p>{{updateEtuPhoto}}</p>
+
+
+        <img ng-src="{{etu.photo}}" style="height: 100px;">
 
         <!-- <img class="m-b-20 avatar" src="{{etu.photo}}" alt="Photo de {{etu.prenom}} {{etu.nom}}"> -->
 
@@ -33,6 +40,7 @@
         <select class="m-b-20" name="groupe" ng-model="etu.groupes" ng-options="g.id as g.groupe for g in trombi.groupes">
             <option value="" disabled>Groupe</option>
         </select>
+        <p>Groupes : {{etu.groupes}}</p>
 
         <input class="m-b-20 text-center" type="text" ng-model="etu.pre_diplome">
 

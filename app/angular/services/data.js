@@ -85,6 +85,7 @@ prjModule.service("data", [
       etu,
       updateEtuNom,
       updateEtuPrenom,
+      updateEtuPhoto,
       updateEtuMail,
       updateEtuDip
     ) {
@@ -94,6 +95,7 @@ prjModule.service("data", [
         data: {
           nom: updateEtuNom,
           prenom: updateEtuPrenom,
+          photo: updateEtuPhoto,
           mail: updateEtuMail,
           diplome: updateEtuDip
         },
