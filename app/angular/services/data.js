@@ -81,30 +81,30 @@ prjModule.service("data", [
     // };
 
     // ********** MODIFICATION ETUDIANT ********** //
-    this.updateEtu = function(
-      etu,
-      updateEtuNom,
-      updateEtuPrenom,
-      updateEtuPhoto,
-      updateEtuMail,
-      updateEtuDip
-    ) {
-      return $http({
-        method: "PUT",
-        url: endpoint + "etu/" + etu,
-        data: {
-          nom: updateEtuNom,
-          prenom: updateEtuPrenom,
-          photo: updateEtuPhoto,
-          mail: updateEtuMail,
-          diplome: updateEtuDip
-        },
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        }
-      });
-    };
+    // this.updateEtu = function(
+    //   etu,
+    //   updateEtuNom,
+    //   updateEtuPrenom,
+    //   updateEtuMail,
+    //   updateEtuStatut,
+    //   updateEtuDip
+    // ) {
+    //   return $http({
+    //     method: "PUT",
+    //     url: endpoint + "etu/" + etu,
+    //     data: {
+    //       nom: updateEtuNom,
+    //       prenom: updateEtuPrenom,
+    //       mail: updateEtuMail,
+    //       alt: updateEtuStatut,
+    //       diplome: updateEtuDip
+    //     },
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Accept: "application/json"
+    //     }
+    //   });
+    // };
 
     // ********** SEARCHBAR ********** //
     this.search = function(query) {

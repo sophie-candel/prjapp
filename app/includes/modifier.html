@@ -2,7 +2,7 @@
     <span class="icon-close text-xl" ng-click="closePanel()"></span>
 
 
-    <form class="tiny-input" name="updateEtuForm" ng-submit="updateEtu()">
+    <form class="tiny-input" name="updateEtuForm" ng-submit="updateEtu(updateEtuPhoto)">
 
         <input type="hidden" name="periode" ng-model="currentEtuPeriode">
         <input type="hidden" name="formation" ng-model="currentEtuFormation">
@@ -38,7 +38,7 @@
         </div>
 
         <!-- select as label for value in array -->
-        <select class="m-b-20" name="groupe" ng-model="etu.groupes" ng-options="g.id as g.groupe for g in trombi.groupes">
+        <select class="m-b-20" name="groupe" ng-model="etu.groupes" ng-options="g.id as g.groupe for g in trombi.groupes track by g.id">
             <option value="" disabled>Groupe</option>
         </select>
         <p>Groupes : {{etu.groupes}}</p>

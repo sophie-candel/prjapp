@@ -171,8 +171,6 @@ class EtudiantsCtr extends Controller {
 
     public function migrate($id_formation, $id_periode) {
 
-    
-
         //ETUDIANTS
         $etudiants = \DB::table('etudiants')
         ->select(

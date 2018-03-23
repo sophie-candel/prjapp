@@ -22,21 +22,58 @@ prjModule.controller("etudiants", [
     getEtu();
 
     // ********** MODIFICATION ETUDIANT ********** //
-    $scope.updateEtu = function(etu) {
+
+    $scope.updateEtu = function(updateEtuPhoto) {
       var etudiant = $scope.etu.etudiant[0];
+      console.log(etudiant.id);
       console.log(updateEtuPhoto);
-      // data
-      //   .updateEtu(
-      //     etudiant.id,
-      //     etudiant.nom,
-      //     etudiant.prenom,
-      //     updateEtuPhoto,
-      //     etudiant.mail,
-      //     etudiant.pre_diplome
-      //   )
-      //   .then(function() {
-      //     location.reload(true);
-      //   });
+      updateEtuPhoto.upload = Upload.upload({
+        url: "http://127.0.0.1:8000/api/etu/" + etudiant.id,
+        data: {
+          nom: etudiant.nom,
+          prenom: etudiant.prenom,
+          photo: $scope.updateEtuPhoto,
+          mail: etudiant.mail,
+          diplome: etudiant.pre_diplome,
+          alt: etudiant.alternant,
+          periode: $scope.currentEtuPeriode,
+          formation: $scope.currentEtuFormation,
+          file: $scope.updateEtuPhoto
+        }
+      });
+      updateEtuPhoto.upload.then(
+        function(response) {
+          $timeout(function() {
+            updateEtuPhoto.result = response.data;
+          });
+        },
+        function(response) {
+          if (response.status > 0)
+            $scope.errorMsg = response.status + ": " + response.data;
+        },
+        function(evt) {
+          updateEtuPhoto.progress = Math.min(
+            100,
+            parseInt(100.0 * evt.loaded / evt.total)
+          );
+        }
+      );
+
+      // $scope.updateEtu = function(etu) {
+      //   var etudiant = $scope.etu.etudiant[0];
+      //   console.log(etudiant);
+      //   data
+      //     .updateEtu(
+      //       etudiant.id,
+      //       etudiant.nom,
+      //       etudiant.prenom,
+      //       etudiant.mail,
+      //       etudiant.alternant,
+      //       etudiant.pre_diplome
+      //     )
+      //     .then(function() {
+      //       location.reload(true);
+      //     });
     };
 
     // ********** SUPPRESSION ETUDIANT ********** //
@@ -56,6 +93,7 @@ prjModule.controller("etudiants", [
     $scope.createEtu = function(createEtuPhoto) {
       createEtuPhoto.upload = Upload.upload({
         url: "http://127.0.0.1:8000/api/etu/",
+        method: "PUT",
         data: {
           nom: $scope.createEtuNom,
           prenom: $scope.createEtuPrenom,
