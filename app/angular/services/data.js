@@ -15,6 +15,10 @@ prjModule.service("data", [
       });
     }
 
+    this.exportTrombi = function() {
+      return makeRequest("export");
+    };
+
     // ********** SEARCHBAR ********** //
     this.getSearch = function() {
       return makeRequest("search");

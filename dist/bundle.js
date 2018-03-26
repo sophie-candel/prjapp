@@ -312,6 +312,12 @@ prjModule.controller("etudiants", [
     let getEtu = function() {
       data.getEtu($stateParams.etu).then(function(etu) {
         $scope.etu = etu;
+
+        etu.etudiant.forEach(function(elt) {
+          elt.groupes.forEach(function(gp) {
+            $scope.selectedGroup = gp.id;
+          });
+        });
       });
     };
     getEtu();
@@ -320,75 +326,79 @@ prjModule.controller("etudiants", [
 
     $scope.updateEtu = function(updateEtuPhoto) {
       var etudiant = $scope.etu.etudiant[0];
-      console.log(etudiant.id);
-      console.log(updateEtuPhoto);
+      //console.log(etudiant.groupes[0].nom);
+
+      // if (typeof updateEtuPhoto === "undefined" || updateEtuPhoto === null) {
+      //   updateEtuPhoto = "etu.png";
+      // } else {
+      //   updateEtuPhoto = updateEtuPhoto;
+      // }
+
+      // console.log(updateEtuPhoto);
+      //console.log($scope.selectedGroup);
+
+      console.log(etudiant.groupes);
+
       updateEtuPhoto.upload = Upload.upload({
         url: "http://127.0.0.1:8000/api/etu/" + etudiant.id,
         data: {
           nom: etudiant.nom,
           prenom: etudiant.prenom,
-          photo: $scope.updateEtuPhoto,
+          photo: updateEtuPhoto,
           mail: etudiant.mail,
           diplome: etudiant.pre_diplome,
           alt: etudiant.alternant,
+          groupe: $scope.selectedGroup,
           periode: $scope.currentEtuPeriode,
           formation: $scope.currentEtuFormation,
-          file: $scope.updateEtuPhoto
+          file: updateEtuPhoto,
+          _method: "PUT"
         }
       });
-      updateEtuPhoto.upload.then(
-        function(response) {
-          $timeout(function() {
-            updateEtuPhoto.result = response.data;
-          });
-        },
-        function(response) {
-          if (response.status > 0)
-            $scope.errorMsg = response.status + ": " + response.data;
-        },
-        function(evt) {
-          updateEtuPhoto.progress = Math.min(
-            100,
-            parseInt(100.0 * evt.loaded / evt.total)
+      updateEtuPhoto.upload
+        .then(
+          function(response) {
+            $timeout(function() {
+              updateEtuPhoto.result = response.data;
+            });
+          },
+          function(response) {
+            if (response.status > 0)
+              $scope.errorMsg = response.status + ": " + response.data;
+          },
+          function(evt) {
+            updateEtuPhoto.progress = Math.min(
+              100,
+              parseInt(100.0 * evt.loaded / evt.total)
+            );
+          }
+        )
+        //.catch(console.log("une erreur est survenue"))
+        .then(function() {
+          $state.go(
+            "trombi",
+            $stateParams.trombi,
+            $stateParams.periode,
+            etudiant.id
           );
-        }
-      );
-
-      // $scope.updateEtu = function(etu) {
-      //   var etudiant = $scope.etu.etudiant[0];
-      //   console.log(etudiant);
-      //   data
-      //     .updateEtu(
-      //       etudiant.id,
-      //       etudiant.nom,
-      //       etudiant.prenom,
-      //       etudiant.mail,
-      //       etudiant.alternant,
-      //       etudiant.pre_diplome
-      //     )
-      //     .then(function() {
-      //       location.reload(true);
-      //     });
+          location.reload(true);
+        });
     };
 
     // ********** SUPPRESSION ETUDIANT ********** //
     $scope.destroyEtu = function(etu) {
       data.destroyEtu($stateParams.etu).then(function() {
-        //location.reload(true);
-        //closePanel();
-        $state.go("trombi", $stateParams);
-        //$state.go("trombi/" + $stateParams.trombi + "/" + $stateParams.periode);
-        // console.log(
-        //   "trombi/" + $stateParams.trombi + "/" + $stateParams.periode
-        // );
+        $state.go("trombi", $stateParams.trombi, $stateParams.periode);
+        location.reload(true);
       });
     };
 
     // ********** CREATION ETUDIANT ********** //
     $scope.createEtu = function(createEtuPhoto) {
+      console.log($scope.createEtuGroupe);
       createEtuPhoto.upload = Upload.upload({
         url: "http://127.0.0.1:8000/api/etu/",
-        method: "PUT",
+        method: "POST",
         data: {
           nom: $scope.createEtuNom,
           prenom: $scope.createEtuPrenom,
@@ -402,25 +412,27 @@ prjModule.controller("etudiants", [
           file: $scope.createEtuPhoto
         }
       });
-
-      createEtuPhoto.upload.then(
-        function(response) {
-          $timeout(function() {
-            createEtuPhoto.result = response.data;
-          });
-        },
-        function(response) {
-          if (response.status > 0)
-            $scope.errorMsg = response.status + ": " + response.data;
-        },
-        function(evt) {
-          createEtuPhoto.progress = Math.min(
-            100,
-            parseInt(100.0 * evt.loaded / evt.total)
-          );
-        }
-      );
-      // .then(location.reload(true));
+      createEtuPhoto.upload
+        .then(
+          function(response) {
+            $timeout(function() {
+              createEtuPhoto.result = response.data;
+            });
+          },
+          function(response) {
+            if (response.status > 0)
+              $scope.errorMsg = response.status + ": " + response.data;
+          },
+          function(evt) {
+            createEtuPhoto.progress = Math.min(
+              100,
+              parseInt(100.0 * evt.loaded / evt.total)
+            );
+          }
+        )
+        .then(function() {
+          location.reload(true);
+        });
     };
 
     // $scope.createEtu = function(photo) {
@@ -553,45 +565,44 @@ prjModule.controller("panel", [
     }
 
     let getParams = function() {
-      console.log($stateParams.trombi);
-      $scope.createEtuFormation = $stateParams.trombi;
-      $scope.createEtuPeriode = $stateParams.periode;
+      $scope.currentEtuFormation = $stateParams.trombi;
+      $scope.currentEtuPeriode = $stateParams.periode;
     };
     getParams();
 
     // ********** IMPORT CSV ********** //
     $scope.importList = function(importListFile) {
-      // console.log(importList);
-      // console.log(importListFile);
-
       importListFile.upload = Upload.upload({
         url: "http://127.0.0.1:8000/api/import",
         data: {
-          periode: $scope.importListPeriode,
-          formation: $scope.importListFormation,
+          periode: $scope.currentEtuPeriode,
+          formation: $scope.currentEtuFormation,
           file: $scope.importListFile
         }
       });
 
-      importListFile.upload.then(
-        function(response) {
-          $timeout(function() {
-            importListFile.result = response.data;
-          });
-        },
-        function(response) {
-          if (response.status > 0)
-            $scope.errorMsg = response.status + ": " + response.data;
-        },
-        function(evt) {
-          importListFile.progress = Math.min(
-            100,
-            parseInt(100.0 * evt.loaded / evt.total)
-          );
-        }
-      );
-      // .then(location.reload(true));
-      //console.log(importList);
+      importListFile.upload
+        .then(
+          function(response) {
+            $timeout(function() {
+              importListFile.result = response.data;
+            });
+          },
+          function(response) {
+            if (response.status > 0)
+              $scope.errorMsg = response.status + ": " + response.data;
+          },
+          function(evt) {
+            importListFile.progress = Math.min(
+              100,
+              parseInt(100.0 * evt.loaded / evt.total)
+            );
+          }
+        )
+        .then(function() {
+          $state.go("trombi", $stateParams.trombi, $stateParams.periode);
+          location.reload(true);
+        });
     };
   }
 ]);
@@ -612,6 +623,10 @@ prjModule.service("data", [
         return response.data;
       });
     }
+
+    this.exportTrombi = function() {
+      return makeRequest("export");
+    };
 
     // ********** SEARCHBAR ********** //
     this.getSearch = function() {

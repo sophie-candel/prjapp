@@ -52,7 +52,7 @@
                     <div class="w-65 bg-grey1 p-0 flex-container is-horizontal-center is-vertical-center">
                         <span class="icon-magnify text-xl text-white"></span>
                     </div>
-                    <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation..." list="search" data-ng-model="toto">
+                    <input id="searchbar" class="flex-12" type="text" placeholder="Rechercher un étudiant, une formation..." list="search" ng-model="searchContent">
 
                     <span id="reset-search" class="icon-close text-xl"></span>
                 </div>
@@ -62,6 +62,8 @@
                 <option data-ng-repeat="e in search.etudiants" value="{{e.nom}} {{e.prenom}}" />
                 <option data-ng-repeat="f in search.formations" value="{{f.nom}}" />
             </datalist>
+
+            <p>{{searchContent}}</p>
 
             <!-- SEARCH RESULTS -->
 

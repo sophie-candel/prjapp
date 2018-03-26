@@ -13,6 +13,7 @@ class Etudiant extends Model
     // public function formations() {
     //     return $this->hasMany('App\Formation');
     // }
+    protected $fillable = ['nom', 'prenom', 'photo', 'mail', 'alternant', 'pre_diplome'];
 
     public function groupes() {
         return $this->belongsToMany('App\Groupe', 'etudiants_groupes');

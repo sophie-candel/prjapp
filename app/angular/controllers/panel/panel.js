@@ -15,45 +15,44 @@ prjModule.controller("panel", [
     }
 
     let getParams = function() {
-      console.log($stateParams.trombi);
-      $scope.createEtuFormation = $stateParams.trombi;
-      $scope.createEtuPeriode = $stateParams.periode;
+      $scope.currentEtuFormation = $stateParams.trombi;
+      $scope.currentEtuPeriode = $stateParams.periode;
     };
     getParams();
 
     // ********** IMPORT CSV ********** //
     $scope.importList = function(importListFile) {
-      // console.log(importList);
-      // console.log(importListFile);
-
       importListFile.upload = Upload.upload({
         url: "http://127.0.0.1:8000/api/import",
         data: {
-          periode: $scope.importListPeriode,
-          formation: $scope.importListFormation,
+          periode: $scope.currentEtuPeriode,
+          formation: $scope.currentEtuFormation,
           file: $scope.importListFile
         }
       });
 
-      importListFile.upload.then(
-        function(response) {
-          $timeout(function() {
-            importListFile.result = response.data;
-          });
-        },
-        function(response) {
-          if (response.status > 0)
-            $scope.errorMsg = response.status + ": " + response.data;
-        },
-        function(evt) {
-          importListFile.progress = Math.min(
-            100,
-            parseInt(100.0 * evt.loaded / evt.total)
-          );
-        }
-      );
-      // .then(location.reload(true));
-      //console.log(importList);
+      importListFile.upload
+        .then(
+          function(response) {
+            $timeout(function() {
+              importListFile.result = response.data;
+            });
+          },
+          function(response) {
+            if (response.status > 0)
+              $scope.errorMsg = response.status + ": " + response.data;
+          },
+          function(evt) {
+            importListFile.progress = Math.min(
+              100,
+              parseInt(100.0 * evt.loaded / evt.total)
+            );
+          }
+        )
+        .then(function() {
+          $state.go("trombi", $stateParams.trombi, $stateParams.periode);
+          location.reload(true);
+        });
     };
   }
 ]);

@@ -13,6 +13,11 @@ use App\Periode;
 use Illuminate\Http\Request;
 use Illumnate\Support\Collection;
 
+
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+
 class EtudiantsCtr extends Controller {
     public function index(){
         return Etudiant::with('groupes')
@@ -67,8 +72,8 @@ class EtudiantsCtr extends Controller {
         $etudiant->save();
         
 
-        // // PIVOT TABLES
-        // $etudiant->groupes()->attach($groupe);
+        // PIVOT TABLES
+        $etudiant->groupes()->attach($groupe);
         
         // $etudiant->formations()->attach(
         //     $etudiant->id, 
@@ -95,7 +100,7 @@ class EtudiantsCtr extends Controller {
             'periode' => 'required|integer',
             'formation' => 'required|integer',
             'file' => 'filled|file|mimetypes:image/jpeg,image/png'
-        ]);
+        ]);   
 
         $groupe = $request->groupe;
         $periode = $request->periode;
@@ -146,7 +151,7 @@ class EtudiantsCtr extends Controller {
 
     private function concatGroupes($etu) {
         $map = []; // correspondance entre la clé dans $res et l'identifiant de l'utilisateur
-        $res = []; 
+        $res = [];  
         $compteur = 0;
         $etu = json_decode(json_encode($etu), true); //transforme l'objet en array
         foreach ($etu as $e) {
@@ -281,16 +286,74 @@ class EtudiantsCtr extends Controller {
     // ********** IMPORT LISTE CSV ********** //
     public function import(Request $request) {
         $request->validate([
-            //'file' => 'required'
-            'file' => 'required|file|mimetypes:text/csv'
+            'file' => 'required|file',
+            //'file' => 'required|file|mimetypes:text/csv'
+            'periode' => 'required|integer',
+            'formation' => 'required|integer',
         ]);
 
-        Excel::load($request->file)->each(function (Collection $csvLine) {
-            Etudiant::create([
+        $periode = $request->periode;
+        $formation = $request->formation;
+
+        Excel::load($request->file)->each(function ($csvLine) use($periode, $formation){
+            $etudiant = Etudiant::create([
                 'nom' => $csvLine->get('nom'),
                 'prenom' => $csvLine->get('prenom'),
-                'photo' => $csvLine->get('photo'),
+                'alternant' => $csvLine->get('statut'),
+                'mail' => $csvLine->get('mail'),
+                'photo' => './sources/img/etu.png',
+                'pre_diplome' => $csvLine->get('pre_diplome')
             ]);
-       });
+
+            // PIVOT TABLES
+            $etudiant->groupes()->attach(
+                $etudiant->id, 
+                array(
+                    "groupe_id"=>$csvLine->get('groupe')
+                )
+            );
+
+            $etudiant->formations()->attach(
+                $etudiant->id, 
+                array(
+                    "formation_id"=>$formation, 
+                    "periode_id"=>$periode
+                )
+            );
+        });
+       
+    }
+
+
+    // ********** EXPORT PDF ********** //
+    public function export() {
+        try {
+            $trombi = $this->trombi(3, 5); 
+            //$trombi = $this->trombi($id_formation, $id_periode);
+            //$trombi = $this->trombi($_GET['id_formation, id_periode']);
+
+            //$content = '<h1>' . $trombi['title'] . '</h1>';
+            $content .= '<table><tr>';
+            $compteur = 0;
+            foreach ($trombi['etudiants'] as $e) {
+                if ($compteur++ % 5 == 0) $content .= '</tr><tr>';
+                $content .= '<td>';
+                $content .= '<img src="' . $e['photo']. '"><br>';
+                $content .= $e['prenom']." ".$e['nom'];
+                $content .= '</td>';
+            }
+            $content .= '</tr></table>';                                
+        
+            $html2pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'fr'); 
+            $html2pdf->writeHTML($content);
+            $html2pdf->output('trombi.pdf', 'D');
+
+            return $trombi;
+        }
+        catch (Html2PdfException $e) {
+            $html2pdf->clean();
+            $formatter = new ExceptionFormatter($e);
+            echo $formatter->getHtmlMessage();
+        }
     }
 }
