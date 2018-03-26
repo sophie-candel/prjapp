@@ -570,6 +570,12 @@ prjModule.controller("panel", [
     };
     getParams();
 
+    $scope.exportTrombi = function() {
+      if ($scope.format == 'pdf') {
+        data.exportTrombi($stateParams.trombi, $stateParams.periode);
+      }
+    }
+
     // ********** IMPORT CSV ********** //
     $scope.importList = function(importListFile) {
       importListFile.upload = Upload.upload({
@@ -624,8 +630,8 @@ prjModule.service("data", [
       });
     }
 
-    this.exportTrombi = function() {
-      return makeRequest("export");
+    this.exportTrombi = function(trombiId, periodeId) {
+      window.open(endpoint + "trombi/" + trombiId + "/" + periodeId + "/export");
     };
 
     // ********** SEARCHBAR ********** //

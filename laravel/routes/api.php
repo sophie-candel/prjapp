@@ -13,7 +13,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('import', 'EtudiantsCtr@import');
-Route::post('export', 'EtudiantsCtr@export');
+// Route::post('export', 'EtudiantsCtr@export');
+Route::get('trombi/{formation}/{periode}/export', 'EtudiantsCtr@export');
 
 Route::get('dep', 'DepartementsCtr@index');
 

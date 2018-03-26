@@ -15,8 +15,8 @@ prjModule.service("data", [
       });
     }
 
-    this.exportTrombi = function() {
-      return makeRequest("export");
+    this.exportTrombi = function(trombiId, periodeId) {
+      window.open(endpoint + "trombi/" + trombiId + "/" + periodeId + "/export");
     };
 
     // ********** SEARCHBAR ********** //

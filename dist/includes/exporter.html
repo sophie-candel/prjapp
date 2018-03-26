@@ -3,7 +3,7 @@
 
 <form class="tiny-input" ng-submit="exportTrombi()">
     <p class="label">Choix du format : </p>
-    <select class="m-b-20">
+    <select class="m-b-20" ng-model="format">
         <option value="" disabled selected hidden>Format</option>
         <option value="zip">
             ZIP

@@ -326,19 +326,21 @@ class EtudiantsCtr extends Controller {
 
 
     // ********** EXPORT PDF ********** //
-    public function export() {
+    public function export($id_formation, $id_periode) {
         try {
-            $trombi = $this->trombi(3, 5); 
-            //$trombi = $this->trombi($id_formation, $id_periode);
-            //$trombi = $this->trombi($_GET['id_formation, id_periode']);
+            $trombi = $this->trombi($id_formation, $id_periode);
 
-            //$content = '<h1>' . $trombi['title'] . '</h1>';
+            if (isset($trombi['formation'][0]['nom'])) {
+                $content = '<h1>' . $trombi['formation'][0]['nom'] . '</h1>';
+            } else {
+                $content = '<h1>Trombinoscope</h1>';
+            }
             $content .= '<table><tr>';
             $compteur = 0;
             foreach ($trombi['etudiants'] as $e) {
                 if ($compteur++ % 5 == 0) $content .= '</tr><tr>';
                 $content .= '<td>';
-                $content .= '<img src="' . $e['photo']. '"><br>';
+                $content .= '<img width="147" src="' . base_path() . '/../dist/' . $e['photo']. '"><br>';
                 $content .= $e['prenom']." ".$e['nom'];
                 $content .= '</td>';
             }
