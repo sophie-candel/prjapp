@@ -27,6 +27,20 @@ Route::get('for', 'FormationsCtr@index');
 Route::resource('etu', 'EtudiantsCtr');
 
 
+
+
+// JWT routes
+Route::post('register', 'AuthController@register');
+Route::post('login', 'AuthController@login');
+Route::group(['middleware' => ['jwt.auth']], function() {
+    Route::get('logout', 'AuthController@logout');
+    Route::get('me', 'AuthController@me');
+});
+
+
+
+
+
 // Route::get('index', 'EtudiantsCtr@index');
 // Route::get('etu/{id}', 'EtudiantsCtr@show');
 // Route::put('etu/{id}', 'EtudiantsCtr@update');
