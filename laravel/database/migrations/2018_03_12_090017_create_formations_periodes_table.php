@@ -24,8 +24,7 @@ class CreateFormationsPeriodesTable extends Migration
             $table->integer('periode_id')->unsigned();
             $table->foreign('periode_id')->references('id')->on('periodes');
             
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

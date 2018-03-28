@@ -21,8 +21,7 @@ class CreateGroupesTable extends Migration
             $table->string('nom', 255);
             $table->integer('formation_id')->unsigned();
             $table->foreign('formation_id')->references('id')->on('formations');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

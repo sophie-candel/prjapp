@@ -24,8 +24,7 @@ class CreateEtudiantsGroupesTable extends Migration
             $table->integer('groupe_id')->unsigned();
             $table->foreign('groupe_id')->references('id')->on('groupes');
             
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

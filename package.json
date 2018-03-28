@@ -23,6 +23,7 @@
   "description": "",
   "dependencies": {
     "json-server": "^0.12.1",
-    "ng-file-upload": "^12.2.13"
+    "ng-file-upload": "^12.2.13",
+    "satellizer": "^0.15.5"
   }
 }

@@ -24,8 +24,7 @@ class CreateEtudiantsTable extends Migration
             $table->string('mail', 255)->nullable();
             $table->string('photo', 255)->default("./sources/img/etu.png");
             $table->string('pre_diplome', 255)->nullable();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

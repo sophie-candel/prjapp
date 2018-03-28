@@ -20,8 +20,7 @@ class CreatePeriodesTable extends Migration
             $table->increments('id');
             $table->string('annee');
             $table->integer('semestre');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

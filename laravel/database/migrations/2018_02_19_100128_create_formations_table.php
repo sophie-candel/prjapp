@@ -21,8 +21,7 @@ class CreateFormationsTable extends Migration
             $table->string('nom', 255);
             $table->integer('departement_id')->unsigned();
             $table->foreign('departement_id')->references('id')->on('departements');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

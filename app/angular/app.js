@@ -2,14 +2,16 @@
 var prjModule = angular.module("prjModule", [
   "ui.router",
   "ngStorage",
-  "ngFileUpload"
+  "ngFileUpload",
+  "satellizer"
 ]);
 
 ////////////////////////////////////////////////////////////
 // ROUTING
 ////////////////////////////////////////////////////////////
-prjModule.config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise("/");
+prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
+  $authProvider.loginUrl = "http://127.0.0.1:8000/api/login";
+  $urlRouterProvider.otherwise("login");
   $stateProvider
     .state("login", {
       url: "/login",
@@ -23,14 +25,8 @@ prjModule.config(function($stateProvider, $urlRouterProvider) {
     })
     .state("trombi", {
       url: "/trombi/{trombi}/{periode}?g&m&s",
-      //url: "/trombi/{trombi}?periode&g",
-      //url: "/trombi/{trombi}",
-      //url: "/trombi/{trombi}a&s&g",
       templateUrl: "views/trombi.html",
       controller: "trombi"
-      // params: {
-      //   g: 1
-      // }
     })
     .state("trombi.afficher", {
       url: "/etu/{etu}",
