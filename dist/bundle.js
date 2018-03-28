@@ -21,23 +21,27 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     .state("formations", {
       url: "/",
       templateUrl: "views/formations.html",
-      controller: "formations"
+      controller: "formations",
+      data: { requiredLogin: true }
     })
     .state("trombi", {
       url: "/trombi/{trombi}/{periode}?g&m&s",
       templateUrl: "views/trombi.html",
-      controller: "trombi"
+      controller: "trombi",
+      data: { requiredLogin: true }
     })
     .state("trombi.afficher", {
       url: "/etu/{etu}",
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/afficher.html",
-          controller: "etudiants"
+          controller: "etudiants",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -46,11 +50,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/modifier.html",
-          controller: "etudiants"
+          controller: "etudiants",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -59,11 +65,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/creer.html",
-          controller: "etudiants"
+          controller: "etudiants",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -72,11 +80,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/filtres.html",
-          controller: "filtres"
+          controller: "filtres",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -85,11 +95,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/importer.html",
-          controller: "panel"
+          controller: "panel",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -98,11 +110,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/imprimer.html",
-          controller: "filtres"
+          controller: "filtres",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -111,11 +125,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/exporter.html",
-          controller: "panel"
+          controller: "panel",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -124,11 +140,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/migrer.html",
-          controller: "panel"
+          controller: "panel",
+          data: { requiredLogin: true }
         }
       }
     })
@@ -137,11 +155,13 @@ prjModule.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       views: {
         "": {
           templateUrl: "views/trombi.html",
-          controller: "trombi"
+          controller: "trombi",
+          data: { requiredLogin: true }
         },
         "panel@trombi": {
           templateUrl: "includes/mail.html",
-          controller: "panel"
+          controller: "panel",
+          data: { requiredLogin: true }
         }
       }
     });
@@ -183,15 +203,17 @@ prjModule.controller("login", [
   "$auth",
 
   function($scope, $state, $stateParams, $localStorage, $location, $auth) {
-    // $scope.logintest = function() {
-    //   console.log("login");
-    // };
-
     $scope.login = function() {
-      username = $scope.username;
-      password = $scope.password;
+      var vm = this;
+      var credentials = {
+        username: vm.username,
+        password: vm.password
+      };
+
+      console.log(credentials);
+
       $auth
-        .login({ username: username, password: password })
+        .login(credentials)
         .then(function(response) {
           console.log(response);
           $auth.setToken(response);
@@ -202,21 +224,26 @@ prjModule.controller("login", [
         });
     };
 
-    // "use strict";
-    // var vm = this;
+    /////////////////////
+    /////////////////////
+
+    // $scope.login = function() {
+    //   var vm = this;
+    //   console.log(vm.username);
     // vm.login = function() {
     //   var credentials = {
     //     username: vm.username,
     //     password: vm.password
     //   };
-    //   // Use Satellizer's $auth service to login
-    //   $auth.login(credentials).then(function(data) {
-    //     // If login is successful, redirect to the users state
-    //     // $state.go("formations", {});
-    //     // $location.reload(true);
-    //     console.log(credentials);
-    //   });
+    //   $auth
+    //     .login(credentials)
+    //     .then(function(data) {
+    //       // $state.go("formations", {});
+    //       // $location.reload(true);
+    //       console.log(credentials);
+    //     });
     // };
+    //};
   }
 ]);
 

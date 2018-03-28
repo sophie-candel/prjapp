@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
+
+
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
@@ -31,7 +33,6 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('migrate/{formation}/{periode}', 'EtudiantsCtr@migrate');
 
     Route::get('search', 'EtudiantsCtr@search');
-
 });
 
 

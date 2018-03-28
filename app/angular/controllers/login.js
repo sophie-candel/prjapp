@@ -7,15 +7,17 @@ prjModule.controller("login", [
   "$auth",
 
   function($scope, $state, $stateParams, $localStorage, $location, $auth) {
-    // $scope.logintest = function() {
-    //   console.log("login");
-    // };
-
     $scope.login = function() {
-      username = $scope.username;
-      password = $scope.password;
+      var vm = this;
+      var credentials = {
+        username: vm.username,
+        password: vm.password
+      };
+
+      console.log(credentials);
+
       $auth
-        .login({ username: username, password: password })
+        .login(credentials)
         .then(function(response) {
           console.log(response);
           $auth.setToken(response);
@@ -26,20 +28,25 @@ prjModule.controller("login", [
         });
     };
 
-    // "use strict";
-    // var vm = this;
+    /////////////////////
+    /////////////////////
+
+    // $scope.login = function() {
+    //   var vm = this;
+    //   console.log(vm.username);
     // vm.login = function() {
     //   var credentials = {
     //     username: vm.username,
     //     password: vm.password
     //   };
-    //   // Use Satellizer's $auth service to login
-    //   $auth.login(credentials).then(function(data) {
-    //     // If login is successful, redirect to the users state
-    //     // $state.go("formations", {});
-    //     // $location.reload(true);
-    //     console.log(credentials);
-    //   });
+    //   $auth
+    //     .login(credentials)
+    //     .then(function(data) {
+    //       // $state.go("formations", {});
+    //       // $location.reload(true);
+    //       console.log(credentials);
+    //     });
     // };
+    //};
   }
 ]);
