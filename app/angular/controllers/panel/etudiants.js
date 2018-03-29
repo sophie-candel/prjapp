@@ -45,7 +45,7 @@ prjModule.controller("etudiants", [
       console.log(etudiant.groupes);
 
       updateEtuPhoto.upload = Upload.upload({
-        url: "http://127.0.0.1:8000/api/etu/" + etudiant.id,
+        url: "http://127.0.0.1:8000/api/etu/" + etudiant.id + '?token=' + localStorage.getItem('token'),
         data: {
           nom: etudiant.nom,
           prenom: etudiant.prenom,
@@ -102,7 +102,7 @@ prjModule.controller("etudiants", [
     $scope.createEtu = function(createEtuPhoto) {
       console.log($scope.createEtuGroupe);
       createEtuPhoto.upload = Upload.upload({
-        url: "http://127.0.0.1:8000/api/etu/",
+        url: "http://127.0.0.1:8000/api/etu/" + '?token=' + localStorage.getItem('token'),
         method: "POST",
         data: {
           nom: $scope.createEtuNom,

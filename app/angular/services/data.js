@@ -9,7 +9,7 @@ prjModule.service("data", [
     function makeRequest(req) {
       return $http({
         method: "GET",
-        url: endpoint + req
+        url: endpoint + req + '?token=' + localStorage.getItem('token')
       }).then(response => {
         return response.data;
       });

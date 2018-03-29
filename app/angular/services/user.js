@@ -1,23 +1,22 @@
 prjModule.service("user", [
   "$http",
-  "$localStorage",
-  function($http, $localStorage) {
+  function($http) {
     const endpoint = "http://127.0.0.1:8000/api/";
 
     function checkIfLoggedIn() {
-      if ($localStorage.get("token")) return true;
+      if (localStorage.getItem("token")) return true;
       else return false;
     }
 
-    function login(email, password, onSuccess, onError) {
+    function login(username, password, onSuccess, onError) {
       $http
-        .post(endpoint + "/user", {
-          email: email,
+        .post(endpoint + "login", {
+          username: username,
           password: password
         })
         .then(
           function(response) {
-            $localStorage.set("token", response.data.token);
+            localStorage.setItem("token", response.data.data.token);
             onSuccess(response);
           },
           function(response) {
@@ -27,11 +26,11 @@ prjModule.service("user", [
     }
 
     function logout() {
-      $localStorage.remove("token");
+      localStorage.removeItem("token");
     }
 
     function getCurrentToken() {
-      return $localStorage.get("token");
+      return localStorage.getItem("token");
     }
 
     return {

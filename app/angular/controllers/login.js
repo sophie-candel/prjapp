@@ -5,8 +5,8 @@ prjModule.controller("login", [
   "$localStorage",
   "$location",
   "$auth",
-
-  function($scope, $state, $stateParams, $localStorage, $location, $auth) {
+  "user",
+  function($scope, $state, $stateParams, $localStorage, $location, $auth, user) {
     $scope.login = function() {
       var vm = this;
       var credentials = {
@@ -16,16 +16,24 @@ prjModule.controller("login", [
 
       console.log(credentials);
 
-      $auth
-        .login(credentials)
-        .then(function(response) {
-          console.log(response);
-          $auth.setToken(response);
-          $state.go("formations");
-        })
-        .catch(function(response) {
-          console.log("error response", response);
-        });
+      user.login(vm.username, vm.password, function (success) {
+        // $auth
+        //   .login(credentials)
+        //   .then(function(response) {
+        //     console.log(response);
+        //     $auth.setToken(response);
+        //     $state.go("formations");
+        //   })
+        //   .catch(function(response) {
+        //     console.log("error response", response);
+        //   });
+        
+        $state.go("formations");
+        console.log(success);
+      }, function (err) {
+        console.error(err);
+      });
+
     };
 
     /////////////////////

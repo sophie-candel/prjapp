@@ -201,8 +201,8 @@ prjModule.controller("login", [
   "$localStorage",
   "$location",
   "$auth",
-
-  function($scope, $state, $stateParams, $localStorage, $location, $auth) {
+  "user",
+  function($scope, $state, $stateParams, $localStorage, $location, $auth, user) {
     $scope.login = function() {
       var vm = this;
       var credentials = {
@@ -212,16 +212,24 @@ prjModule.controller("login", [
 
       console.log(credentials);
 
-      $auth
-        .login(credentials)
-        .then(function(response) {
-          console.log(response);
-          $auth.setToken(response);
-          $state.go("formations");
-        })
-        .catch(function(response) {
-          console.log("error response", response);
-        });
+      user.login(vm.username, vm.password, function (success) {
+        // $auth
+        //   .login(credentials)
+        //   .then(function(response) {
+        //     console.log(response);
+        //     $auth.setToken(response);
+        //     $state.go("formations");
+        //   })
+        //   .catch(function(response) {
+        //     console.log("error response", response);
+        //   });
+        
+        $state.go("formations");
+        console.log(success);
+      }, function (err) {
+        console.error(err);
+      });
+
     };
 
     /////////////////////
@@ -382,7 +390,7 @@ prjModule.controller("etudiants", [
       console.log(etudiant.groupes);
 
       updateEtuPhoto.upload = Upload.upload({
-        url: "http://127.0.0.1:8000/api/etu/" + etudiant.id,
+        url: "http://127.0.0.1:8000/api/etu/" + etudiant.id + '?token=' + localStorage.getItem('token'),
         data: {
           nom: etudiant.nom,
           prenom: etudiant.prenom,
@@ -439,7 +447,7 @@ prjModule.controller("etudiants", [
     $scope.createEtu = function(createEtuPhoto) {
       console.log($scope.createEtuGroupe);
       createEtuPhoto.upload = Upload.upload({
-        url: "http://127.0.0.1:8000/api/etu/",
+        url: "http://127.0.0.1:8000/api/etu/" + '?token=' + localStorage.getItem('token'),
         method: "POST",
         data: {
           nom: $scope.createEtuNom,
@@ -666,7 +674,7 @@ prjModule.service("data", [
     function makeRequest(req) {
       return $http({
         method: "GET",
-        url: endpoint + req
+        url: endpoint + req + '?token=' + localStorage.getItem('token')
       }).then(response => {
         return response.data;
       });
@@ -791,24 +799,23 @@ prjModule.service("data", [
 
 prjModule.service("user", [
   "$http",
-  "$localStorage",
-  function($http, $localStorage) {
+  function($http) {
     const endpoint = "http://127.0.0.1:8000/api/";
 
     function checkIfLoggedIn() {
-      if ($localStorage.get("token")) return true;
+      if (localStorage.getItem("token")) return true;
       else return false;
     }
 
-    function login(email, password, onSuccess, onError) {
+    function login(username, password, onSuccess, onError) {
       $http
-        .post(endpoint + "/user", {
-          email: email,
+        .post(endpoint + "login", {
+          username: username,
           password: password
         })
         .then(
           function(response) {
-            $localStorage.set("token", response.data.token);
+            localStorage.setItem("token", response.data.data.token);
             onSuccess(response);
           },
           function(response) {
@@ -818,11 +825,11 @@ prjModule.service("user", [
     }
 
     function logout() {
-      $localStorage.remove("token");
+      localStorage.removeItem("token");
     }
 
     function getCurrentToken() {
-      return $localStorage.get("token");
+      return localStorage.getItem("token");
     }
 
     return {
